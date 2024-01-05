@@ -73,6 +73,7 @@
     "@dcloudio/uni-stacktracey": "3.0.0-3081220230817001",
     "@dcloudio/vite-plugin-uni": "3.0.0-3081220230817001",
     "@rushstack/eslint-patch": "^1.6.1",
+    "@types/node": "^20.10.6",
     "@uni-helper/uni-app-types": "^0.5.12",
     "@uni-helper/uni-ui-types": "^0.5.11",
     "@vue/eslint-config-prettier": "^9.0.0",
