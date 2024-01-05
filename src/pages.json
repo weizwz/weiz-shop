@@ -1,5 +1,6 @@
 {// 组件自动导入
 	"easycom": {
+		// 开启自动扫描
 		"autoscan": true,
 		"custom": {
 			// uni-ui 规则如下配置  
