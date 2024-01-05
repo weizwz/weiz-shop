@@ -2,6 +2,9 @@
   // 在保存时格式化文件
   "editor.formatOnSave": true,
   // 文件格式化配置
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -9,5 +12,6 @@
   "files.associations": {
     "pages.json": "jsonc", // pages.json 可以写注释
     "manifest.json": "jsonc" // manifest.json 可以写注释
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

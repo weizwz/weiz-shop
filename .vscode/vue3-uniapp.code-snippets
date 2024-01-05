@@ -1,0 +1,17 @@
+{
+  "vue3+uniapp快速生成模板": {
+    "scope": "vue",
+    "prefix": "Vue3",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "$2",
+      "</script>\n",
+      "<template>",
+      "\t<view class=\"\">test</view>",
+      "</template>\n",
+      "<style lang=\"scss\"></style>",
+      "$2"
+    ],
+    "description": "vue3+uniapp快速生成模板"
+  }
+}
