@@ -22,6 +22,6 @@ npm run dev:mp-weixin
 
 ### 项目搭建流程
 
-参考文档 [小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)
+参考文档 [uni-app+vue3+ts项目搭建](https://www.cnblogs.com/weizwz/p/17952042)
 
-参考文档 [uni-app+vue3+ts项目搭建](https://weizwz.com/posts/f1579949.html)
+参考文档 [小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)
