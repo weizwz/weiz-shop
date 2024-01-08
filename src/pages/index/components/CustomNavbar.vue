@@ -7,14 +7,9 @@ const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets.top
 
 const toSearch = () => {
-  uni.navigateTo({
+  uni.redirectTo({
     url: '/pages/search/index',
     animationType: 'pop-in',
-    animationDuration: 200,
-  })
-  uni.navigateBack({
-    delta: 1,
-    animationType: 'pop-out',
     animationDuration: 200,
   })
 }
