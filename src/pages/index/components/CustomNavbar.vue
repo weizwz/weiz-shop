@@ -7,7 +7,6 @@ const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 
 const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets?.top
 const rightSpace = menuButtonInfo && menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
-console.log(menuButtonInfo)
 
 const toSearch = () => {
   uni.redirectTo({

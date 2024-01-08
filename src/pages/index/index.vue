@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
+// 生命周期 https://uniapp.dcloud.net.cn/tutorial/page.html#onload
+import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import { getBannerAPI } from '@/api/banner'
 import type { BannerItem } from '@/types/home'
@@ -14,7 +16,8 @@ const imgs: stringKey = {
   img_index_2,
   img_index_3,
 }
-const list = ref([] as BannerItem[])
+// 或者 ref([] as BannerItem[])
+const list = ref<BannerItem[]>([])
 
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
@@ -29,7 +32,7 @@ const getBannerList = async () => {
   })
 }
 
-onMounted(() => {
+onLoad(() => {
   getBannerList()
 })
 </script>
