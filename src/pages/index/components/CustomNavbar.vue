@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import logo from '@/static/logo.png'
 // 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
+const { safeAreaInsets, screenWidth } = uni.getSystemInfoSync()
 // 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
 const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 
 const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets?.top
+const rightSpace = menuButtonInfo && menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
+console.log(menuButtonInfo)
 
 const toSearch = () => {
   uni.redirectTo({
@@ -19,8 +21,8 @@ const toSearch = () => {
 <template>
   <view class="navbar" :style="{ paddingTop: pT + 'px' }">
     <!-- logo文字 -->
-    <view class="logo" :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }">
-      <image class="logo-img" :src="logo">味值商城</image>
+    <view class="logo" :style="{ height: menuButtonInfo?.height + 'px' }">
+      <image mode="aspectFit" class="logo-img" :src="logo" alt="味值商城"></image>
     </view>
     <!-- 搜索条 -->
     <view
@@ -33,7 +35,7 @@ const toSearch = () => {
         <text class="search-txt">零食</text>
       </view>
     </view>
-    <view class="navbar-space" :style="{ width: menuButtonInfo?.width + menuButtonInfo?.right + 'px' }"></view>
+    <view class="navbar-space" :style="{ width: menuButtonInfo?.width + rightSpace + 'px' }"></view>
   </view>
 </template>
 
@@ -48,12 +50,12 @@ const toSearch = () => {
   .logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 64rpx;
-    line-height: 64rpx;
-    margin-right: 10rpx;
     font-family: '隶书';
     color: $uni-color-primary;
     padding: 0 20rpx;
+    width: 120rpx;
     .logo-img {
       height: 100%;
       width: inherit;
