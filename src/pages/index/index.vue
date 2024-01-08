@@ -4,6 +4,7 @@ import CustomNavbar from './components/CustomNavbar.vue'
 
 <template>
   <CustomNavbar />
+  <weiz-carousel />
   <view class="">index</view>
 </template>
 

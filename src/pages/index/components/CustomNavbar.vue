@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-// 获取胶囊位置信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
+// 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
 const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 
 const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets.top
@@ -10,6 +10,11 @@ const toSearch = () => {
   uni.navigateTo({
     url: '/pages/search/index',
     animationType: 'pop-in',
+    animationDuration: 200,
+  })
+  uni.navigateBack({
+    delta: 1,
+    animationType: 'pop-out',
     animationDuration: 200,
   })
 }
@@ -42,6 +47,7 @@ const toSearch = () => {
   position: relative;
   display: flex;
   align-item: center;
+  margin-bottom: 10px;
   .logo {
     display: flex;
     align-items: center;
