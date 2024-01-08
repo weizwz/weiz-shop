@@ -1,6 +1,6 @@
 import { createSSRApp } from 'vue'
 import pinia from './stores'
-import '@/styles/iconfont.css'
+import '@/styles/iconfont.scss'
 
 import App from './App.vue'
 export function createApp() {
