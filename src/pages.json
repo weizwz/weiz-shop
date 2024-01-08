@@ -7,7 +7,7 @@
       // uni-ui 规则如下配置
       "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
       // 公共组件
-      "^weiz-(.*)": "@/components/weiz-$1/index.vue"
+      "^Weiz(.*)": "@/components/Weiz$1/index.vue"
     }
   },
   "pages": [

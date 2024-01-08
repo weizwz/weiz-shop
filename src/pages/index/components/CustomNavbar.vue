@@ -4,7 +4,7 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 // 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
 const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 
-const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets.top
+const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets?.top
 
 const toSearch = () => {
   uni.redirectTo({
