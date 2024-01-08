@@ -12,6 +12,7 @@ const onChange: UniHelper.SwiperOnChange = (ev) => {
 // 定义 props 接收
 defineProps<{
   list: BannerItem[]
+  dotBottom: Number
 }>()
 </script>
 
@@ -25,7 +26,7 @@ defineProps<{
       </swiper-item>
     </swiper>
     <!-- 指示点 -->
-    <view class="indicator">
+    <view class="indicator" :style="{ bottom: dotBottom + 'rpx' }">
       <text v-for="(item, index) in list" :key="item.id" class="dot" :class="{ active: index === activeIndex }"></text>
     </view>
   </view>
@@ -46,7 +47,7 @@ defineProps<{
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 16rpx;
+    bottom: 36rpx;
     display: flex;
     justify-content: center;
     .dot {

@@ -39,8 +39,17 @@ onLoad(() => {
 
 <template>
   <CustomNavbar />
-  <WeizCarousel :list="list" />
-  <view class="">index</view>
+  <WeizCarousel :list="list" :dotBottom="64" />
+  <view class="content"></view>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.content {
+  position: relative;
+  z-index: 2;
+  min-height: 800rpx;
+  border-radius: 64rpx 64rpx 0 0;
+  background: #f7f7f7;
+  margin-top: -42rpx;
+}
+</style>
