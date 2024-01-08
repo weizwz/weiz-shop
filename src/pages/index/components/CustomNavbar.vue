@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import logo from '@/static/logo.png'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 // 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
@@ -19,7 +20,7 @@ const toSearch = () => {
   <view class="navbar" :style="{ paddingTop: pT + 'px' }">
     <!-- logo文字 -->
     <view class="logo" :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }">
-      <text class="logo-text">味值商城</text>
+      <image class="logo-img" :src="logo">味值商城</image>
     </view>
     <!-- 搜索条 -->
     <view
@@ -32,6 +33,7 @@ const toSearch = () => {
         <text class="search-txt">零食</text>
       </view>
     </view>
+    <view class="navbar-space" :style="{ width: menuButtonInfo?.width + menuButtonInfo?.right + 'px' }"></view>
   </view>
 </template>
 
@@ -41,7 +43,7 @@ const toSearch = () => {
   padding-top: 20px;
   position: relative;
   display: flex;
-  align-item: center;
+  align-items: center;
   margin-bottom: 10px;
   .logo {
     display: flex;
@@ -52,27 +54,31 @@ const toSearch = () => {
     font-family: '隶书';
     color: $uni-color-primary;
     padding: 0 20rpx;
-    .logo-text {
-      flex: 1;
-      font-size: 40rpx;
+    .logo-img {
+      height: 100%;
+      width: inherit;
     }
   }
   .search {
-    width: 40%;
+    flex: 1;
     height: 64rpx;
     line-height: 64rpx;
     box-sizing: border-box;
     border: solid 1px #c8c7cc;
     border-radius: 100px;
     display: flex;
-    align-item: center;
+    align-items: center;
     padding: 0 20rpx;
+    margin-right: 20rpx;
     color: #999;
     font-size: 12px;
     .search-txt-wrapper {
       flex: 1;
       margin-left: 10rpx;
     }
+  }
+  .navbar-space {
+    width: 0;
   }
 }
 </style>
