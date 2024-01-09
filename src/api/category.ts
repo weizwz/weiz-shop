@@ -1,5 +1,5 @@
 import { http } from '@/utils/http'
-import type { CategoryItem, HotPanelItem } from '@/types/api'
+import type { CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
 
 export const getCategoryIndexAPI = () => {
   return http<CategoryItem[]>({
@@ -9,7 +9,7 @@ export const getCategoryIndexAPI = () => {
 }
 
 export const getHotIndexAPI = () => {
-  return http<HotPanelItem[]>({
+  return http<HotPanelItem<HotPcitureItem>[]>({
     url: '/category/hot',
     method: 'GET',
   })

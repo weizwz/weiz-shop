@@ -5,7 +5,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
-import type { BannerItem, CategoryItem, HotPanelItem } from '@/types/api'
+import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
 import type { stringKey } from '@/types/global'
 
 import img_index_1 from '@/static/images/banner/index/1.png'
@@ -20,6 +20,8 @@ import img_hot_5 from '@/static/images/card/category/5.png'
 import img_hot_6 from '@/static/images/card/category/6.png'
 import img_hot_7 from '@/static/images/card/category/7.png'
 import img_hot_8 from '@/static/images/card/category/8.png'
+import img_hot_9 from '@/static/images/card/category/9.png'
+import img_hot_10 from '@/static/images/card/category/10.png'
 
 const imgs: stringKey = {
   img_index_1,
@@ -33,6 +35,8 @@ const imgs: stringKey = {
   img_hot_6,
   img_hot_7,
   img_hot_8,
+  img_hot_9,
+  img_hot_10,
 }
 // 或者 ref([] as BannerItem[])
 const bannerList = ref<BannerItem[]>([])
@@ -55,19 +59,29 @@ const getCategoryList = async () => {
   categoryList.value = res.result
 }
 // 热门推荐
-const hotList = ref<HotPanelItem[]>([])
+const hotList = ref<HotPanelItem<HotPcitureItem>[]>([])
 const getHotList = async () => {
   const res = await getHotIndexAPI()
+  const newHotList: HotPanelItem<HotPcitureItem>[] = []
   const { result } = res
   result.map((item) => {
-    hotList.value.push({
+    const pictureData: HotPcitureItem[] = item.picture
+    let picture: HotPcitureItem[] = []
+    pictureData.map((temp) => {
+      picture.push({
+        ...temp,
+        src: imgs['img_hot_' + temp.src],
+      })
+    })
+    newHotList.push({
       id: item.id,
+      type: item.type,
       title: item.title,
       desc: item.desc,
-      picture: [imgs['img_hot_' + item.picture[0]], imgs['img_hot_' + item.picture[1]]],
+      picture: picture,
     })
-    console.log(hotList)
   })
+  hotList.value = newHotList
 }
 
 onLoad(() => {

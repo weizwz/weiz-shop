@@ -18,14 +18,31 @@ export type CategoryItem = {
   icon: string
 }
 
-// 热门推荐
-export type HotPanelItem = {
+/**
+ * 热门推荐
+ */
+export type HotPanelItem<T> = {
   // id
   id: string
+  // 卡片类型
+  type: string
   // 标题
   title: string
   // 子标题
   desc: string
   // 图片集合
-  picture: string[]
+  picture: T[]
+}
+// picture
+export type HotPcitureItem = {
+  // 图片路径
+  src: string
+  // 价格
+  price?: string
+  // 销量
+  sales?: number
+  // 品牌
+  brand?: string
+  // 上架日期
+  date?: string
 }
