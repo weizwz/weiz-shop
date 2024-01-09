@@ -44,12 +44,15 @@ onLoad(() => {
 </template>
 
 <style lang="scss">
+page {
+  background: #f7f7f7;
+}
 .content {
   position: relative;
   z-index: 2;
   min-height: 800rpx;
-  border-radius: 64rpx 64rpx 0 0;
+  border-radius: 48rpx 48rpx 0 0;
   background: #f7f7f7;
-  margin-top: -42rpx;
+  margin-top: -48rpx;
 }
 </style>

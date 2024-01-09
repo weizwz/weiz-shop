@@ -55,10 +55,10 @@ defineProps<{
       height: 6rpx;
       margin: 0 8rpx;
       border-radius: 6rpx;
-      background-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(0, 0, 0, 0.5);
     }
     .active {
-      background-color: #fff;
+      background-color: #409eff;
     }
   }
   .navigator,

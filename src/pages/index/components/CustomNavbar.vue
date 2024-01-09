@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { getSearchTxtAPI } from '@/api/search'
 import logo from '@/static/logo.png'
+import { onMounted, ref } from 'vue'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets, screenWidth } = uni.getSystemInfoSync()
 // 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
@@ -8,12 +10,23 @@ const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets?.top
 const rightSpace = menuButtonInfo && menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
 
-const toSearch = () => {
+const toSearch = (searchKey: string) => {
   uni.redirectTo({
-    url: '/pages/search/index',
+    url: '/pages/search/index?searchKey=' + searchKey,
     animationType: 'pop-in',
     animationDuration: 200,
   })
+}
+
+onMounted(() => {
+  getSearchTxt()
+})
+
+// 默认一次返回10组文字
+const searchTxt = ref<string[]>([])
+const getSearchTxt = async () => {
+  const res = await getSearchTxtAPI()
+  searchTxt.value = res.result
 }
 </script>
 
@@ -24,14 +37,25 @@ const toSearch = () => {
       <image mode="aspectFit" class="logo-img" :src="logo" alt="味值商城"></image>
     </view>
     <!-- 搜索条 -->
-    <view
-      class="search"
-      :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }"
-      @tap="toSearch"
-    >
+    <view class="search" :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }">
       <span class="iconfont icon-sousuo"></span>
-      <view class="search-txt-wrapper">
-        <text class="search-txt">零食</text>
+      <view class="search-txt-wrapper" :style="{ height: menuButtonInfo?.height + 'px' }">
+        <swiper
+          class="search-txt-content"
+          :vertical="true"
+          :circular="true"
+          :autoplay="true"
+          :interval="3000"
+          :duration="1000"
+        >
+          <swiper-item class="search-txt-item" v-for="(item, index) in searchTxt" :key="index" @click="toSearch(item)">
+            <view
+              class="search-txt"
+              :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }"
+              >{{ item }}</view
+            >
+          </swiper-item>
+        </swiper>
       </view>
     </view>
     <view class="navbar-space" :style="{ width: menuButtonInfo?.width + rightSpace + 'px' }"></view>
@@ -65,21 +89,36 @@ const toSearch = () => {
     height: 64rpx;
     line-height: 64rpx;
     box-sizing: border-box;
-    border: solid 1px #c8c7cc;
-    border-radius: 100px;
+    border: solid 1px #409eff;
+    border-radius: 100rpx;
     display: flex;
     align-items: center;
     padding: 0 20rpx;
     margin-right: 20rpx;
     color: #999;
-    font-size: 12px;
     .search-txt-wrapper {
       flex: 1;
       margin-left: 10rpx;
+      height: 100%;
+      overflow: hidden;
+      .search-txt-content {
+        .search-txt {
+          width: 100%;
+          font-size: 12px;
+          height: 64rpx;
+          line-height: 64rpx;
+        }
+      }
     }
   }
   .navbar-space {
     width: 0;
   }
+}
+.search-txt-content {
+  height: 100%;
+}
+.search-txt-item {
+  height: auto !important;
 }
 </style>
