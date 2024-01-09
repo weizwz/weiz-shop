@@ -21,7 +21,7 @@ defineProps<{
   display: flex;
   flex-wrap: wrap;
   min-height: 328rpx;
-  background: #fff;
+  background: linear-gradient(to bottom, #fff7ef, #fff 80%);
   border-radius: 42rpx 42rpx 0 0;
   .category-item {
     width: 150rpx;
@@ -30,13 +30,13 @@ defineProps<{
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
+    color: #333;
     .iconfont {
       font-size: 48rpx;
       margin-bottom: 10rpx;
     }
     .text {
       font-size: 24rpx;
-      color: #666;
     }
   }
 }
