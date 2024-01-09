@@ -17,3 +17,15 @@ export type CategoryItem = {
   // 图标
   icon: string
 }
+
+// 热门推荐
+export type HotPanelItem = {
+  // id
+  id: string
+  // 标题
+  title: string
+  // 子标题
+  desc: string
+  // 图片集合
+  picture: string[]
+}
