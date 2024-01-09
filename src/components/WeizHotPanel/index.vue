@@ -82,13 +82,16 @@ watch(
       margin-left: 18rpx;
     }
   }
-  .img-swiper-item {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    .img-swiper-item-panel {
-      width: 150rpx;
-      height: 150rpx;
+  .img-swiper-content {
+    height: 150rpx;
+    .img-swiper-item {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .img-swiper-item-panel {
+        width: 150rpx;
+        height: 150rpx;
+      }
     }
   }
   .item {

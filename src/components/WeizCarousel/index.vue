@@ -51,10 +51,10 @@ defineProps<{
     display: flex;
     justify-content: center;
     .dot {
-      width: 30rpx;
-      height: 6rpx;
+      width: 32rpx;
+      height: 8rpx;
       margin: 0 8rpx;
-      border-radius: 6rpx;
+      border-radius: 8rpx;
       background-color: rgba(0, 0, 0, 0.5);
     }
     .active {
