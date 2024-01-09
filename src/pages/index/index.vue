@@ -4,7 +4,8 @@ import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import { getBannerAPI } from '@/api/banner'
-import type { BannerItem } from '@/types/home'
+import { getCategoryIndexAPI } from '@/api/category'
+import type { BannerItem, CategoryItem } from '@/types/api'
 import type { stringKey } from '@/types/global'
 
 import img_index_1 from '@/static/images/banner/index/1.png'
@@ -17,14 +18,13 @@ const imgs: stringKey = {
   img_index_3,
 }
 // 或者 ref([] as BannerItem[])
-const list = ref<BannerItem[]>([])
-
+const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
   const { result } = res
 
   result.map((item) => {
-    list.value.push({
+    bannerList.value.push({
       id: item.id,
       url: item.url,
       imgUrl: imgs['img_' + item.imgUrl],
@@ -32,15 +32,24 @@ const getBannerList = async () => {
   })
 }
 
+const categoryList = ref<CategoryItem[]>([])
+const getCategoryList = async () => {
+  const res = await getCategoryIndexAPI()
+  categoryList.value = res.result
+}
+
 onLoad(() => {
   getBannerList()
+  getCategoryList()
 })
 </script>
 
 <template>
   <CustomNavbar />
-  <WeizCarousel :list="list" :dotBottom="64" />
-  <view class="content"></view>
+  <WeizCarousel :list="bannerList" :dotBottom="64" />
+  <view class="content">
+    <WeizCategory :list="categoryList" />
+  </view>
 </template>
 
 <style lang="scss">
