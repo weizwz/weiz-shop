@@ -30,6 +30,8 @@ defineProps<{
   position: relative;
   width: 150rpx;
   height: 150rpx;
+  overflow: hidden;
+  border-radius: 10rpx;
   .image {
     width: 100%;
     height: 100%;
@@ -62,7 +64,8 @@ defineProps<{
         text-align: center;
         border-radius: 0;
         font-weight: 600;
-        background: rgba(252, 200, 2, 0.6);
+        color: #fff;
+        background: rgba(250, 44, 25, 0.6);
       }
     }
     &.mark-wrapper-brand {
@@ -82,6 +85,7 @@ defineProps<{
       .date {
         border-radius: 0 0 0 10rpx;
         background: #fcc802;
+        font-weight: 500;
       }
     }
   }

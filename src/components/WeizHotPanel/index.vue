@@ -60,19 +60,17 @@ watch(
 </template>
 
 <style lang="scss">
-/* 热门推荐 */
 .hot {
   display: flex;
   flex-wrap: wrap;
-  min-height: 508rpx;
-  margin: 20rpx 20rpx 0;
-  border-radius: 20rpx;
+  margin: $uni-margin-frame $uni-margin-frame 0;
+  border-radius: $uni-margin-frame;
   background-color: #fff;
 
   .title {
     display: flex;
     align-items: center;
-    padding: 24rpx 24rpx 0;
+    padding: $uni-margin-frame 24rpx 0;
     font-size: 32rpx;
     color: #262626;
     position: relative;
@@ -98,7 +96,6 @@ watch(
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 254rpx;
     border-right: 1rpx solid #f7f7f7;
     border-top: 1rpx solid #f7f7f7;
     box-sizing: border-box;
