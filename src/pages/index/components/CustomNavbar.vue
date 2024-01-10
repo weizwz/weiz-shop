@@ -2,16 +2,9 @@
 import { getSearchTxtAPI } from '@/api/search'
 import logo from '@/static/logo.png'
 import { onMounted, ref } from 'vue'
-// 获取屏幕边界到安全区域距离 https://uniapp.dcloud.net.cn/api/system/getWindowInfo.html#getwindowinfo
-const { safeAreaInsets, screenWidth } = uni.getWindowInfo()
-// 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
-let menuButtonInfo = { top: 0, right: 0, height: 32, width: 0 }
-//#ifdef MP-WEIXIN
-menuButtonInfo = uni.getMenuButtonBoundingClientRect()
-//#endif
+import { navData } from '@/utils/navData'
 
-const pT = menuButtonInfo.top || safeAreaInsets?.top
-const rightSpace = menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
+const navBarData = navData()
 
 const toSearch = (searchKey: string) => {
   uni.redirectTo({
@@ -34,15 +27,15 @@ const getSearchTxt = async () => {
 </script>
 
 <template>
-  <view class="navbar" :style="{ paddingTop: pT + 'px' }">
+  <view class="navbar" :style="{ paddingTop: navBarData.top + 'px', height: navBarData.height + 'px' }">
     <!-- logo文字 -->
-    <view class="logo" :style="{ height: menuButtonInfo.height + 'px' }">
+    <view class="logo" :style="{ height: navBarData.height + 'px' }">
       <image mode="aspectFit" class="logo-img" :src="logo" alt="味值商城"></image>
     </view>
     <!-- 搜索条 -->
-    <view class="search" :style="{ height: menuButtonInfo.height + 'px', lineHeight: menuButtonInfo.height + 'px' }">
+    <view class="search" :style="{ height: navBarData.height + 'px', lineHeight: navBarData.height + 'px' }">
       <span class="iconfont icon-sousuo"></span>
-      <view class="search-txt-wrapper" :style="{ height: menuButtonInfo.height + 'px' }">
+      <view class="search-txt-wrapper" :style="{ height: navBarData.height + 'px' }">
         <swiper
           class="search-txt-content"
           :vertical="true"
@@ -54,25 +47,30 @@ const getSearchTxt = async () => {
           <swiper-item class="search-txt-item" v-for="(item, index) in searchTxt" :key="index" @click="toSearch(item)">
             <view
               class="search-txt"
-              :style="{ height: menuButtonInfo.height + 'px', lineHeight: menuButtonInfo.height + 'px' }"
+              :style="{ height: navBarData.height + 'px', lineHeight: navBarData.height + 'px' }"
               >{{ item }}</view
             >
           </swiper-item>
         </swiper>
       </view>
     </view>
-    <view class="navbar-space" :style="{ width: menuButtonInfo.width + rightSpace + 'px' }"></view>
+    <view class="navbar-space" :style="{ width: navBarData.width + navBarData.marginRight + 'px' }"></view>
   </view>
 </template>
 
 <style lang="scss">
 /* 自定义导航条 */
 .navbar {
-  padding-top: 20px;
-  position: relative;
+  padding: 20px 0 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64rpx;
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  z-index: 1;
+  background: #fff;
   .logo {
     display: flex;
     align-items: center;

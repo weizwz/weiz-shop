@@ -3,6 +3,7 @@ import { ref } from 'vue'
 // 生命周期 https://uniapp.dcloud.net.cn/tutorial/page.html#onload
 import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
+import { navData } from '@/utils/navData'
 import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
 import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
@@ -38,7 +39,10 @@ const imgs: stringKey = {
   img_hot_9,
   img_hot_10,
 }
-// 或者 ref([] as BannerItem[])
+// 导航
+const navBarData = navData()
+
+// 轮播图 或者 ref([] as BannerItem[])
 const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
@@ -89,15 +93,33 @@ onLoad(() => {
   getCategoryList()
   getHotList()
 })
+
+// 下拉刷新
+const onRefresherrefresh = () => {
+  console.log('下拉刷新了')
+}
+// 滚动触底刷新
+const onScrolltolower = () => {
+  console.log('滚动到底了')
+}
 </script>
 
 <template>
   <CustomNavbar />
-  <WeizCarousel :list="bannerList" :dotBottom="64" />
-  <view class="content">
-    <WeizCategory :list="categoryList" />
-    <WeizHotPanel :list="hotList" />
-  </view>
+  <view :style="{ height: navBarData.top + navBarData.height + navBarData.marginBottom + 'px' }"></view>
+  <scroll-view
+    refresher-enabled
+    @refresherrefresh="onRefresherrefresh"
+    @scrolltolower="onScrolltolower"
+    class="scroll-view"
+    scroll-y
+  >
+    <WeizCarousel :list="bannerList" :dotBottom="64" />
+    <view class="content">
+      <WeizCategory :list="categoryList" />
+      <WeizHotPanel :list="hotList" />
+    </view>
+  </scroll-view>
 </template>
 
 <style lang="scss">
@@ -107,7 +129,6 @@ page {
 .content {
   position: relative;
   z-index: 2;
-  min-height: 800rpx;
   border-radius: 48rpx 48rpx 0 0;
   background: #f7f7f7;
   margin-top: -48rpx;
