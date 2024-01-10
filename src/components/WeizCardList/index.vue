@@ -6,9 +6,9 @@ import img_hot_2 from '@/static/images/card/index/2.png'
 import img_hot_3 from '@/static/images/card/index/3.png'
 import img_hot_4 from '@/static/images/card/index/4.png'
 
-const goodsList = [
+const goodsList: GoodsItem<RankItem>[] = [
   {
-    id: 111,
+    id: '111',
     name: '香甜爆米花好吃不腻',
     nameTag: '自营',
     price: '9.90',
@@ -18,11 +18,11 @@ const goodsList = [
     rank: {
       rank: 1,
       type: '香甜零食榜',
-      line: '4569',
+      link: '4569',
     },
   },
   {
-    id: 112,
+    id: '112',
     name: '美味坚果大礼包',
     nameTag: '百亿补贴',
     price: '129.00',
@@ -32,7 +32,7 @@ const goodsList = [
     image_url: img_hot_2,
   },
   {
-    id: 113,
+    id: '113',
     name: '香脆面就是一个脆',
     price: '12.23',
     oldPrice: '15.00',
@@ -41,7 +41,7 @@ const goodsList = [
     image_url: img_hot_3,
   },
   {
-    id: 114,
+    id: '114',
     name: '猪肉脯越吃越想吃',
     price: '36.00',
     priceTag: '30天最低价',
@@ -49,9 +49,9 @@ const goodsList = [
     commentRate: '96%',
     image_url: img_hot_4,
     rank: {
-      rank: 12,
+      rank: 10,
       type: '开袋即食肉类零食榜',
-      line: '4568',
+      link: '4568',
     },
   },
 ]
