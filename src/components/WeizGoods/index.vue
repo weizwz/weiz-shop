@@ -22,6 +22,8 @@ defineProps<{
         <span class="goods-price-unit">¥</span>
         <span class="goods-price-main">{{ goods.price.split('.')[0] }}</span>
         <span class="goods-price-other">.{{ goods.price.split('.')[1] }}</span>
+        <span v-if="goods.oldPrice" class="goods-price-desc"> 到手价 </span>
+        <span v-if="goods.oldPrice" class="goods-price-old">¥{{ goods.oldPrice }}</span>
       </view>
       <view class="goods-comment-wrapper">
         <view v-if="goods.payTag" class="goods-pay-tag">先享后付</view>
@@ -68,7 +70,7 @@ defineProps<{
         white-space: nowrap;
         font-size: 20rpx;
         font-weight: 400;
-        background: #ff4142;
+        background: $uni-text-color-price;
         padding: 4rpx 10rpx;
         border-radius: 6rpx;
         color: #fff;
@@ -95,12 +97,12 @@ defineProps<{
       font-size: 22rpx;
       background: #fef6ee;
       border-radius: 6rpx;
-      color: #ff7500;
+      color: $uni-text-color-rank-main;
       box-sizing: border-box;
       .goods-price-tag-icon {
         width: 24rpx;
         height: 24rpx;
-        background: #ff4142;
+        background: $uni-text-color-price;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 5rpx;
@@ -114,14 +116,22 @@ defineProps<{
       height: 52rpx;
       line-height: 52rpx;
       margin-top: 5rpx;
-      color: #ff4142;
-      font-size: 36rpx;
+      color: $uni-text-color-price;
+      font-size: 38rpx;
       font-weight: 600;
       .goods-price-unit {
         font-size: 24rpx;
       }
       .goods-price-other {
         font-size: 24rpx;
+      }
+      .goods-price-desc {
+        font-size: 20rpx;
+        font-weight: 700;
+      }
+      .goods-price-old {
+        color: $uni-text-color-grey;
+        font-size: 20rpx;
       }
     }
     .goods-comment-wrapper {
@@ -135,12 +145,14 @@ defineProps<{
       font-weight: 300;
       color: $uni-text-color-grey;
       .goods-pay-tag {
+        font-size: 24rpx;
         padding: 2rpx 8rpx;
         background: #e1fded;
         color: $uni-color-success;
-        font-weight: 400;
+        font-weight: 500;
         margin-right: 10rpx;
         border-radius: 6rpx;
+        letter-spacing: 2rpx;
       }
       .goods-comment {
         margin-right: 10rpx;
@@ -158,7 +170,7 @@ defineProps<{
       }
       .goods-rank-num {
         width: 60rpx;
-        background: #f4b200;
+        background: $uni-text-color-rank-main;
         padding: 0 30rpx 0 10rpx;
         font-size: 24rpx;
         color: #fff;
@@ -167,14 +179,15 @@ defineProps<{
           margin-left: 5rpx;
           flex: 1;
           text-align: center;
+          font-weight: 600;
         }
       }
       .goods-rank-type {
         flex: 1;
         font-size: 20rpx;
         font-weight: 600;
-        background: #fdf2d7;
-        color: #d89e0b;
+        background: $uni-text-color-rank-bg;
+        color: $uni-text-color-rank-main;
         overflow: hidden;
         text-overflow: ellipsis;
         border-radius: 20rpx 0 0 20rpx;
@@ -184,8 +197,8 @@ defineProps<{
       .goods-rank-link {
         font-size: 20rpx;
         font-weight: 600;
-        background: #fdf2d7;
-        color: #d89e0b;
+        background: $uni-text-color-rank-bg;
+        color: $uni-text-color-rank-main;
         padding-right: 10rpx;
         > .iconfont {
           font-size: 16rpx;
