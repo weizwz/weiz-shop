@@ -118,6 +118,7 @@ const onScrolltolower = () => {
     <view class="content">
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
+      <WeizCardList />
     </view>
   </scroll-view>
 </template>

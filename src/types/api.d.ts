@@ -46,3 +46,39 @@ export type HotPcitureItem = {
   // 上架日期
   date?: string
 }
+
+/**
+ * 单个商品
+ */
+export type RankItem = {
+  // 排名
+  rank: number
+  // 排名分类
+  type: string
+  // 排名链接
+  link: string
+}
+export type GoodsItem<T> = {
+  // 商品id
+  id: string
+  // 商品名称
+  name: string
+  // 价格
+  price: string
+  // 评论数量
+  comment: string
+  // 图片路径
+  image_url: string
+  // 名称标签： 自营/百亿补贴/隔日送
+  nameTag?: string
+  // 旧价格
+  oldPrice?: string
+  // 好评率
+  commentRate?: string
+  // 价格标签 x天最低价
+  priceTag?: string
+  // 付款标签 先享后付
+  payTag?: boolean
+  // 排行榜
+  rank?: T
+}
