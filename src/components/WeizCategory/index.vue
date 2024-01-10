@@ -19,6 +19,7 @@ defineProps<{
 <style lang="scss">
 .category {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   min-height: 328rpx;
   background: linear-gradient(to bottom, #fff7ef, #fff 80%);

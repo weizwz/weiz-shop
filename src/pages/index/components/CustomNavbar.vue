@@ -2,13 +2,16 @@
 import { getSearchTxtAPI } from '@/api/search'
 import logo from '@/static/logo.png'
 import { onMounted, ref } from 'vue'
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets, screenWidth } = uni.getSystemInfoSync()
+// 获取屏幕边界到安全区域距离 https://uniapp.dcloud.net.cn/api/system/getWindowInfo.html#getwindowinfo
+const { safeAreaInsets, screenWidth } = uni.getWindowInfo()
 // 获取胶囊信息 https://uniapp.dcloud.net.cn/api/ui/menuButton.html#getmenubuttonboundingclientrect
-const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+let menuButtonInfo = { top: 0, right: 0, height: 32, width: 0 }
+//#ifdef MP-WEIXIN
+menuButtonInfo = uni.getMenuButtonBoundingClientRect()
+//#endif
 
-const pT = menuButtonInfo && menuButtonInfo.top ? menuButtonInfo.top : safeAreaInsets?.top
-const rightSpace = menuButtonInfo && menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
+const pT = menuButtonInfo.top || safeAreaInsets?.top
+const rightSpace = menuButtonInfo.right ? screenWidth - menuButtonInfo.right : 0
 
 const toSearch = (searchKey: string) => {
   uni.redirectTo({
@@ -33,13 +36,13 @@ const getSearchTxt = async () => {
 <template>
   <view class="navbar" :style="{ paddingTop: pT + 'px' }">
     <!-- logo文字 -->
-    <view class="logo" :style="{ height: menuButtonInfo?.height + 'px' }">
+    <view class="logo" :style="{ height: menuButtonInfo.height + 'px' }">
       <image mode="aspectFit" class="logo-img" :src="logo" alt="味值商城"></image>
     </view>
     <!-- 搜索条 -->
-    <view class="search" :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }">
+    <view class="search" :style="{ height: menuButtonInfo.height + 'px', lineHeight: menuButtonInfo.height + 'px' }">
       <span class="iconfont icon-sousuo"></span>
-      <view class="search-txt-wrapper" :style="{ height: menuButtonInfo?.height + 'px' }">
+      <view class="search-txt-wrapper" :style="{ height: menuButtonInfo.height + 'px' }">
         <swiper
           class="search-txt-content"
           :vertical="true"
@@ -51,14 +54,14 @@ const getSearchTxt = async () => {
           <swiper-item class="search-txt-item" v-for="(item, index) in searchTxt" :key="index" @click="toSearch(item)">
             <view
               class="search-txt"
-              :style="{ height: menuButtonInfo?.height + 'px', lineHeight: menuButtonInfo?.height + 'px' }"
+              :style="{ height: menuButtonInfo.height + 'px', lineHeight: menuButtonInfo.height + 'px' }"
               >{{ item }}</view
             >
           </swiper-item>
         </swiper>
       </view>
     </view>
-    <view class="navbar-space" :style="{ width: menuButtonInfo?.width + rightSpace + 'px' }"></view>
+    <view class="navbar-space" :style="{ width: menuButtonInfo.width + rightSpace + 'px' }"></view>
   </view>
 </template>
 
@@ -75,8 +78,6 @@ const getSearchTxt = async () => {
     align-items: center;
     justify-content: center;
     height: 64rpx;
-    font-family: '隶书';
-    color: $uni-color-primary;
     padding: 0 20rpx;
     width: 120rpx;
     .logo-img {
@@ -89,13 +90,13 @@ const getSearchTxt = async () => {
     height: 64rpx;
     line-height: 64rpx;
     box-sizing: border-box;
-    border: solid 1px #409eff;
     border-radius: 100rpx;
     display: flex;
     align-items: center;
     padding: 0 20rpx;
     margin-right: 20rpx;
     color: #999;
+    background: rgba(201, 225, 247, 0.2);
     .search-txt-wrapper {
       flex: 1;
       margin-left: 10rpx;
