@@ -75,10 +75,10 @@ export type GoodsItem<T> = {
   oldPrice?: string
   // 好评率
   commentRate?: string
-  // 价格标签 x天最低价
+  // 价格标签 x天最低价 h=37
   priceTag?: string
   // 付款标签 先享后付
   payTag?: boolean
-  // 排行榜
+  // 排行榜 h=62
   rank?: T
 }

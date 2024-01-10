@@ -1,60 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { getCardListIndexAPI } from '@/api/card'
 import type { GoodsItem, RankItem } from '@/types/api'
-import img_hot_1 from '@/static/images/card/index/1.png'
-import img_hot_2 from '@/static/images/card/index/2.png'
-import img_hot_3 from '@/static/images/card/index/3.png'
-import img_hot_4 from '@/static/images/card/index/4.png'
 
-const goodsList: GoodsItem<RankItem>[] = [
-  {
-    id: '111',
-    name: '香甜爆米花好吃不腻',
-    nameTag: '自营',
-    price: '9.90',
-    comment: '10万+',
-    commentRate: '98%',
-    image_url: img_hot_1,
-    rank: {
-      rank: 1,
-      type: '香甜零食榜',
-      link: '4569',
-    },
-  },
-  {
-    id: '112',
-    name: '美味坚果大礼包',
-    nameTag: '百亿补贴',
-    price: '129.00',
-    priceTag: '28天最低价',
-    comment: '1万+',
-    commentRate: '97%',
-    image_url: img_hot_2,
-  },
-  {
-    id: '113',
-    name: '香脆面就是一个脆',
-    price: '12.23',
-    oldPrice: '15.00',
-    comment: '200+',
-    payTag: true,
-    image_url: img_hot_3,
-  },
-  {
-    id: '114',
-    name: '猪肉脯越吃越想吃',
-    price: '36.00',
-    priceTag: '30天最低价',
-    comment: '1万+',
-    commentRate: '96%',
-    image_url: img_hot_4,
-    rank: {
-      rank: 10,
-      type: '开袋即食肉类零食榜',
-      link: '4568',
-    },
-  },
-]
+// 分类
+const cardList = ref<GoodsItem<RankItem>[]>([])
+const getCardList = async () => {
+  const res = await getCardListIndexAPI({
+    pageNum: 1,
+    pageSize: 10,
+  })
+  cardList.value = res.result
+  initList(cardList.value)
+}
+
 // 左侧商品列表
 let goodsLeftList = ref<GoodsItem<RankItem>[]>([])
 // 右侧商品列表
@@ -65,17 +24,35 @@ const initList = (list: GoodsItem<RankItem>[]) => {
   let goodsRightH = 1
   for (let index = 0; index < list.length; index++) {
     const element = list[index]
-    if (index % 2 === 0) {
+    // 右边高下一个商品插入左边
+    console.log(index, goodsLeftH, goodsRightH)
+
+    if (goodsLeftH <= goodsRightH) {
       goodsLeftList.value.push(element)
+      goodsLeftH += addH(element)
     } else {
       goodsRightList.value.push(element)
+      goodsRightH += addH(element)
     }
   }
 }
+// 计算单个卡片高度
+const addH = (data: GoodsItem<RankItem>) => {
+  // 基础高度 图片+名称+价格+评论+间距
+  const { screenWidth } = uni.getWindowInfo()
+  // screenWidth 单位px，其他rpx，但是不影响，因为都是共有高度
+  const imgH = screenWidth / 2 - 30
+  let h = imgH + 46 + 57 + 32
+  // 低价高度
+  if (data.priceTag) h += 37
+  // 排行高度
+  if (data.rank) h += 62
+  return h
+}
 
-// const addH = (data: CardItem) => {}
-
-initList(goodsList)
+onMounted(() => {
+  getCardList()
+})
 </script>
 
 <template>
