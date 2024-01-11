@@ -35,8 +35,8 @@ defineProps<{
           <view class="goods-video-name">{{ goods.name }}</view>
           <view class="goods-price">
             <span class="goods-price-unit">¥</span>
-            <span class="goods-price-main">{{ goods?.price ? goods?.price.split('.')[0] : '' }}</span>
-            <span class="goods-price-other">.{{ goods?.price ? goods?.price.split('.')[1] : '' }}</span>
+            <span class="goods-price-main">{{ goods?.price ? String(goods?.price).split('.')[0] : '' }}</span>
+            <span class="goods-price-other">.{{ goods?.price ? String(goods?.price).split('.')[1] : '' }}</span>
           </view>
         </view>
       </view>
@@ -54,8 +54,8 @@ defineProps<{
         </view>
         <view class="goods-price">
           <span class="goods-price-unit">¥</span>
-          <span class="goods-price-main">{{ goods?.price ? goods?.price.split('.')[0] : '' }}</span>
-          <span class="goods-price-other">.{{ goods?.price ? goods?.price.split('.')[1] : '' }}</span>
+          <span class="goods-price-main">{{ goods?.price ? String(goods?.price).split('.')[0] : '' }}</span>
+          <span class="goods-price-other">.{{ goods?.price ? String(goods?.price).split('.')[1] : '' }}</span>
           <span v-if="goods.oldPrice" class="goods-price-desc"> 到手价 </span>
           <span v-if="goods.oldPrice" class="goods-price-old">¥{{ goods.oldPrice }}</span>
         </view>

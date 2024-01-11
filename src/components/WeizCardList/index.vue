@@ -3,25 +3,33 @@ import { ref, onMounted } from 'vue'
 import { getCardListIndexAPI } from '@/api/card'
 import type { GoodsItem, RankItem } from '@/types/api'
 
-// 分类
+// 加载状态
+let loading = ref(false)
+// 获取数据
 const cardList = ref<GoodsItem<RankItem>[]>([])
-const getCardList = async () => {
-  const res = await getCardListIndexAPI({
-    pageNum: 1,
-    pageSize: 10,
-  })
-  cardList.value = res.result
-  initList(cardList.value)
-}
-
 // 左侧商品列表
 let goodsLeftList = ref<GoodsItem<RankItem>[]>([])
 // 右侧商品列表
 let goodsRightList = ref<GoodsItem<RankItem>[]>([])
+// 高度计算
+let goodsLeftH = 0
+let goodsRightH = 0
+// 参数
+let pageSize = 10
+let pageNum = 1
+const getCardList = async () => {
+  loading.value = true
+  const res = await getCardListIndexAPI({
+    pageNum,
+    pageSize,
+  })
+  pageNum++
+  loading.value = false
+  cardList.value = res.result
+  initList(cardList.value)
+}
 
 const initList = (list: GoodsItem<RankItem>[]) => {
-  let goodsLeftH = 0
-  let goodsRightH = 0
   for (let index = 0; index < list.length; index++) {
     const element = list[index]
     // 右边高下一个商品插入左边
@@ -58,6 +66,23 @@ const addH = (data: GoodsItem<RankItem>) => {
 onMounted(() => {
   getCardList()
 })
+
+const resetData = () => {
+  pageSize = 10
+  pageNum = 1
+  cardList.value = []
+  goodsLeftList.value = []
+  goodsRightList.value = []
+  goodsLeftH = 0
+  goodsRightH = 0
+  // 重新获取数据
+  getCardList()
+}
+// 暴露方法
+defineExpose({
+  resetData,
+  loadData: getCardList,
+})
 </script>
 
 <template>
@@ -73,6 +98,7 @@ onMounted(() => {
       </view>
     </view>
   </view>
+  <view v-if="loading" class="loading-text">'正在加载...'</view>
 </template>
 
 <style lang="scss">
@@ -89,5 +115,12 @@ onMounted(() => {
   .card-list-item {
     margin-bottom: $uni-margin-frame;
   }
+}
+// 加载提示文字
+.loading-text {
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  padding: 20rpx 0;
 }
 </style>

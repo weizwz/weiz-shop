@@ -13,3 +13,6 @@ declare module 'vue' {
     WeizHotPanel: typeof WeizHotPanel
   }
 }
+
+// 组件实例类型
+export type CardListInstance = InstanceType<typeof WeizCardList>

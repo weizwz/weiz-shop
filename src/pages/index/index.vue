@@ -6,6 +6,7 @@ import CustomNavbar from './components/CustomNavbar.vue'
 import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
 import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
+import type { CardListInstance } from '@/types/components'
 
 // 轮播图 或者 ref([] as BannerItem[])
 const bannerList = ref<BannerItem[]>([])
@@ -26,19 +27,28 @@ const getHotList = async () => {
   hotList.value = res.result
 }
 
-onLoad(() => {
+// 初始化数据
+const init = () => {
   getBannerList()
   getCategoryList()
   getHotList()
+}
+
+onLoad(() => {
+  init()
 })
+
+// 组件实例
+const cardList = ref<CardListInstance>()
 
 // 下拉刷新
 const onRefresherrefresh = () => {
-  console.log('下拉刷新了')
+  init()
+  cardList.value?.resetData()
 }
 // 滚动触底刷新
 const onScrolltolower = () => {
-  console.log('滚动到底了')
+  cardList.value?.loadData()
 }
 </script>
 
@@ -55,7 +65,7 @@ const onScrolltolower = () => {
       <WeizCarousel :list="bannerList" :dotBottom="24" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
-      <WeizCardList />
+      <WeizCardList ref="cardList" />
     </scroll-view>
   </view>
 </template>

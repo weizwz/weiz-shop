@@ -58,7 +58,7 @@ export type GoodsItem<T> = {
   // 商品名称
   name?: string
   // 价格
-  price?: string
+  price?: number
   // 评论数量
   comment?: string
   // 图片路径
