@@ -43,7 +43,7 @@ watch(
             :vertical="true"
             :circular="true"
             :autoplay="true"
-            :interval="5000"
+            :interval="3000"
             :duration="600"
           >
             <swiper-item class="img-swiper-item" v-for="(imgArr, index) in swiperArr" :key="index">

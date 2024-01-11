@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getSearchTxtAPI } from '@/api/search'
-import logo from '@/static/logo.png'
 import { onMounted, ref } from 'vue'
 import { navData } from '@/utils/navData'
 
@@ -30,7 +29,7 @@ const getSearchTxt = async () => {
   <view class="navbar" :style="{ paddingTop: navBarData.top + 'px', height: navBarData.height + 'px' }">
     <!-- logo文字 -->
     <view class="logo" :style="{ height: navBarData.height + 'px' }">
-      <image mode="aspectFit" class="logo-img" :src="logo" alt="味值商城"></image>
+      <image mode="aspectFit" class="logo-img" src="@/static/logo.png" alt="味值商城"></image>
     </view>
     <!-- 搜索条 -->
     <view class="search" :style="{ height: navBarData.height + 'px', lineHeight: navBarData.height + 'px' }">

@@ -3,35 +3,21 @@ import { ref } from 'vue'
 // 生命周期 https://uniapp.dcloud.net.cn/tutorial/page.html#onload
 import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
-import { navData } from '@/utils/navData'
 import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
 import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
-import type { stringKey } from '@/types/global'
-
-import img_index_1 from '@/static/images/banner/index/1.png'
-import img_index_2 from '@/static/images/banner/index/2.png'
-import img_index_3 from '@/static/images/banner/index/3.png'
-
-const imgs: stringKey = {
-  img_index_1,
-  img_index_2,
-  img_index_3,
-}
-// 导航
-const navBarData = navData()
 
 // 轮播图 或者 ref([] as BannerItem[])
 const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
   const { result } = res
-  // 处理后台数据&&导入本地图片&&使用动态变量
+  // 处理后台数据
   result.map((item) => {
     bannerList.value.push({
       id: item.id,
       url: item.url,
-      imgUrl: imgs['img_' + item.imgUrl],
+      imgUrl: `@/static/images/banner/index/${item.imgUrl}.png`,
     })
   })
 }

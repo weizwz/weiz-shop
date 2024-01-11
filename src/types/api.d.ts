@@ -50,14 +50,6 @@ export type HotPcitureItem = {
 /**
  * 单个商品
  */
-export type RankItem = {
-  // 排名
-  rank: number
-  // 排名分类
-  type: string
-  // 排名链接
-  link: string
-}
 export type GoodsItem<T> = {
   // 商品id
   id: string
@@ -81,4 +73,13 @@ export type GoodsItem<T> = {
   payTag?: boolean
   // 排行榜 h=62
   rank?: T
+}
+// 商品排行数据
+export type RankItem = {
+  // 排名
+  rank: number
+  // 排名分类
+  type: string
+  // 排名链接
+  link: string
 }
