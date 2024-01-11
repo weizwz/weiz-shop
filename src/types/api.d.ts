@@ -51,16 +51,24 @@ export type HotPcitureItem = {
  * 单个商品
  */
 export type GoodsItem<T> = {
-  // 商品id
+  // id
   id: string
+  // 类型 video,normal,swiper
+  type: string
   // 商品名称
-  name: string
+  name?: string
   // 价格
-  price: string
+  price?: string
   // 评论数量
-  comment: string
+  comment?: string
   // 图片路径
-  image_url: string
+  image_url: string | string[]
+  // 视频标题
+  videoName?: string
+  // 视频源
+  video_url?: string
+  // 图片宽高比
+  image_ratio: number
   // 名称标签： 自营/百亿补贴/隔日送
   nameTag?: string
   // 旧价格
