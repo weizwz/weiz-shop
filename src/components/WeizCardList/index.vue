@@ -21,7 +21,7 @@ let goodsRightList = ref<GoodsItem<RankItem>[]>([])
 
 const initList = (list: GoodsItem<RankItem>[]) => {
   let goodsLeftH = 0
-  let goodsRightH = 1
+  let goodsRightH = 0
   for (let index = 0; index < list.length; index++) {
     const element = list[index]
     // 右边高下一个商品插入左边
@@ -37,9 +37,8 @@ const initList = (list: GoodsItem<RankItem>[]) => {
 // 计算单个卡片高度
 const addH = (data: GoodsItem<RankItem>) => {
   // 基础高度 图片+名称+价格+评论+间距
-  const { screenWidth } = uni.getWindowInfo()
-  // screenWidth 单位px，其他rpx，但是不影响，因为都是共有高度
-  const imgH = screenWidth / 2 - 30
+  // 750rpx = screenWidth  imgH = screenWidth/2 - $uni-margin-frame * 3 / 2
+  const imgH = 750 / 2 - 30
   let h = imgH + 46 + 57 + 32
   // 低价高度
   if (data.priceTag) h += 37
@@ -73,12 +72,11 @@ onMounted(() => {
   width: calc(100% - $uni-margin-frame * 2);
   margin: $uni-margin-frame $uni-margin-frame 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   .card-list-wrapper {
     width: calc(50% - $uni-margin-frame/2);
-  }
-  .card-list-left {
-    margin-right: $uni-margin-frame;
+    display: flex;
+    flex-direction: column;
   }
   .card-list-item {
     margin-bottom: $uni-margin-frame;

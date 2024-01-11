@@ -55,7 +55,7 @@ const onScrolltolower = () => {
       <WeizCarousel :list="bannerList" :dotBottom="24" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
-      <WeizCardList />·
+      <WeizCardList />
     </scroll-view>
   </view>
 </template>

@@ -55,7 +55,7 @@ defineProps<{
   background: #fff;
   overflow: hidden;
   > image {
-    width: calc(50vw - $uni-margin-frame * 3 / 2);
+    width: 100%;
     height: calc(50vw - $uni-margin-frame * 3 / 2);
   }
   .goods-info {
@@ -152,7 +152,6 @@ defineProps<{
         font-weight: 500;
         margin-right: 10rpx;
         border-radius: 6rpx;
-        letter-spacing: 2rpx;
       }
       .goods-comment {
         margin-right: 10rpx;

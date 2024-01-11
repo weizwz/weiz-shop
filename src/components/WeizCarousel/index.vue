@@ -55,7 +55,7 @@ defineProps<{
       height: 8rpx;
       margin: 0 8rpx;
       border-radius: 8rpx;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(255, 255, 255, 0.5);
     }
     .active {
       background-color: #409eff;
