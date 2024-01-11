@@ -11,15 +11,7 @@ import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/t
 const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
-  const { result } = res
-  // 处理后台数据
-  result.map((item) => {
-    bannerList.value.push({
-      id: item.id,
-      url: item.url,
-      imgUrl: `@/static/images/banner/index/${item.imgUrl}.png`,
-    })
-  })
+  bannerList.value = res.result
 }
 // 分类
 const categoryList = ref<CategoryItem[]>([])
