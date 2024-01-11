@@ -13,31 +13,10 @@ import img_index_1 from '@/static/images/banner/index/1.png'
 import img_index_2 from '@/static/images/banner/index/2.png'
 import img_index_3 from '@/static/images/banner/index/3.png'
 
-import img_hot_1 from '@/static/images/card/category/1.png'
-import img_hot_2 from '@/static/images/card/category/2.png'
-import img_hot_3 from '@/static/images/card/category/3.png'
-import img_hot_4 from '@/static/images/card/category/4.png'
-import img_hot_5 from '@/static/images/card/category/5.png'
-import img_hot_6 from '@/static/images/card/category/6.png'
-import img_hot_7 from '@/static/images/card/category/7.png'
-import img_hot_8 from '@/static/images/card/category/8.png'
-import img_hot_9 from '@/static/images/card/category/9.png'
-import img_hot_10 from '@/static/images/card/category/10.png'
-
 const imgs: stringKey = {
   img_index_1,
   img_index_2,
   img_index_3,
-  img_hot_1,
-  img_hot_2,
-  img_hot_3,
-  img_hot_4,
-  img_hot_5,
-  img_hot_6,
-  img_hot_7,
-  img_hot_8,
-  img_hot_9,
-  img_hot_10,
 }
 // 导航
 const navBarData = navData()
@@ -47,7 +26,7 @@ const bannerList = ref<BannerItem[]>([])
 const getBannerList = async () => {
   const res = await getBannerAPI('index')
   const { result } = res
-
+  // 处理后台数据&&导入本地图片&&使用动态变量
   result.map((item) => {
     bannerList.value.push({
       id: item.id,
@@ -66,26 +45,7 @@ const getCategoryList = async () => {
 const hotList = ref<HotPanelItem<HotPcitureItem>[]>([])
 const getHotList = async () => {
   const res = await getHotIndexAPI()
-  const newHotList: HotPanelItem<HotPcitureItem>[] = []
-  const { result } = res
-  result.map((item) => {
-    const pictureData: HotPcitureItem[] = item.picture
-    let picture: HotPcitureItem[] = []
-    pictureData.map((temp) => {
-      picture.push({
-        ...temp,
-        src: imgs['img_hot_' + temp.src],
-      })
-    })
-    newHotList.push({
-      id: item.id,
-      type: item.type,
-      title: item.title,
-      desc: item.desc,
-      picture: picture,
-    })
-  })
-  hotList.value = newHotList
+  hotList.value = res.result
 }
 
 onLoad(() => {
@@ -114,10 +74,10 @@ const onScrolltolower = () => {
       class="scroll-view"
       :scroll-y="true"
     >
-      <WeizCarousel :list="bannerList" :dotBottom="64" />
+      <WeizCarousel :list="bannerList" :dotBottom="24" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
-      <WeizCardList />
+      <WeizCardList />·
     </scroll-view>
   </view>
 </template>
