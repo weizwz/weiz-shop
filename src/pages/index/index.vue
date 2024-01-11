@@ -105,33 +105,36 @@ const onScrolltolower = () => {
 </script>
 
 <template>
-  <CustomNavbar />
-  <view :style="{ height: navBarData.top + navBarData.height + navBarData.marginBottom + 'px' }"></view>
-  <scroll-view
-    refresher-enabled
-    @refresherrefresh="onRefresherrefresh"
-    @scrolltolower="onScrolltolower"
-    class="scroll-view"
-    scroll-y
-  >
-    <WeizCarousel :list="bannerList" :dotBottom="64" />
-    <view class="content">
+  <view class="index">
+    <CustomNavbar />
+    <scroll-view
+      refresher-enabled
+      @refresherrefresh="onRefresherrefresh"
+      @scrolltolower="onScrolltolower"
+      class="scroll-view"
+      :scroll-y="true"
+    >
+      <WeizCarousel :list="bannerList" :dotBottom="64" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
       <WeizCardList />
-    </view>
-  </scroll-view>
+    </scroll-view>
+  </view>
 </template>
 
 <style lang="scss">
 page {
   background: #f7f7f7;
+  height: 100%;
+  overflow: hidden;
 }
-.content {
-  position: relative;
-  z-index: 2;
-  border-radius: 48rpx 48rpx 0 0;
-  background: #f7f7f7;
-  margin-top: -48rpx;
+.index {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.scroll-view {
+  flex: 1;
+  overflow: hidden;
 }
 </style>

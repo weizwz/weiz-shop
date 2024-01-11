@@ -62,10 +62,7 @@ const getSearchTxt = async () => {
 /* 自定义导航条 */
 .navbar {
   padding: 20px 0 10px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: relative;
   height: 64rpx;
   display: flex;
   align-items: center;

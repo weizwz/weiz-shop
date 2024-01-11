@@ -25,8 +25,6 @@ const initList = (list: GoodsItem<RankItem>[]) => {
   for (let index = 0; index < list.length; index++) {
     const element = list[index]
     // 右边高下一个商品插入左边
-    console.log(index, goodsLeftH, goodsRightH)
-
     if (goodsLeftH <= goodsRightH) {
       goodsLeftList.value.push(element)
       goodsLeftH += addH(element)

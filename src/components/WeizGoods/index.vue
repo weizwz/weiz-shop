@@ -142,7 +142,7 @@ defineProps<{
       align-items: center;
       white-space: nowrap;
       font-size: 24rpx;
-      font-weight: 300;
+      font-weight: 400;
       color: $uni-text-color-grey;
       .goods-pay-tag {
         font-size: 24rpx;
