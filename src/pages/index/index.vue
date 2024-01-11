@@ -7,6 +7,7 @@ import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
 import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
 import type { CardListInstance } from '@/types/components'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 // 轮播图 或者 ref([] as BannerItem[])
 const bannerList = ref<BannerItem[]>([])
@@ -27,15 +28,12 @@ const getHotList = async () => {
   hotList.value = res.result
 }
 
-// 初始化数据
-const init = () => {
-  getBannerList()
-  getCategoryList()
-  getHotList()
-}
-
-onLoad(() => {
-  init()
+// 加载
+const pageLoading = ref(false)
+onLoad(async () => {
+  pageLoading.value = true
+  await Promise.all([getBannerList(), getCategoryList(), getHotList()])
+  pageLoading.value = false
 })
 
 // 组件实例
@@ -69,6 +67,7 @@ const onScrolltolower = () => {
       class="scroll-view"
       :scroll-y="true"
     >
+      <PageSkeleton v-if="pageLoading" />
       <WeizCarousel :list="bannerList" :dotBottom="24" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
