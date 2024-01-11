@@ -36,7 +36,7 @@ const initList = (list: GoodsItem<RankItem>[]) => {
 }
 // 计算单个卡片高度  图片高度计算 750rpx = screenWidth  imgH = screenWidth/2 - $uni-margin-frame * 3 / 2
 const addH = (data: GoodsItem<RankItem>) => {
-  const imgW = 705 / 2 - 30
+  const imgW = 750 / 2 - 30
   const imgH = data.image_ratio * imgW
   let h = 0
   if (data.type === 'swiper') {
