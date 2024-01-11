@@ -34,16 +34,24 @@ const initList = (list: GoodsItem<RankItem>[]) => {
     }
   }
 }
-// 计算单个卡片高度
+// 计算单个卡片高度  图片高度计算 750rpx = screenWidth  imgH = screenWidth/2 - $uni-margin-frame * 3 / 2
 const addH = (data: GoodsItem<RankItem>) => {
-  // 基础高度 图片+名称+价格+评论+间距
-  // 750rpx = screenWidth  imgH = screenWidth/2 - $uni-margin-frame * 3 / 2
-  const imgH = 750 / 2 - 30
-  let h = imgH + 46 + 57 + 32
-  // 低价高度
-  if (data.priceTag) h += 37
-  // 排行高度
-  if (data.rank) h += 62
+  const imgW = 705 / 2 - 30
+  const imgH = data.image_ratio * imgW
+  let h = 0
+  if (data.type === 'swiper') {
+    h = imgH
+  } else if (data.type === 'video') {
+    // 视频模式 信息框高
+    h = imgH + 140
+  } else {
+    // 普通模式 名称+价格+评论
+    h = imgH + 46 + 57 + 32
+    // 低价高度
+    if (data.priceTag) h += 37
+    // 排行高度
+    if (data.rank) h += 62
+  }
   return h
 }
 
