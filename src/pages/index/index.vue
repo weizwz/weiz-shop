@@ -41,10 +41,16 @@ onLoad(() => {
 // 组件实例
 const cardList = ref<CardListInstance>()
 
+// 下拉刷新动画
+const refreshering = ref(false)
 // 下拉刷新
-const onRefresherrefresh = () => {
-  init()
+const onRefresherrefresh = async () => {
+  // 开始动画
+  refreshering.value = true
   cardList.value?.resetData()
+  await Promise.all([getBannerList(), getCategoryList(), getHotList(), cardList.value?.loadData()])
+  // 结束动画
+  refreshering.value = false
 }
 // 滚动触底刷新
 const onScrolltolower = () => {
@@ -59,6 +65,7 @@ const onScrolltolower = () => {
       refresher-enabled
       @refresherrefresh="onRefresherrefresh"
       @scrolltolower="onScrolltolower"
+      :refresher-triggered="refreshering"
       class="scroll-view"
       :scroll-y="true"
     >
