@@ -75,8 +75,6 @@ const resetData = () => {
   goodsRightList.value = []
   goodsLeftH = 0
   goodsRightH = 0
-  // 重新获取数据
-  getCardList()
 }
 // 暴露方法
 defineExpose({
