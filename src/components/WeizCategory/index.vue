@@ -25,7 +25,8 @@ defineProps<{
   border-radius: $uni-margin-frame;
   min-height: 160rpx;
   background: #fff;
-  .category-item {
+  .category-item,
+  > a {
     width: 20%;
     display: flex;
     justify-content: center;
@@ -42,4 +43,15 @@ defineProps<{
     }
   }
 }
+// https://uniapp.dcloud.net.cn/component/navigator.html#navigator
+//#ifdef  APP-PLUS
+.category a .category-item {
+  width: 100%;
+}
+//#endif
+//#ifdef H5
+.category a .category-item {
+  width: 100%;
+}
+//#endif
 </style>
