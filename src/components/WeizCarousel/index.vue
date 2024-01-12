@@ -9,11 +9,16 @@ const onChange: UniHelper.SwiperOnChange = (ev) => {
   // ! 非空断言，主观上排除掉空值情况
   activeIndex.value = ev.detail.current
 }
-// 定义 props 接收
-defineProps<{
-  list: BannerItem[]
-  dotBottom?: Number
-}>()
+// 定义 props 接收 withDefaults设置默认值
+withDefaults(
+  defineProps<{
+    list: BannerItem[]
+    dotBottom?: number
+  }>(),
+  {
+    dotBottom: 12,
+  },
+)
 </script>
 
 <template>

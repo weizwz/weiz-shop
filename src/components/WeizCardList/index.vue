@@ -102,6 +102,7 @@ defineExpose({
 <style lang="scss">
 .card-list {
   width: calc(100% - $uni-margin-frame * 2);
+  min-height: 400rpx;
   margin: $uni-margin-frame $uni-margin-frame 0;
   display: flex;
   justify-content: space-between;

@@ -64,6 +64,7 @@ watch(
   display: flex;
   flex-wrap: wrap;
   margin: $uni-margin-frame $uni-margin-frame 0;
+  min-height: 400rpx;
   border-radius: $uni-margin-frame;
   background-color: #fff;
 
