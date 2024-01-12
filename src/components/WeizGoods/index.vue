@@ -46,7 +46,9 @@ defineProps<{
       <view class="goods-info">
         <view class="goods-name">
           <view v-if="goods.nameTag" class="goods-name-tag">{{ goods.nameTag }}</view>
-          <view class="goods-name-title">{{ goods.name }}</view>
+          <view class="goods-name-title-wrapper">
+            <view class="goods-name-title">{{ goods.name }}</view>
+          </view>
         </view>
         <view v-if="goods.priceTag" class="goods-price-tag">
           <view class="goods-price-tag-icon"><span class="iconfont icon-wodefapiao"></span></view>
@@ -98,6 +100,8 @@ defineProps<{
   }
   .goods-video {
     width: 100%;
+    display: flex;
+    flex-direction: column;
     .goods-video-image {
       border-radius: $uni-margin-frame;
       overflow: hidden;
@@ -154,13 +158,14 @@ defineProps<{
   }
   .goods-normal {
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .goods-price {
-    height: 52rpx;
-    line-height: 52rpx;
-    margin-top: 5rpx;
+    height: 56rpx;
+    line-height: 56rpx;
     color: $uni-text-color-price;
-    font-size: 38rpx;
+    font-size: 42rpx;
     font-weight: 600;
     .goods-price-unit {
       font-size: 24rpx;
@@ -178,13 +183,17 @@ defineProps<{
     }
   }
   .goods-info {
-    padding: 0 $uni-margin-frame $uni-margin-frame;
+    padding: 0 $uni-margin-frame;
+    display: flex;
+    flex-direction: column;
     .goods-name {
-      height: 46rpx;
+      height: 60rpx;
+      line-height: 60rpx;
       overflow: hidden;
       font-size: 28rpx;
       font-weight: 600;
       display: flex;
+      align-items: center;
       .goods-name-tag {
         white-space: nowrap;
         font-size: 20rpx;
@@ -195,23 +204,24 @@ defineProps<{
         color: #fff;
         height: 24rpx;
         line-height: 24rpx;
-        margin-top: 8rpx;
       }
-      .goods-name-title {
-        line-height: 46rpx;
+      .goods-name-title-wrapper {
         flex: 1;
-        word-break: break-all;
-        overflow: hidden;
         margin-left: 5rpx;
+        height: 100%;
+        word-break: break-all;
+        .goods-name-title {
+          overflow: hidden;
+        }
       }
     }
     .goods-price-tag {
       display: flex;
       width: fit-content;
       align-items: center;
-      height: 32rpx;
-      line-height: 32rpx;
-      margin-top: 5rpx;
+      height: 36rpx;
+      line-height: 36rpx;
+      margin-bottom: 10rpx;
       padding-right: 10rpx;
       font-size: 22rpx;
       background: #fef6ee;
@@ -232,9 +242,9 @@ defineProps<{
       }
     }
     .goods-comment-wrapper {
-      height: 32rpx;
-      line-height: 32rpx;
-      padding: 5rpx 0;
+      height: 36rpx;
+      line-height: 36rpx;
+      margin-bottom: 10rpx;
       display: flex;
       align-items: center;
       white-space: nowrap;
@@ -255,9 +265,9 @@ defineProps<{
       }
     }
     .goods-rank {
-      height: 52rpx;
-      line-height: 52rpx;
-      margin-top: 10rpx;
+      height: 50rpx;
+      line-height: 50rpx;
+      margin-bottom: 20rpx;
       border-radius: 12rpx;
       overflow: hidden;
       .goods-rank-wrapper {

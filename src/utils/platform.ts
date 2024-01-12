@@ -112,3 +112,21 @@ export const isProduction = import.meta.env.NODE_ENV == 'production'
 export const isMpDouyinApp = uni.getSystemInfoSync().appName == 'Douyin'
 /**头条小程序*/
 export const isMpToutiaoApp = uni.getSystemInfoSync().appName == 'Toutiao'
+
+/**
+ * 单位转换
+ */
+
+// rpx 转换为 px ，传参类型是数字（Number）
+export function rpxToPx(rpx: number) {
+  // 获取设备屏幕宽度
+  const deviceWidth = wx.getSystemInfoSync().windowWidth
+  const px = (deviceWidth / 750) * Number(rpx)
+  return px
+}
+// px 转换为 rpx ，传参类型是数字（Number）
+export function pxToRpx(px: number) {
+  const deviceWidth = wx.getSystemInfoSync().windowWidth
+  const rpx = (750 / deviceWidth) * Number(px)
+  return rpx
+}

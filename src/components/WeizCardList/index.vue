@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { getCardListIndexAPI } from '@/api/card'
 import type { GoodsItem, RankItem } from '@/types/api'
+// import { rpxToPx } from '@/utils/platform'
 
 // 加载状态
 let loading = ref(false)
@@ -29,17 +30,25 @@ const getCardList = async () => {
   initList(cardList.value)
 }
 
+// 分配瀑布列表
 const initList = (list: GoodsItem<RankItem>[]) => {
   for (let index = 0; index < list.length; index++) {
     const element = list[index]
+    const currentH = addH(element)
     // 右边高下一个商品插入左边
     if (goodsLeftH <= goodsRightH) {
       goodsLeftList.value.push(element)
-      goodsLeftH += addH(element)
+      goodsLeftH += currentH
     } else {
       goodsRightList.value.push(element)
-      goodsRightH += addH(element)
+      goodsRightH += currentH
     }
+    // 高度校验
+    // console.log(
+    //   `序列：${index + 1}，名称：${element.name}，当前卡片高度：${rpxToPx(currentH - 20)}，图片高度：${rpxToPx(
+    //     (750 / 2 - 30) * element.image_ratio,
+    //   )}`,
+    // )
   }
 }
 // 计算单个卡片高度  图片高度计算 750rpx = screenWidth  imgH = screenWidth/2 - $uni-margin-frame * 3 / 2
@@ -54,12 +63,14 @@ const addH = (data: GoodsItem<RankItem>) => {
     h = imgH + 140
   } else {
     // 普通模式 名称+价格+评论
-    h = imgH + 46 + 57 + 32
+    h = imgH + 60 + 56 + 46
     // 低价高度
-    if (data.priceTag) h += 37
+    if (data.priceTag) h += 46
     // 排行高度
-    if (data.rank) h += 62
+    if (data.rank) h += 70
   }
+  // 距离底部高度
+  h += 20
   return h
 }
 
@@ -90,13 +101,13 @@ defineExpose({
         <WeizGoods :goods="item" />
       </view>
     </view>
-    <view class="goodsRightList card-list-wrapper">
+    <view class="card-list-right card-list-wrapper">
       <view class="card-list-item" v-for="(item, index) in goodsRightList" :key="index">
         <WeizGoods :goods="item" />
       </view>
     </view>
   </view>
-  <view v-if="loading" class="loading-text">'正在加载...'</view>
+  <view v-if="loading" class="loading-text">正在加载...</view>
 </template>
 
 <style lang="scss">
