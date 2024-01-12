@@ -66,7 +66,6 @@ const getSearchTxt = async () => {
   display: flex;
   align-items: center;
   z-index: 1;
-  background: #fff;
   .logo {
     display: flex;
     align-items: center;
@@ -89,8 +88,8 @@ const getSearchTxt = async () => {
     align-items: center;
     padding: 0 20rpx;
     margin-right: 20rpx;
-    color: #999;
-    background: rgba(201, 225, 247, 0.2);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.3);
     .search-txt-wrapper {
       flex: 1;
       margin-left: 10rpx;

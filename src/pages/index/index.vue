@@ -68,7 +68,7 @@ const onScrolltolower = () => {
       :scroll-y="true"
     >
       <PageSkeleton v-if="pageLoading" />
-      <WeizCarousel :list="bannerList" :dotBottom="24" />
+      <WeizCarousel :list="bannerList" />
       <WeizCategory :list="categoryList" />
       <WeizHotPanel :list="hotList" />
       <WeizCardList ref="cardList" />
@@ -79,6 +79,7 @@ const onScrolltolower = () => {
 <style lang="scss">
 page {
   background: #f7f7f7;
+  background: linear-gradient(to bottom, #18c7ff, #f7f7f7 60%);
   height: 100%;
   overflow: hidden;
 }

@@ -12,7 +12,7 @@ const onChange: UniHelper.SwiperOnChange = (ev) => {
 // 定义 props 接收
 defineProps<{
   list: BannerItem[]
-  dotBottom: Number
+  dotBottom?: Number
 }>()
 </script>
 
@@ -35,19 +35,21 @@ defineProps<{
 <style lang="scss">
 /* 轮播图 */
 .carousel {
-  height: 360rpx;
+  height: 280rpx;
+  margin: 0 $uni-margin-frame;
+  border-radius: $uni-margin-frame;
   position: relative;
   overflow: hidden;
   transform: translateY(0);
   background-color: #efefef;
   .swiper {
-    height: 360rpx;
+    height: 280rpx;
   }
   .indicator {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 36rpx;
+    bottom: 12rpx;
     display: flex;
     justify-content: center;
     .dot {
@@ -58,7 +60,7 @@ defineProps<{
       background-color: rgba(255, 255, 255, 0.5);
     }
     .active {
-      background-color: #409eff;
+      background-color: $uni-color-primary;
     }
   }
   .navigator,

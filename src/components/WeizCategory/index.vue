@@ -21,11 +21,12 @@ defineProps<{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  min-height: 328rpx;
-  background: linear-gradient(to bottom, #fff7ef, #fff 80%);
-  border-radius: 42rpx 42rpx 0 0;
+  margin: $uni-margin-frame $uni-margin-frame 0;
+  border-radius: $uni-margin-frame;
+  min-height: 160rpx;
+  background: #fff;
   .category-item {
-    width: 150rpx;
+    width: 20%;
     display: flex;
     justify-content: center;
     flex-direction: column;
