@@ -528,9 +528,8 @@
   border-radius: $uni-margin-frame;
   min-height: 160rpx;
   background: #fff;
-  .category-item,
-  > a {
-    width: 20%;
+  .category-item {
+    width: calc(20vw - $uni-margin-frame / 2);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -545,9 +544,6 @@
       font-size: 24rpx;
     }
   }
-}
-.category a .category-item {
-  width: 100%;
 }
 /* 首页推荐 */
 .hot {

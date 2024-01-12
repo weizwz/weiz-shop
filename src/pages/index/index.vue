@@ -33,7 +33,7 @@ const pageLoading = ref(false)
 onLoad(async () => {
   pageLoading.value = true
   await Promise.all([getBannerList(), getCategoryList(), getHotList()])
-  // pageLoading.value = false
+  pageLoading.value = false
 })
 
 // 组件实例
