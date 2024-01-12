@@ -297,7 +297,7 @@
   </view>
 </template>
 
-<style>
+<style lang="scss">
 .sk-text {
   background-origin: content-box !important;
   background-clip: content-box !important;
@@ -482,4 +482,179 @@
   overflow: hidden;
   background-color: transparent;
 }
+//#ifdef  APP-PLUS || H5
+/* 轮播图 */
+.carousel {
+  height: 280rpx;
+  margin: 0 $uni-margin-frame;
+  border-radius: $uni-margin-frame;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  background-color: #efefef;
+  .swiper {
+    height: 280rpx;
+  }
+  .indicator {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12rpx;
+    display: flex;
+    justify-content: center;
+    .dot {
+      width: 32rpx;
+      height: 8rpx;
+      margin: 0 8rpx;
+      border-radius: 8rpx;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    .active {
+      background-color: $uni-color-primary;
+    }
+  }
+  .navigator,
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+}
+/* 分类 */
+.category {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: $uni-margin-frame $uni-margin-frame 0;
+  border-radius: $uni-margin-frame;
+  min-height: 160rpx;
+  background: #fff;
+  .category-item,
+  > a {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    color: #333;
+    .iconfont {
+      font-size: 48rpx;
+      margin-bottom: 10rpx;
+    }
+    .text {
+      font-size: 24rpx;
+    }
+  }
+}
+.category a .category-item {
+  width: 100%;
+}
+/* 首页推荐 */
+.hot {
+  display: flex;
+  flex-wrap: wrap;
+  margin: $uni-margin-frame $uni-margin-frame 0;
+  min-height: 400rpx;
+  border-radius: $uni-margin-frame;
+  background-color: #fff;
+  .title {
+    display: flex;
+    align-items: center;
+    padding: $uni-margin-frame 24rpx 0;
+    font-size: 32rpx;
+    color: #262626;
+    position: relative;
+    .title-desc {
+      font-size: 24rpx;
+      color: #7f7f7f;
+      margin-left: 18rpx;
+    }
+  }
+  .img-swiper-content {
+    height: 150rpx;
+    .img-swiper-item {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .img-swiper-item-panel {
+        width: 150rpx;
+        height: 150rpx;
+      }
+    }
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    border-right: 1rpx solid #f7f7f7;
+    border-top: 1rpx solid #f7f7f7;
+    box-sizing: border-box;
+    .title {
+      justify-content: start;
+    }
+    &:nth-child(2n) {
+      border-right: 0 none;
+    }
+    &:nth-child(-n + 2) {
+      border-top: 0 none;
+    }
+    .img-swiper {
+      width: 100%;
+      height: 150rpx;
+      overflow: hidden;
+    }
+  }
+  .cards {
+    flex: 1;
+    padding: 15rpx 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.img-content {
+  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+  overflow: hidden;
+  border-radius: 10rpx;
+  .image {
+    width: 100%;
+    height: 100%;
+    border-radius: 10rpx;
+  }
+  .mark-wrapper {
+    position: absolute;
+    bottom: 15rpx;
+    left: 0;
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* 瀑布流 */
+.card-list {
+  width: calc(100% - $uni-margin-frame * 2);
+  min-height: 400rpx;
+  margin: $uni-margin-frame $uni-margin-frame 0;
+  display: flex;
+  justify-content: space-between;
+  .card-list-wrapper {
+    width: calc(50% - $uni-margin-frame/2);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-list-item {
+    margin-bottom: $uni-margin-frame;
+  }
+}
+.sk-image {
+  width: 100%;
+  border-radius: $uni-margin-frame;
+}
+//#endif
 </style>

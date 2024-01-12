@@ -44,12 +44,7 @@ defineProps<{
   }
 }
 // https://uniapp.dcloud.net.cn/component/navigator.html#navigator
-//#ifdef  APP-PLUS
-.category a .category-item {
-  width: 100%;
-}
-//#endif
-//#ifdef H5
+//#ifdef  APP-PLUS || H5
 .category a .category-item {
   width: 100%;
 }
