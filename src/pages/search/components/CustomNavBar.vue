@@ -105,7 +105,7 @@ const clearSearchHandle = () => {}
     height: 100%;
     display: flex;
     align-items: center;
-    just-content: center;
+    justify-content: center;
   }
   .search-wrapper {
     flex: 1;
