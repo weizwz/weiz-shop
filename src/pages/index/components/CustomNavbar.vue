@@ -65,7 +65,7 @@ const getSearchTxt = async () => {
         size="mini"
         type="default"
         class="weiz-btn weiz-btn-search"
-        :style="{ height: navBarData.height - 8 + 'px', lineHeight: navBarData.height - 8 + 'px' }"
+        :style="{ height: navBarData.height - 6 + 'px', lineHeight: navBarData.height - 6 + 'px' }"
       >
         搜索
       </button>

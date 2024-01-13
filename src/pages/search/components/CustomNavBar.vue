@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { navData } from '@/utils/navData'
+import { useSearchStore } from '@/stores'
 
+const searchStore = useSearchStore()
 const navBarData = navData()
 const searchValue = ref<string>('')
 const searchFocus = ref<boolean>(false)
@@ -10,10 +12,11 @@ const props = defineProps<{
   search: stringBoolean
   searchKey: string
 }>()
-
+// 页面初始化
 const init = () => {
   if (props.search === '1') {
     searchValue.value = props.searchKey
+    searchHandle()
   } else {
     searchFocus.value = true
   }
@@ -21,7 +24,7 @@ const init = () => {
 onMounted(() => {
   init()
 })
-
+// 返回上个页面
 const toBack = () => {
   uni.navigateBack({
     delta: 1,
@@ -30,8 +33,11 @@ const toBack = () => {
   })
 }
 const searchHandle = () => {
+  // 保存搜索词
+  searchStore.setSearchInfoKey(searchValue.value)
   console.log('开始搜索')
 }
+// 搜索按钮
 const searchBtnHandle = () => {
   if (searchValue.value === '') {
     searchValue.value = props.searchKey
@@ -39,6 +45,7 @@ const searchBtnHandle = () => {
   searchFocus.value = false
   searchHandle()
 }
+// 清理搜索
 const clearSearchHandle = () => {}
 </script>
 
@@ -46,7 +53,7 @@ const clearSearchHandle = () => {}
   <view class="navbar" :style="{ paddingTop: navBarData.top + 'px', height: navBarData.height + 'px' }">
     <!-- 返回按钮 -->
     <view class="search-back" @tap="toBack">
-      <uni-icons type="left" size="24"></uni-icons>
+      <uni-icons type="left" size="24" color="#fff"></uni-icons>
     </view>
     <!-- 搜索条 -->
     <uni-easyinput
@@ -71,7 +78,7 @@ const clearSearchHandle = () => {}
           size="mini"
           type="default"
           class="weiz-btn weiz-btn-search"
-          :style="{ height: navBarData.height - 8 + 'px', lineHeight: navBarData.height - 8 + 'px' }"
+          :style="{ height: navBarData.height - 6 + 'px', lineHeight: navBarData.height - 6 + 'px' }"
         >
           搜索
         </button>
@@ -90,6 +97,7 @@ const clearSearchHandle = () => {}
   display: flex;
   align-items: center;
   z-index: 1;
+  background: $uni-color-aquamarine;
   .search-back {
     width: 60rpx;
     padding-left: $uni-margin-frame;
