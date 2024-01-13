@@ -1,0 +1,12 @@
+/* 默认按钮 */
+.weiz-btn[type=default] {
+  border-radius: 64rpx;
+  background: $uni-color-aquamarine;
+  color: $uni-text-color-inverse;
+  &.weiz-btn-search {
+    height: 48rpx;
+    line-height: 48rpx;
+    font-size: 24rpx;
+    margin-right: -8rpx;
+  }
+}

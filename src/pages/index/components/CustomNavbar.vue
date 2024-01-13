@@ -2,15 +2,20 @@
 import { getSearchTxtAPI } from '@/api/search'
 import { onMounted, ref } from 'vue'
 import { navData } from '@/utils/navData'
+import { SearchTo } from '@/utils/search'
 
 const navBarData = navData()
+const currentSearchKey = ref<string>('')
 
+const changeSearchKey: UniHelper.SwiperOnChange = (event) => {
+  const currentIdx: number = event.detail.current
+  currentSearchKey.value = searchTxt.value[currentIdx]
+}
 const toSearch = (searchKey: string) => {
-  uni.redirectTo({
-    url: '/pages/search/index?searchKey=' + searchKey,
-    animationType: 'pop-in',
-    animationDuration: 200,
-  })
+  SearchTo(searchKey, false)
+}
+const toSearchAndSearch = () => {
+  SearchTo(currentSearchKey.value, true)
 }
 
 onMounted(() => {
@@ -42,6 +47,7 @@ const getSearchTxt = async () => {
           :autoplay="true"
           :interval="3000"
           :duration="1000"
+          @change="changeSearchKey"
         >
           <swiper-item class="search-txt-item" v-for="(item, index) in searchTxt" :key="index" @click="toSearch(item)">
             <view
@@ -52,6 +58,16 @@ const getSearchTxt = async () => {
           </swiper-item>
         </swiper>
       </view>
+
+      <button
+        @tap="toSearchAndSearch"
+        size="mini"
+        type="default"
+        class="weiz-btn weiz-btn-search"
+        :style="{ height: navBarData.height - 8 + 'px', lineHeight: navBarData.height - 8 + 'px' }"
+      >
+        搜索
+      </button>
     </view>
     <view class="navbar-space" :style="{ width: navBarData.width + navBarData.marginRight + 'px' }"></view>
   </view>
@@ -116,3 +132,4 @@ const getSearchTxt = async () => {
   height: auto !important;
 }
 </style>
+@/utils/search
