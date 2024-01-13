@@ -91,3 +91,21 @@ export type RankItem = {
   // 排名链接
   link: string
 }
+
+/**
+ * 热搜排行榜
+ */
+export type SearchHot = {
+  // id
+  id: string
+  // name
+  name: string
+  // 描述
+  desc: string
+  // 排名
+  rank: number
+  // 热度
+  hot: string
+  // 图片
+  img: string
+}

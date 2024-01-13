@@ -1,3 +1,32 @@
+/* 公共类名 */ 
+.ml20 {
+  margin-left: 20rpx;
+}
+.mr20 {
+  margin-right: 20rpx;
+}
+.mt20 {
+  margin-top: 20rpx;
+}
+.mb20 {
+  margin-bottom: 20rpx;
+}
+
+.flex,
+.flex-wrap,
+.flex-column,
+.flex-align-center {
+  display: flex;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-column {
+  flex-direction: column;
+}
+.flex-align-center {
+  align-items: center;
+}
 /* 默认按钮 */
 .weiz-btn[type=default] {
   border-radius: 64rpx;
