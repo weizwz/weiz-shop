@@ -40,6 +40,7 @@
     {
       "path": "pages/search/index",
       "style": {
+        "navigationStyle": "custom",
         "navigationBarTitleText": "搜索"
       }
     }

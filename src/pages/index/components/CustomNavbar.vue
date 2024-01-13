@@ -27,6 +27,7 @@ const searchTxt = ref<string[]>([])
 const getSearchTxt = async () => {
   const res = await getSearchTxtAPI()
   searchTxt.value = res.result
+  currentSearchKey.value = searchTxt.value[0]
 }
 </script>
 
@@ -114,9 +115,10 @@ const getSearchTxt = async () => {
       .search-txt-content {
         .search-txt {
           width: 100%;
-          font-size: 12px;
           height: 64rpx;
           line-height: 64rpx;
+          font-size: 28rpx;
+          font-weight: 400;
         }
       }
     }

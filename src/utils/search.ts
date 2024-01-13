@@ -6,7 +6,7 @@
 export const SearchTo = (searchKey: string, search: boolean = false) => {
   uni.navigateTo({
     url: `/pages/search/index?search=${search ? '1' : '0'}&searchKey=${searchKey}`,
-    animationType: 'pop-in',
-    animationDuration: 200,
+    animationType: 'slide-in-right',
+    animationDuration: 1000,
   })
 }

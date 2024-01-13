@@ -16,3 +16,11 @@ declare module 'vue' {
 
 // 组件实例类型
 export type CardListInstance = InstanceType<typeof WeizCardList>
+
+// 搜索url传参参数
+export type SearchOption = {
+  // 搜索字段
+  searchKey: string
+  // 是否执行搜索
+  search: stringBoolean
+}

@@ -4,3 +4,6 @@
  * const a = obj['img_index_' + 1]
  */
 export type stringKey = Record<string, string>
+
+// 布尔类型字符串
+export type stringBoolean = '1' | '0'
