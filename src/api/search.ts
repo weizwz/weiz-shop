@@ -1,3 +1,4 @@
+import type { SearchHot } from '@/types/api'
 import { http } from '@/utils/http'
 
 export const getSearchTxtAPI = () => {
@@ -15,7 +16,7 @@ export const getWantSearchAPI = () => {
 }
 
 export const getHotSearchAPI = () => {
-  return http<string[]>({
+  return http<SearchHot[]>({
     url: '/search/hot',
     method: 'GET',
   })

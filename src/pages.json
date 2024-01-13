@@ -43,6 +43,12 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "搜索"
       }
+    },
+    {
+      "path": "pages/hotCategory/index",
+      "style": {
+        "navigationBarTitleText": "特惠推荐"
+      }
     }
   ],
   "globalStyle": {

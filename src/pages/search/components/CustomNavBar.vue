@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { navData } from '@/utils/navData'
 import { useSearchStore } from '@/stores'
+import type { stringBoolean } from '@/types/global'
 
 const searchStore = useSearchStore()
 const navBarData = navData()

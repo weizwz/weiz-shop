@@ -5,7 +5,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import CustomNavbar from './components/CustomNavbar.vue'
 import { getBannerAPI } from '@/api/banner'
 import { getCategoryIndexAPI, getHotIndexAPI } from '@/api/category'
-import type { BannerItem, CategoryItem, HotPanelItem, HotPcitureItem } from '@/types/api'
+import type { BannerItem, CategoryItem, HotPanelItem, HotPictureItem } from '@/types/api'
 import type { CardListInstance } from '@/types/components'
 import PageSkeleton from './components/PageSkeleton.vue'
 
@@ -22,7 +22,7 @@ const getCategoryList = async () => {
   categoryList.value = res.result
 }
 // 热门推荐
-const hotList = ref<HotPanelItem<HotPcitureItem>[]>([])
+const hotList = ref<HotPanelItem<HotPictureItem>[]>([])
 const getHotList = async () => {
   const res = await getHotIndexAPI()
   hotList.value = res.result

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { HotPanelItem, HotPcitureItem } from '@/types/api'
+import type { HotPanelItem, HotPictureItem } from '@/types/api'
 import ImgPanel from './ImgPanel.vue'
 import { toRaw, watch, ref } from 'vue'
 
 // 定义 props 接收数据
 const props = defineProps<{
-  list: HotPanelItem<HotPcitureItem>[]
+  list: HotPanelItem<HotPictureItem>[]
 }>()
 
-const regroup = (data: HotPcitureItem[]) => {
-  let swiperArr: Array<Array<HotPcitureItem>> = []
+const regroup = (data: HotPictureItem[]) => {
+  let swiperArr: Array<Array<HotPictureItem>> = []
   const num = Math.ceil(data.length / 2)
   for (let i = 0; i < num; i++) {
     swiperArr.push(data.splice(0, 2))
@@ -17,7 +17,7 @@ const regroup = (data: HotPcitureItem[]) => {
   return swiperArr
 }
 
-let swiperArr = ref<Array<Array<HotPcitureItem>>>([])
+let swiperArr = ref<Array<Array<HotPictureItem>>>([])
 if (toRaw(props.list).length > 0) swiperArr.value = regroup(toRaw(props.list)[0].picture)
 
 watch(
@@ -36,7 +36,7 @@ watch(
         <text class="title-text">{{ item.title }}</text>
         <text class="title-desc">{{ item.desc }}</text>
       </view>
-      <navigator hover-class="none" :url="`/pages/hot/hot?type=${item.id}`" class="cards">
+      <navigator hover-class="none" :url="`/pages/hotCategory/index?category=${item.category}`" class="cards">
         <view v-if="item.type === 'swiper'" class="img-swiper">
           <swiper
             class="img-swiper-content"

@@ -1,3 +1,11 @@
+// 分页类型
+export type ParamPage = {
+  // 页码
+  pageNum: number
+  // 每页条数
+  pageSize: number
+}
+
 // banner类型
 export type BannerItem = {
   // 跳转链接
@@ -26,6 +34,8 @@ export type HotPanelItem<T> = {
   id: string
   // 卡片类型
   type: string
+  // 类型
+  category: string
   // 标题
   title: string
   // 子标题
@@ -34,7 +44,7 @@ export type HotPanelItem<T> = {
   picture: T[]
 }
 // picture
-export type HotPcitureItem = {
+export type HotPictureItem = {
   // 图片路径
   src: string
   // 价格
@@ -45,6 +55,28 @@ export type HotPcitureItem = {
   brand?: string
   // 上架日期
   date?: string
+}
+// 热门分类
+export type HotCategory = {
+  // id
+  id: string
+  // 标题
+  title: string
+  // banner图片
+  banner: string
+  /** 子类选项 */
+  subTypes: HotCategoryItem[]
+}
+// 热门分类子选项
+export type HotCategoryItem = {
+  // id
+  id: string
+  // 子标题
+  title: string
+  // 总页
+  pages: number
+  // 商品信息
+  goods: GoodsItem[]
 }
 
 /**

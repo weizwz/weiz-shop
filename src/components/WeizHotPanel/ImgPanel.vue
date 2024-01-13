@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { HotPcitureItem } from '@/types/api'
+import type { HotPictureItem } from '@/types/api'
 
 // 定义 props 接收数据
 defineProps<{
-  img: HotPcitureItem
+  img: HotPictureItem
 }>()
 </script>
 

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { getHotSearchAPI } from '@/api/search'
+import type { SearchHot } from '@/types/api'
 
-let hotSearchList = ref<string[]>([])
-let hotForeList = ref<string[]>([])
-let hotLaterList = ref<string[]>([])
+let hotSearchList = ref<SearchHot[]>([])
+let hotForeList = ref<SearchHot[]>([])
+let hotLaterList = ref<SearchHot[]>([])
 
 const getData = async () => {
   const res = await getHotSearchAPI()

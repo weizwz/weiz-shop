@@ -61,7 +61,7 @@ defineProps<{
           <span v-if="goods.oldPrice" class="goods-price-desc"> 到手价 </span>
           <span v-if="goods.oldPrice" class="goods-price-old">¥{{ goods.oldPrice }}</span>
         </view>
-        <view class="goods-comment-wrapper">
+        <view v-if="goods.comment" class="goods-comment-wrapper">
           <view v-if="goods.payTag" class="goods-pay-tag">先享后付</view>
           <view class="goods-comment">{{ goods.comment }}条评论</view>
           <view v-if="!goods.payTag" class="goods-commentRate">{{ goods.commentRate }}好评率</view>
