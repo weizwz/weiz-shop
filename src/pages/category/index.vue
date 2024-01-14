@@ -19,7 +19,7 @@ onLoad(async () => {
   <view class="viewport">
     <!-- 搜索框 -->
     <view class="search-top">
-      <WeizSearch :height="32" theme="white" />
+      <WeizSearch :height="36" theme="white" />
     </view>
     <!-- 分类 -->
     <view class="categories">
@@ -32,24 +32,16 @@ onLoad(async () => {
       <!-- 右侧：二级分类 -->
       <scroll-view class="secondary" scroll-y>
         <!-- 焦点图 -->
-        <WeizCarousel :list="bannerList" />
+        <WeizCarousel class="categories-banner" :list="bannerList" size="small" />
         <!-- 内容区域 -->
         <view class="panel" v-for="item in 3" :key="item">
           <view class="title">
             <text class="name">饼干类</text>
-            <navigator class="more" hover-class="none">
-              全部
-              <uni-icons color="#999" type="right" size="12"></uni-icons>
-            </navigator>
           </view>
           <view class="section">
             <navigator v-for="goods in 4" :key="goods" class="goods" hover-class="none" :url="`/pages/goods/goods?id=`">
               <image class="image" src="/static/images/card/category/1.png"></image>
               <view class="name ellipsis">五谷饼干</view>
-              <view class="price">
-                <text class="symbol">¥</text>
-                <text class="number">16.00</text>
-              </view>
             </navigator>
           </view>
         </view>
@@ -77,6 +69,9 @@ page {
   flex: 1;
   min-height: 400rpx;
   display: flex;
+}
+.categories-banner {
+  height: 200rpx;
 }
 /* 一级分类 */
 .primary {
@@ -121,14 +116,8 @@ page {
 /* 二级分类 */
 .secondary {
   background-color: #fff;
-  .carousel {
-    height: 200rpx;
-    margin: 0 30rpx 20rpx;
-    border-radius: 4rpx;
-    overflow: hidden;
-  }
   .panel {
-    margin: 0 30rpx 0rpx;
+    margin: $uni-margin-frame $uni-margin-frame 0;
   }
   .title {
     height: 60rpx;
@@ -136,42 +125,27 @@ page {
     color: #333;
     font-size: 28rpx;
     border-bottom: 1rpx solid #f7f7f8;
-    .more {
-      float: right;
-      padding-left: 20rpx;
-      font-size: 24rpx;
-      color: #999;
-    }
   }
   .section {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 20rpx 0;
+    padding: 20rpx 0 0;
     .goods {
-      width: 150rpx;
-      margin: 0rpx 30rpx 20rpx 0;
+      width: 163.33rpx;
+      margin: 0rpx $uni-margin-frame $uni-margin-frame 0;
       &:nth-child(3n) {
         margin-right: 0;
       }
       image {
-        width: 150rpx;
-        height: 150rpx;
+        width: 163.33rpx;
+        height: 163.33rpx;
         border-radius: 10rpx;
       }
       .name {
         padding: 5rpx;
         font-size: 22rpx;
         color: #333;
-      }
-      .price {
-        padding: 5rpx;
-        font-size: 18rpx;
-        color: #cf4444;
-      }
-      .number {
-        font-size: 24rpx;
-        margin-left: 2rpx;
       }
     }
   }

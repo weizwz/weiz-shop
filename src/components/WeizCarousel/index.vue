@@ -14,6 +14,7 @@ withDefaults(
   defineProps<{
     list: BannerItem[]
     dotBottom?: number
+    size?: string
   }>(),
   {
     dotBottom: 12,
@@ -22,7 +23,7 @@ withDefaults(
 </script>
 
 <template>
-  <view class="carousel">
+  <view :class="['carousel', size]">
     <swiper class="swiper" :circular="true" :autoplay="true" :interval="3000" @change="onChange">
       <swiper-item v-for="item in list" :key="item.id">
         <navigator :url="item.url" hover-class="none" class="navigator">
@@ -49,6 +50,12 @@ withDefaults(
   background-color: #efefef;
   .swiper {
     height: 280rpx;
+  }
+  &.small {
+    height: 200rpx;
+    .swiper {
+      height: 200rpx;
+    }
   }
   .indicator {
     position: absolute;
