@@ -79,7 +79,7 @@ const onScrolltolower = () => {
 
 <style lang="scss">
 page {
-  background: linear-gradient(to bottom, $uni-color-aquamarine, $uni-bg-color-grey 60%);
+  background: linear-gradient(to bottom, $uni-color-main, $uni-bg-color-grey 60%);
   height: 100%;
   overflow: hidden;
 }

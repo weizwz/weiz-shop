@@ -98,7 +98,7 @@ const clearSearchHandle = () => {}
   display: flex;
   align-items: center;
   z-index: 1;
-  background: $uni-color-aquamarine;
+  background: $uni-color-main;
   .search-back {
     width: 60rpx;
     padding-left: $uni-margin-frame;

@@ -5,10 +5,8 @@
 <template>
   <view class="viewport">
     <!-- 搜索框 -->
-    <view class="search">
-      <view class="input">
-        <text class="icon-search">饼干</text>
-      </view>
+    <view class="search-top">
+      <WeizSearch :height="32" theme="white" />
     </view>
     <!-- 分类 -->
     <view class="categories">
@@ -57,25 +55,9 @@ page {
   display: flex;
   flex-direction: column;
 }
-.search {
-  padding: 0 30rpx 20rpx;
-  background-color: #fff;
-  .input {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64rpx;
-    padding-left: 26rpx;
-    color: #8b8b8b;
-    font-size: 28rpx;
-    border-radius: 32rpx;
-    background-color: #f3f4f4;
-  }
-}
-.icon-search {
-  &::before {
-    margin-right: 10rpx;
-  }
+.search-top {
+  padding: 0 $uni-margin-frame;
+  margin: $uni-margin-frame 0;
 }
 /* 分类 */
 .categories {
@@ -115,7 +97,7 @@ page {
       top: 0;
       width: 8rpx;
       height: 100%;
-      background-color: #27ba9b;
+      background-color: $uni-color-main;
     }
   }
 }

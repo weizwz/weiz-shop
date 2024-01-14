@@ -81,7 +81,7 @@ onMounted(() => {
         height: 80rpx;
         line-height: 115rpx;
         border-radius: 100%;
-        background: $uni-color-aquamarine;
+        background: $uni-color-main;
         color: #fff;
         text-indent: 50rpx;
         font-size: 28rpx;
