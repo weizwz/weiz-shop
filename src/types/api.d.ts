@@ -1,3 +1,5 @@
+import type { CommonObj } from './global'
+
 // 分页类型
 export type ParamPage = {
   // 页码
@@ -140,4 +142,16 @@ export type SearchHot = {
   hot: string
   // 图片
   img: string
+}
+
+/**
+ * 一级分类
+ */
+export type CategoryTop<T> = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // banner图片
+  bannerImg: T[]
 }

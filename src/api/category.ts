@@ -1,5 +1,6 @@
 import { http } from '@/utils/http'
-import type { CategoryItem, HotCategory, HotPanelItem, HotPictureItem, ParamPage } from '@/types/api'
+import type { BannerItem, CategoryItem, HotCategory, HotPanelItem, HotPictureItem, ParamPage } from '@/types/api'
+import type { CategoryTop } from '@/types/api'
 
 export const getCategoryIndexAPI = () => {
   return http<CategoryItem[]>({
@@ -21,5 +22,13 @@ export const getCategoryHotAPI = (url: string, data: HotParams) => {
     url: '/category/hot/' + url,
     method: 'POST',
     data,
+  })
+}
+
+// 一级分类
+export const getCategoryTopAPI = () => {
+  return http<CategoryTop<BannerItem>[]>({
+    url: '/category/top',
+    method: 'GET',
   })
 }

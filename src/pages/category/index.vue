@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getBannerAPI } from '@/api/banner'
-import type { BannerItem } from '@/types/api'
+import { getCategoryTopAPI } from '@/api/category'
+import type { BannerItem, CategoryTop } from '@/types/api'
 
+const activeIdx = ref<number>(0)
 // 轮播图 或者 ref([] as BannerItem[])
-const bannerList = ref<BannerItem[]>([])
-const getBannerList = async () => {
-  const res = await getBannerAPI('category')
-  bannerList.value = res.result
+const categoryList = ref<CategoryTop<BannerItem>[]>([])
+const getCategoryList = async () => {
+  const res = await getCategoryTopAPI()
+  categoryList.value = res.result
 }
 onLoad(async () => {
-  getBannerList()
+  getCategoryList()
 })
+// 切换分类
+const changeCategory = (idx: number) => {
+  activeIdx.value = idx
+}
 </script>
 
 <template>
@@ -25,14 +30,20 @@ onLoad(async () => {
     <view class="categories">
       <!-- 左侧：一级分类 -->
       <scroll-view class="primary" scroll-y>
-        <view v-for="(item, index) in 10" :key="item" class="item" :class="{ active: index === 0 }">
-          <text class="name"> 零食 </text>
+        <view
+          v-for="(item, index) in categoryList"
+          :key="item.id"
+          class="item"
+          :class="{ active: index === activeIdx }"
+          @tap="changeCategory(index)"
+        >
+          <text class="name"> {{ item.name }} </text>
         </view>
       </scroll-view>
       <!-- 右侧：二级分类 -->
       <scroll-view class="secondary" scroll-y>
         <!-- 焦点图 -->
-        <WeizCarousel class="categories-banner" :list="bannerList" size="small" />
+        <WeizCarousel class="categories-banner" :list="categoryList[activeIdx]?.bannerImg" size="small" />
         <!-- 内容区域 -->
         <view class="panel" v-for="item in 3" :key="item">
           <view class="title">

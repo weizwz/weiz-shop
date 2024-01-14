@@ -7,3 +7,21 @@ export type stringKey = Record<string, string>
 
 // 布尔类型字符串
 export type stringBoolean = '1' | '0'
+
+/**
+ * 通用类型
+ */
+export type CommonObj<T> = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // 描述
+  desc?: string
+  // 链接
+  link?: string
+  // img
+  image_url?: string
+  // 子集
+  children?: T[]
+}
