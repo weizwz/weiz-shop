@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
+import PageSkeleton from './components/PageSkeleton.vue'
 import { getCategoryTopAPI, getCategoryTwoAPI } from '@/api/category'
 import type { BannerItem, CategoryThree, CategoryTop, CategoryTwo } from '@/types/api'
 
@@ -10,6 +11,7 @@ const categoryList = ref<CategoryTop<BannerItem>[]>([])
 const categoryTwoList = ref<CategoryTwo<CategoryThree>[]>([])
 const getCategoryList = async () => {
   const res = await getCategoryTopAPI()
+  pageLoading.value = false
   categoryList.value = res.result
   getCategoryTwoList(res.result[activeIdx.value].name)
 }
@@ -17,7 +19,11 @@ const getCategoryTwoList = async (id: string) => {
   const res = await getCategoryTwoAPI(id)
   categoryTwoList.value = res.result
 }
+
+// 加载
+const pageLoading = ref(false)
 onLoad(async () => {
+  pageLoading.value = true
   getCategoryList()
 })
 // 切换分类
@@ -29,6 +35,7 @@ const changeCategory = (idx: number) => {
 
 <template>
   <view class="viewport">
+    <PageSkeleton v-if="pageLoading" />
     <!-- 搜索框 -->
     <view class="search-top">
       <WeizSearch :height="36" theme="white" />
