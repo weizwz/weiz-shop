@@ -61,6 +61,7 @@ const onScrolltolower = () => {
     <CustomNavbar />
     <scroll-view
       refresher-enabled
+      refresher-background="transparent"
       @refresherrefresh="onRefresherrefresh"
       @scrolltolower="onScrolltolower"
       :refresher-triggered="refreshering"

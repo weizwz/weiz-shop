@@ -11,7 +11,7 @@ let historyKeys = ref<string[]>([])
 let wantSearchKeys = ref<string[]>([])
 
 // uniapp获取url传参
-const query = defineProps<{
+defineProps<{
   search: stringBoolean
   searchKey: string
 }>()
