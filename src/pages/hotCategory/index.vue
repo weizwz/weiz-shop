@@ -162,7 +162,7 @@ page {
       width: 40rpx;
       height: 4rpx;
       transform: translate(-50%);
-      background-color: $uni-color-aquamarine;
+      background-color: $uni-color-main;
       position: absolute;
       left: 50%;
       bottom: 24rpx;

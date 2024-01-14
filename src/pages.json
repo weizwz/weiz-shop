@@ -60,7 +60,7 @@
   // 设置 TabBar https://uniapp.dcloud.net.cn/collocation/pages.html#tabbar
   "tabBar": {
     "color": "#333",
-    "selectedColor": "#409eff",
+    "selectedColor": "#18c7ff",
     "backgroundColor": "#fff",
     "borderStyle": "white",
     "spacing": "5px",
