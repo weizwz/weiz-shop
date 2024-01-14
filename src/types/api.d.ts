@@ -155,3 +155,21 @@ export type CategoryTop<T> = {
   // banner图片
   bannerImg: T[]
 }
+// 二级分类
+export type CategoryTwo<CategoryThree> = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // 子类
+  children: CategoryThree[]
+}
+// 三级分类
+export type CategoryThree = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // 子类
+  image_url: string
+}

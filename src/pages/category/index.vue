@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getCategoryTopAPI } from '@/api/category'
-import type { BannerItem, CategoryTop } from '@/types/api'
+import { getCategoryTopAPI, getCategoryTwoAPI } from '@/api/category'
+import type { BannerItem, CategoryThree, CategoryTop, CategoryTwo } from '@/types/api'
 
 const activeIdx = ref<number>(0)
 // 轮播图 或者 ref([] as BannerItem[])
 const categoryList = ref<CategoryTop<BannerItem>[]>([])
+const categoryTwoList = ref<CategoryTwo<CategoryThree>[]>([])
 const getCategoryList = async () => {
   const res = await getCategoryTopAPI()
   categoryList.value = res.result
+  getCategoryTwoList(res.result[activeIdx.value].name)
+}
+const getCategoryTwoList = async (id: string) => {
+  const res = await getCategoryTwoAPI(id)
+  categoryTwoList.value = res.result
 }
 onLoad(async () => {
   getCategoryList()
@@ -17,6 +23,7 @@ onLoad(async () => {
 // 切换分类
 const changeCategory = (idx: number) => {
   activeIdx.value = idx
+  getCategoryTwoList(categoryList.value[activeIdx.value].name)
 }
 </script>
 
@@ -45,14 +52,20 @@ const changeCategory = (idx: number) => {
         <!-- 焦点图 -->
         <WeizCarousel class="categories-banner" :list="categoryList[activeIdx]?.bannerImg" size="small" />
         <!-- 内容区域 -->
-        <view class="panel" v-for="item in 3" :key="item">
+        <view class="panel" v-for="item in categoryTwoList" :key="item.id">
           <view class="title">
-            <text class="name">饼干类</text>
+            <text class="name">{{ item.name }}</text>
           </view>
           <view class="section">
-            <navigator v-for="goods in 4" :key="goods" class="goods" hover-class="none" :url="`/pages/goods/goods?id=`">
-              <image class="image" src="/static/images/card/category/1.png"></image>
-              <view class="name ellipsis">五谷饼干</view>
+            <navigator
+              v-for="goods in item.children"
+              :key="goods.id"
+              class="goods"
+              hover-class="none"
+              :url="`/pages/goods/index?id=`"
+            >
+              <image class="image" :src="goods.image_url"></image>
+              <view class="name ellipsis">{{ goods.name }}</view>
             </navigator>
           </view>
         </view>
@@ -133,9 +146,9 @@ page {
   .title {
     height: 60rpx;
     line-height: 60rpx;
-    color: #333;
+    color: $uni-text-color;
     font-size: 28rpx;
-    border-bottom: 1rpx solid #f7f7f8;
+    border-bottom: 1rpx solid $uni-line-color;
   }
   .section {
     width: 100%;
@@ -154,9 +167,9 @@ page {
         border-radius: 10rpx;
       }
       .name {
-        padding: 5rpx;
         font-size: 22rpx;
-        color: #333;
+        color: $uni-text-color;
+        text-align: center;
       }
     }
   }
