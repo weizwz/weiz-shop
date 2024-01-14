@@ -1,138 +1,123 @@
 <script setup lang="ts">
-import type { stringBoolean } from '@/types/global'
-import CustomNavbar from './components/CustomNavbar.vue'
-import SearchHot from './components/SearchHot.vue'
+import { onMounted, ref } from 'vue'
+import { navData } from '@/utils/navData'
 import { useSearchStore } from '@/stores'
-import { onMounted, ref, watch } from 'vue'
-import { getWantSearchAPI } from '@/api/search'
+import type { stringBoolean } from '@/types/global'
 
 const searchStore = useSearchStore()
-let historyKeys = ref<string[]>([])
-let wantSearchKeys = ref<string[]>([])
+const navBarData = navData()
+const searchValue = ref<string>('')
+const searchFocus = ref<boolean>(false)
 
-// uniapp获取url传参
-defineProps<{
+const props = defineProps<{
   search: stringBoolean
   searchKey: string
 }>()
-
-// 获取搜索历史
-const getSearchHistory = () => {
-  historyKeys.value = searchStore.getSearchInfoKey()
+// 页面初始化
+const init = () => {
+  if (props.search === '1') {
+    searchValue.value = props.searchKey
+    searchHandle()
+  } else {
+    searchFocus.value = true
+  }
 }
-// 清除
-const clearSearchKey = () => {
-  searchStore.clearSearchInfoKey()
-}
-// 猜你想搜
-const getWantSearch = async () => {
-  const res = await getWantSearchAPI()
-  wantSearchKeys.value = res.result
-}
-
 onMounted(() => {
-  getSearchHistory()
-  getWantSearch()
+  init()
 })
-
-watch(
-  () => searchStore.state.searchKey,
-  (val) => {
-    historyKeys.value = val
-  },
-)
+// 返回上个页面
+const toBack = () => {
+  uni.navigateBack({
+    delta: 1,
+    animationType: 'slide-out-right',
+    animationDuration: 600,
+  })
+}
+const searchHandle = () => {
+  // 保存搜索词
+  searchStore.setSearchInfoKey(searchValue.value)
+  console.log('开始搜索')
+}
+// 搜索按钮
+const searchBtnHandle = () => {
+  if (searchValue.value === '') {
+    searchValue.value = props.searchKey
+  }
+  searchFocus.value = false
+  searchHandle()
+}
+// 清理搜索
+const clearSearchHandle = () => {}
 </script>
 
 <template>
-  <view class="search">
-    <CustomNavbar :search="search" :searchKey="searchKey" />
-    <scroll-view class="scroll-view" :scroll-y="true">
-      <view class="scroll-content">
-        <view class="search-history">
-          <view class="search-history-title-wrapper">
-            <text class="search-history-title">搜索历史</text>
-            <uni-icons type="trash" size="16" @tap="clearSearchKey"></uni-icons>
-          </view>
-          <view class="search-history-key">
-            <view class="search-history-key-item" v-for="(item, index) in historyKeys" :key="index">
-              <view class="search-history-key-txt">{{ item }}</view>
-            </view>
-          </view>
-        </view>
-        <view class="search-history">
-          <view class="search-history-title-wrapper">
-            <text class="search-history-title">猜你想搜</text>
-            <uni-icons type="reload" size="16" @tap="getWantSearch"></uni-icons>
-          </view>
-          <view class="search-history-key">
-            <view class="search-history-key-item" v-for="(item, index) in wantSearchKeys" :key="index">
-              <view class="search-history-key-txt">{{ item }}</view>
-            </view>
-          </view>
-        </view>
-        <SearchHot />
-      </view>
-    </scroll-view>
+  <view class="navbar" :style="{ paddingTop: navBarData.top + 'px', height: navBarData.height + 'px' }">
+    <!-- 返回按钮 -->
+    <view class="search-back" @tap="toBack">
+      <uni-icons type="left" size="24" color="#fff"></uni-icons>
+    </view>
+    <!-- 搜索条 -->
+    <uni-easyinput
+      class="search-wrapper"
+      :style="{ height: navBarData.height + 'px', lineHeight: navBarData.height + 'px' }"
+      radius="64"
+      :placeholder="searchKey"
+      placeholderStyle="color: #9a9a9a; font-size: 28rpx;"
+      :inputBorder="false"
+      primaryColor="#c0c4cc"
+      trim="both"
+      clearButton="auto"
+      cancelButton="none"
+      v-model="searchValue"
+      :focus="searchFocus"
+      @confirm="searchHandle"
+      @clear="clearSearchHandle"
+    >
+      <template #right>
+        <button
+          @tap="searchBtnHandle"
+          size="mini"
+          type="default"
+          class="weiz-btn weiz-btn-search"
+          :style="{ height: navBarData.height - 6 + 'px', lineHeight: navBarData.height - 6 + 'px' }"
+        >
+          搜索
+        </button>
+      </template>
+    </uni-easyinput>
+    <view class="navbar-space" :style="{ width: navBarData.width + navBarData.marginRight + 'px' }"></view>
   </view>
 </template>
 
 <style lang="scss">
-page {
-  height: 100%;
-  overflow: hidden;
-}
-.search {
-  height: 100%;
+/* 自定义导航条 */
+.navbar {
+  padding: 20px 0 10px;
+  position: relative;
+  height: 64rpx;
   display: flex;
-  flex-direction: column;
-  .scroll-view {
+  align-items: center;
+  z-index: 1;
+  background: $uni-color-aquamarine;
+  .search-back {
+    width: 60rpx;
+    padding-left: $uni-margin-frame;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search-wrapper {
     flex: 1;
-    box-sizing: border-box;
-    overflow: hidden;
-    .scroll-content {
-      padding: $uni-margin-frame;
-    }
-    .search-history:nth-child(2) {
-      margin-bottom: 20rpx;
-    }
-    .search-history-title-wrapper {
-      height: 48rpx;
-      line-height: 48rpx;
-      display: flex;
-      align-items: center;
-      margin-bottom: 20rpx;
-      .search-history-title {
-        font-size: 32rpx;
-        font-weight: 600;
-        margin-right: $uni-margin-frame;
-      }
-    }
-    .search-history-key {
-      display: flex;
-      flex-wrap: wrap;
-      .search-history-key-item {
-        height: 42rpx;
-        line-height: 42rpx;
-        padding: 6rpx 20rpx;
-        margin-right: 20rpx;
-        margin-bottom: 20rpx;
-        background: #f2f2f2;
-        border-radius: 42rpx;
-        font-size: 24rpx;
-      }
-    }
+  }
+  .navbar-space {
+    width: 0;
   }
 }
-.uni-easyinput {
+.search-txt-content {
   height: 100%;
-  margin-right: $uni-margin-frame;
-  .uni-easyinput__content {
-    height: 100%;
-    background: #f2f2f2 !important;
-    border-radius: 64rpx;
-    .weiz-btn.weiz-btn-search {
-      margin-right: 10rpx;
-    }
-  }
+}
+.search-txt-item {
+  height: auto !important;
 }
 </style>

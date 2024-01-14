@@ -27,6 +27,7 @@
 .flex-align-center {
   align-items: center;
 }
+
 /* 默认按钮 */
 .weiz-btn[type=default] {
   border-radius: 64rpx;
@@ -41,5 +42,21 @@
     margin-right: -8rpx;
     font-size: 28rpx;
     font-weight: 400;
+  }
+}
+
+/* 搜索页面样式 修改默认组件 */
+.search-page .uni-easyinput {
+  height: 100%;
+  margin-right: $uni-margin-frame;
+  .uni-easyinput__content {
+    height: 100%;
+    border-radius: 64rpx;
+    .weiz-btn.weiz-btn-search {
+      margin-right: 10rpx;
+    }
+    .uni-easyinput__content-input {
+      font-size: 28rpx;
+    }
   }
 }

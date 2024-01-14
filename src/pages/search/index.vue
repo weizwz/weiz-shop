@@ -44,7 +44,7 @@ watch(
 </script>
 
 <template>
-  <view class="search">
+  <view class="search-page">
     <CustomNavbar :search="search" :searchKey="searchKey" />
     <scroll-view class="scroll-view" :scroll-y="true">
       <view class="scroll-content">
@@ -81,7 +81,7 @@ page {
   height: 100%;
   overflow: hidden;
 }
-.search {
+.search-page {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -120,18 +120,6 @@ page {
         border-radius: 42rpx;
         font-size: 24rpx;
       }
-    }
-  }
-}
-.uni-easyinput {
-  height: 100%;
-  margin-right: $uni-margin-frame;
-  .uni-easyinput__content {
-    height: 100%;
-    background: #f2f2f2 !important;
-    border-radius: 64rpx;
-    .weiz-btn.weiz-btn-search {
-      margin-right: 10rpx;
     }
   }
 }
