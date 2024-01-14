@@ -1,5 +1,18 @@
 <script setup lang="ts">
-//
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { getBannerAPI } from '@/api/banner'
+import type { BannerItem } from '@/types/api'
+
+// 轮播图 或者 ref([] as BannerItem[])
+const bannerList = ref<BannerItem[]>([])
+const getBannerList = async () => {
+  const res = await getBannerAPI('category')
+  bannerList.value = res.result
+}
+onLoad(async () => {
+  getBannerList()
+})
 </script>
 
 <template>
@@ -19,7 +32,7 @@
       <!-- 右侧：二级分类 -->
       <scroll-view class="secondary" scroll-y>
         <!-- 焦点图 -->
-        <XtxSwiper class="banner" :list="[]" />
+        <WeizCarousel :list="bannerList" />
         <!-- 内容区域 -->
         <view class="panel" v-for="item in 3" :key="item">
           <view class="title">
