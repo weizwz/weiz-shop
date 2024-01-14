@@ -57,16 +57,10 @@ const changeCategory = (idx: number) => {
             <text class="name">{{ item.name }}</text>
           </view>
           <view class="section">
-            <navigator
-              v-for="goods in item.children"
-              :key="goods.id"
-              class="goods"
-              hover-class="none"
-              :url="`/pages/goods/index?id=`"
-            >
+            <view v-for="goods in item.children" :key="goods.id" class="goods" hover-class="none">
               <image class="image" :src="goods.image_url"></image>
               <view class="name ellipsis">{{ goods.name }}</view>
-            </navigator>
+            </view>
           </view>
         </view>
       </scroll-view>
