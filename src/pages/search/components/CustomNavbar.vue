@@ -30,7 +30,7 @@ const toBack = () => {
   uni.navigateBack({
     delta: 1,
     animationType: 'slide-out-right',
-    animationDuration: 600,
+    animationDuration: 300,
   })
 }
 const searchHandle = () => {

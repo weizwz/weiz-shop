@@ -183,7 +183,7 @@ defineProps<{
     }
   }
   .goods-info {
-    padding: 0 $uni-margin-frame;
+    padding: 0 $uni-margin-frame 10rpx;
     display: flex;
     flex-direction: column;
     .goods-name {
@@ -259,6 +259,8 @@ defineProps<{
         font-weight: 500;
         margin-right: 10rpx;
         border-radius: 6rpx;
+        height: 32rpx;
+        line-height: 32rpx;
       }
       .goods-comment {
         margin-right: 10rpx;
@@ -267,7 +269,7 @@ defineProps<{
     .goods-rank {
       height: 50rpx;
       line-height: 50rpx;
-      margin-bottom: 20rpx;
+      margin-bottom: 10rpx;
       border-radius: 12rpx;
       overflow: hidden;
       .goods-rank-wrapper {

@@ -43,7 +43,7 @@ const initList = (list: GoodsItem<RankItem>[]) => {
       goodsRightList.value.push(element)
       goodsRightH += currentH
     }
-    // 高度校验
+    // 高度校验，微信小程序或H5页面查看元素高度
     // console.log(
     //   `序列：${index + 1}，名称：${element.name}，当前卡片高度：${rpxToPx(currentH - 20)}，图片高度：${rpxToPx(
     //     (750 / 2 - 30) * element.image_ratio,
@@ -67,9 +67,11 @@ const addH = (data: GoodsItem<RankItem>) => {
     // 低价高度
     if (data.priceTag) h += 46
     // 排行高度
-    if (data.rank) h += 70
+    if (data.rank) h += 60
+    // 容器padding-bottom
+    h += 10
   }
-  // 距离底部高度
+  // 容器margin-bottom
   h += 20
   return h
 }
