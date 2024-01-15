@@ -1,11 +1,25 @@
 // src/pages/goods/goods.vue
 <script setup lang="ts">
+import { getCategorySuggestAPI } from '@/api/category'
+import type { GoodsItem, RankItem } from '@/types/api'
 import { rpxToPx } from '@/utils/platform'
+import { onLoad } from '@dcloudio/uni-app'
 import { nextTick, ref, getCurrentInstance } from 'vue'
 
 const instance = getCurrentInstance()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
+// 接收参数
+const props = defineProps<{
+  id: string
+}>()
+
+// 图集索引
+const imgIdx = ref<number>(1)
+const changeImgSwiper = (ev: UniHelper.SwiperOnChangeEvent) => {
+  imgIdx.value = ev.detail.current + 1
+}
+
 // 快捷滚动
 const shortcutIdx = ref<number>(0)
 const scrollTop = ref<number>(0)
@@ -20,7 +34,7 @@ const shortcutActive = (idx: number) => {
   shortcutIdx.value = idx
   scrollTop.value = scrollOldTop.value
   // 快捷方式自身高度
-  const dH = rpxToPx(108)
+  const dH = rpxToPx(112)
   nextTick(() => {
     if (idx === 0) {
       scrollTop.value = 0
@@ -45,7 +59,19 @@ const shortcutActive = (idx: number) => {
     }
   })
 }
-// 购物车配置
+
+/**
+ * 同类推荐
+ */
+const categoryList = ref<GoodsItem<RankItem>[]>([])
+const getCategorySuggestData = async () => {
+  const res = await getCategorySuggestAPI(props.id)
+  categoryList.value = res.result
+}
+
+/**
+ * 购物车配置
+ */
 const cartOptions = ref<UniHelper.UniGoodsNavOption[]>([
   {
     icon: 'star',
@@ -79,6 +105,13 @@ const cartGroup = ref([
 
 const addCartHandle = () => {}
 const buyHandle = () => {}
+
+/**
+ * 加载
+ */
+onLoad(() => {
+  getCategorySuggestData()
+})
 </script>
 
 <template>
@@ -93,18 +126,19 @@ const buyHandle = () => {}
     <view class="goods">
       <!-- 商品主图 -->
       <view class="preview">
-        <swiper circular class="preview-swiper">
+        <swiper circular class="preview-swiper" @change="changeImgSwiper">
           <swiper-item v-for="idx in 5" :key="idx">
             <image mode="aspectFill" :src="`/static/images/card/index/${idx}.png`" />
           </swiper-item>
         </swiper>
         <view class="indicator">
-          <text class="current">1</text>
+          <text class="current">{{ imgIdx }}</text>
           <text class="split">/</text>
           <text class="total">5</text>
         </view>
       </view>
       <!-- 快捷跳转 -->
+      <view v-show="shortcutFixed" class="seat"> <!--占位--> </view>
       <view :class="{ shortcut: true, fixed: shortcutFixed }">
         <view class="content">
           <view :class="{ active: shortcutIdx === 0, 'shortcut-item': true }" @tap="shortcutActive(0)">图集</view>
@@ -148,7 +182,7 @@ const buyHandle = () => {}
     </view>
 
     <!-- 商品详情 -->
-    <view class="detail">
+    <view class="detail mb20">
       <WeizTitle title="详情" />
       <view class="content">
         <uni-section title="商品规格" type="line" color="#18c7ff"></uni-section>
@@ -178,7 +212,11 @@ const buyHandle = () => {}
     <!-- 同类推荐 -->
     <view class="similar">
       <WeizTitle title="推荐" />
-      <view class="content"> </view>
+      <view class="content mt20">
+        <view class="mr20 mb20 goods-item" v-for="temp in categoryList" :key="temp.id">
+          <WeizGoods :goods="temp" />
+        </view>
+      </view>
     </view>
   </scroll-view>
 
@@ -206,7 +244,9 @@ page {
   background: $uni-bg-color-grey;
   overflow: hidden;
 }
-
+.seat {
+  height: 112rpx;
+}
 .shortcut {
   width: 100%;
   padding: $uni-margin-frame 0;
@@ -263,15 +303,9 @@ page {
       position: absolute;
       bottom: 30rpx;
       right: 30rpx;
-      .current {
-        font-size: 26rpx;
-      }
+      font-size: 24rpx;
       .split {
-        font-size: 24rpx;
-        margin: 0 1rpx 0 2rpx;
-      }
-      .total {
-        font-size: 24rpx;
+        margin: 0 2rpx;
       }
     }
   }
@@ -422,11 +456,17 @@ page {
 
 /* 同类推荐 */
 .similar {
-  .content {
+  > .content {
     padding: 0 20rpx 200rpx;
     background-color: #f4f4f4;
     display: flex;
     flex-wrap: wrap;
+    > .goods-item {
+      width: 345rpx;
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+    }
   }
 }
 

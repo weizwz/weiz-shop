@@ -4,10 +4,12 @@ import type {
   CategoryItem,
   CategoryThree,
   CategoryTwo,
+  GoodsItem,
   HotCategory,
   HotPanelItem,
   HotPictureItem,
   ParamPage,
+  RankItem,
 } from '@/types/api'
 import type { CategoryTop } from '@/types/api'
 
@@ -45,6 +47,14 @@ export const getCategoryTopAPI = () => {
 export const getCategoryTwoAPI = (id: string) => {
   return http<CategoryTwo<CategoryThree>[]>({
     url: `/category/two?id=${id}`,
+    method: 'GET',
+  })
+}
+
+// 同类推荐-商品详情页
+export const getCategorySuggestAPI = (id: string) => {
+  return http<GoodsItem<RankItem>[]>({
+    url: `/category/suggest?id=${id}`,
     method: 'GET',
   })
 }
