@@ -28,16 +28,18 @@ const shortcutActive = (idx: number) => {
       const query = uni.createSelectorQuery().in(instance)
       query
         .select('.detail')
-        .boundingClientRect((data: UniApp.NodeInfo | UniApp.NodeInfo[]) => {
-          scrollTop.value += data.top - dH
+        .boundingClientRect((data) => {
+          const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
+          scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
         .exec()
     } else {
       const query = uni.createSelectorQuery().in(instance)
       query
         .select('.similar')
-        .boundingClientRect((data: UniApp.NodeInfo | UniApp.NodeInfo[]) => {
-          scrollTop.value += data.top - dH
+        .boundingClientRect((data) => {
+          const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
+          scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
         .exec()
     }
