@@ -27,8 +27,24 @@ const scrollOldTop = ref<number>(0)
 const shortcutFixed = ref<boolean>(false) // 是否固定住快捷跳转
 const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
   scrollOldTop.value = e.detail.scrollTop
-  if (scrollOldTop.value >= rpxToPx(750)) shortcutFixed.value = true
-  else shortcutFixed.value = false
+
+  const query = uni.createSelectorQuery().in(instance)
+  query
+    .select('.similar')
+    .boundingClientRect((data) => {
+      const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
+      if (nodeInfo && nodeInfo.top && nodeInfo.top <= rpxToPx(112)) {
+        shortcutIdx.value = 2
+        shortcutFixed.value = true
+      } else if (scrollOldTop.value >= rpxToPx(750)) {
+        shortcutFixed.value = true
+        shortcutIdx.value = 1
+      } else {
+        shortcutIdx.value = 0
+        shortcutFixed.value = false
+      }
+    })
+    .exec()
 }
 const shortcutActive = (idx: number) => {
   shortcutIdx.value = idx
@@ -185,7 +201,7 @@ onLoad(() => {
     <view class="detail mb20">
       <WeizTitle title="详情" />
       <view class="content">
-        <uni-section title="商品规格" type="line" color="#18c7ff"></uni-section>
+        <uni-section title="规格参数" type="line" color="#18c7ff"></uni-section>
         <view class="properties">
           <!-- 属性详情 -->
           <view class="item">
