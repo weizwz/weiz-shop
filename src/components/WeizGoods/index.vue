@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <navigator hover-class="none" :url="`/pages/goods/details?type=${goods.id}`" class="goods">
+  <navigator hover-class="none" :url="`/pages/goods/index?id=${goods.id}`" class="goods">
     <swiper
       v-if="goods.type === 'swiper'"
       class="goods-swiper"
