@@ -27,7 +27,9 @@ const scrollOldTop = ref<number>(0)
 const shortcutFixed = ref<boolean>(false) // 是否固定住快捷跳转
 const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
   scrollOldTop.value = e.detail.scrollTop
-
+  if (scrollOldTop.value >= rpxToPx(750)) {
+    shortcutFixed.value = true
+  }
   const query = uni.createSelectorQuery().in(instance)
   query
     .select('.similar')
@@ -35,9 +37,7 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
       const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
       if (nodeInfo && nodeInfo.top && nodeInfo.top <= rpxToPx(112)) {
         shortcutIdx.value = 2
-        shortcutFixed.value = true
       } else if (scrollOldTop.value >= rpxToPx(750)) {
-        shortcutFixed.value = true
         shortcutIdx.value = 1
       } else {
         shortcutIdx.value = 0
@@ -47,19 +47,21 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
     .exec()
 }
 const shortcutActive = (idx: number) => {
-  shortcutIdx.value = idx
   scrollTop.value = scrollOldTop.value
   // 快捷方式自身高度
   const dH = rpxToPx(112)
   nextTick(() => {
     if (idx === 0) {
       scrollTop.value = 0
+      shortcutIdx.value = idx
     } else if (idx === 1) {
       const query = uni.createSelectorQuery().in(instance)
       query
         .select('.detail')
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
+          shortcutIdx.value = idx
+          if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
           scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
         .exec()
@@ -69,6 +71,8 @@ const shortcutActive = (idx: number) => {
         .select('.similar')
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
+          shortcutIdx.value = idx
+          if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
           scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
         .exec()
@@ -272,11 +276,8 @@ page {
     top: 0;
     background: rgba(255, 255, 255, 0.95);
     z-index: 1;
-    transition: cubic-bezier(0.71, 0.15, 0.16, 1.15) 0.6s;
-    transform: translateZ(0);
-    transform-style: preserve-3d;
   }
-  .content {
+  > .content {
     margin: 0 auto;
     display: flex;
     align-items: center;
