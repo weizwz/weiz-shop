@@ -274,6 +274,9 @@ page {
   &.fixed {
     position: fixed;
     top: 0;
+    //#ifdef  APP-PLUS || H5
+    top: calc(44px + env(safe-area-inset-top));
+    //#endif
     background: rgba(255, 255, 255, 0.95);
     z-index: 1;
   }
