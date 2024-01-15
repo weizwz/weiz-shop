@@ -1,9 +1,48 @@
 // src/pages/goods/goods.vue
 <script setup lang="ts">
-import { ref } from 'vue'
+import { rpxToPx } from '@/utils/platform'
+import { nextTick, ref, getCurrentInstance } from 'vue'
 
+const instance = getCurrentInstance()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
+// 快捷滚动
+const shortcutIdx = ref<number>(0)
+const scrollTop = ref<number>(0)
+const scrollOldTop = ref<number>(0)
+const shortcutFixed = ref<boolean>(false) // 是否固定住快捷跳转
+const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
+  scrollOldTop.value = e.detail.scrollTop
+  if (scrollOldTop.value >= rpxToPx(750)) shortcutFixed.value = true
+  else shortcutFixed.value = false
+}
+const shortcutActive = (idx: number) => {
+  shortcutIdx.value = idx
+  scrollTop.value = scrollOldTop.value
+  // 快捷方式自身高度
+  const dH = rpxToPx(108)
+  nextTick(() => {
+    if (idx === 0) {
+      scrollTop.value = 0
+    } else if (idx === 1) {
+      const query = uni.createSelectorQuery().in(instance)
+      query
+        .select('.detail')
+        .boundingClientRect((data: UniApp.NodeInfo | UniApp.NodeInfo[]) => {
+          scrollTop.value += data.top - dH
+        })
+        .exec()
+    } else {
+      const query = uni.createSelectorQuery().in(instance)
+      query
+        .select('.similar')
+        .boundingClientRect((data: UniApp.NodeInfo | UniApp.NodeInfo[]) => {
+          scrollTop.value += data.top - dH
+        })
+        .exec()
+    }
+  })
+}
 // 购物车配置
 const cartOptions = ref<UniHelper.UniGoodsNavOption[]>([
   {
@@ -13,22 +52,25 @@ const cartOptions = ref<UniHelper.UniGoodsNavOption[]>([
   {
     icon: 'chat',
     text: '客服',
+    info: 3,
+    infoBackgroundColor: '#4ADA68',
   },
   {
     icon: 'cart',
     text: '购物车',
     info: 2,
+    infoBackgroundColor: '#18c7ff',
   },
 ])
 const cartGroup = ref([
   {
     text: '加入购物车',
-    backgroundColor: 'linear-gradient(90deg, #FFCD1E, #FF8A18)',
+    backgroundColor: 'linear-gradient(90deg, #05ffd1, #4cd964)',
     color: '#fff',
   },
   {
     text: '立即购买',
-    backgroundColor: 'linear-gradient(90deg, #FE6035, #EF1224)',
+    backgroundColor: 'linear-gradient(90deg, #18c7ff, #409eff)',
     color: '#fff',
   },
 ])
@@ -38,7 +80,13 @@ const buyHandle = () => {}
 </script>
 
 <template>
-  <scroll-view :scroll-y="true" class="viewport">
+  <scroll-view
+    :scroll-y="true"
+    :scroll-with-animation="true"
+    :scroll-top="scrollTop"
+    @scroll="scrollHandle"
+    class="viewport"
+  >
     <!-- 基本信息 -->
     <view class="goods">
       <!-- 商品主图 -->
@@ -55,11 +103,11 @@ const buyHandle = () => {}
         </view>
       </view>
       <!-- 快捷跳转 -->
-      <view class="shortcut">
+      <view :class="{ shortcut: true, fixed: shortcutFixed }">
         <view class="content">
-          <view class="shortcut-item active">图集</view>
-          <view class="shortcut-item">详情</view>
-          <view class="shortcut-item">推荐</view>
+          <view :class="{ active: shortcutIdx === 0, 'shortcut-item': true }" @tap="shortcutActive(0)">图集</view>
+          <view :class="{ active: shortcutIdx === 1, 'shortcut-item': true }" @tap="shortcutActive(1)">详情</view>
+          <view :class="{ active: shortcutIdx === 2, 'shortcut-item': true }" @tap="shortcutActive(2)">推荐</view>
         </view>
       </view>
       <!-- 商品简介 -->
@@ -157,33 +205,16 @@ page {
   overflow: hidden;
 }
 
-.panel {
-  margin-top: 20rpx;
-  background-color: #fff;
-  .title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90rpx;
-    line-height: 1;
-    padding: 30rpx 60rpx 30rpx 6rpx;
-    position: relative;
-    text {
-      padding-left: 10rpx;
-      font-size: 28rpx;
-      color: #333;
-      font-weight: 600;
-      border-left: 4rpx solid #27ba9b;
-    }
-    navigator {
-      font-size: 24rpx;
-      color: #666;
-    }
-  }
-}
-
 .shortcut {
-  margin: $uni-margin-frame 0;
+  width: 100%;
+  padding: $uni-margin-frame 0;
+  position: static;
+  &.fixed {
+    position: fixed;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 1;
+  }
   .content {
     margin: 0 auto;
     display: flex;
@@ -261,7 +292,7 @@ page {
       font-size: 34rpx;
       box-sizing: border-box;
       border-radius: $uni-margin-frame;
-      background: linear-gradient(45deg, $uni-color-main, #3bffac);
+      background: linear-gradient(45deg, $uni-color-main, $uni-color-auxiliary);
     }
     .number {
       font-size: 56rpx;
