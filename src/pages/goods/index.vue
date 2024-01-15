@@ -272,6 +272,9 @@ page {
     top: 0;
     background: rgba(255, 255, 255, 0.95);
     z-index: 1;
+    transition: cubic-bezier(0.71, 0.15, 0.16, 1.15) 0.6s;
+    transform: translateZ(0);
+    transform-style: preserve-3d;
   }
   .content {
     margin: 0 auto;
