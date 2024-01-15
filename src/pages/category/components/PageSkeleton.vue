@@ -12,13 +12,13 @@
             ></label>
             <view class="search-txt-wrapper WeizSearch-index--search-txt-wrapper" style="height: 36px">
               <swiper
-                autoplay="false"
-                circular="true"
+                :autoplay="false"
+                :circular="true"
                 class="search-txt-content WeizSearch-index--search-txt-content"
-                duration="1000"
-                interval="3000"
-                vertical="true"
-                current="0"
+                :duration="1000"
+                :interval="3000"
+                :vertical="true"
+                :current="0"
               >
                 <swiper-item
                   class="search-txt-item WeizSearch-index--search-txt-item"
@@ -48,7 +48,7 @@
         </view>
       </view>
       <view class="categories categories">
-        <scroll-view scroll-y="true" class="primary primary">
+        <scroll-view :scroll-y="true" class="primary primary">
           <view class="item active sk-pseudo sk-pseudo-circle">
             <text class="name sk-transparent sk-text-14-2857-534 sk-text">坚果</text>
           </view>
@@ -80,10 +80,10 @@
             <text class="name sk-transparent sk-text-14-2857-158 sk-text">充饥</text>
           </view>
         </scroll-view>
-        <scroll-view scroll-y="true" class="secondary secondary">
+        <scroll-view :scroll-y="true" class="secondary secondary">
           <view is="components/WeizCarousel/index" class="categories-banner categories-banner">
             <view class="carousel index--carousel small index--small">
-              <swiper autoplay="false" circular="true" class="swiper index--swiper" interval="3000" current="0">
+              <swiper :autoplay="false" :circular="true" class="swiper index--swiper" :interval="3000" :current="0">
                 <swiper-item
                   style="position: absolute; width: 100%; height: 100%; transform: translate(100%, 0px) translateZ(0px)"
                 >
