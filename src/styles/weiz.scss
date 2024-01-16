@@ -1,4 +1,8 @@
-/* 公共类名 */ 
+/* --------------- 公共类名 ------------------ */ 
+// 间距
+.m20 {
+  margin: 20rpx;
+}
 .ml20 {
   margin-left: 20rpx;
 }
@@ -11,10 +15,16 @@
 .mb20 {
   margin-bottom: 20rpx;
 }
+.p20 {
+  padding: 20rpx;
+}
+.pl20 {
+  padding-left: 20rpx;
+}
 .white {
   color: white;
 }
-
+// 布局
 .flex,
 .flex-wrap,
 .flex-column,
@@ -30,6 +40,24 @@
 .flex-align-center {
   align-items: center;
 }
+// 文字
+.fold {
+  font-style: 600;
+}
+.fold4 {
+  font-style: 400;
+}
+.fold7 {
+  font-style: 700;
+}
+.fold8 {
+  font-style: 800;
+}
+// 其他
+.boxSize {
+  box-sizing: border-box;
+}
+
 
 /* 默认按钮 */
 .weiz-btn[type=default] {

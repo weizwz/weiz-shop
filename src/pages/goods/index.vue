@@ -1,12 +1,14 @@
 // src/pages/goods/goods.vue
 <script setup lang="ts">
-import { getCategorySuggestAPI } from '@/api/category'
-import type { GoodsItem, RankItem } from '@/types/api'
-import { rpxToPx } from '@/utils/platform'
-import { onLoad } from '@dcloudio/uni-app'
 import { nextTick, ref, getCurrentInstance } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+import { rpxToPx } from '@/utils/platform'
+import { getCategorySuggestAPI } from '@/api/category'
+import SpecificationPanel from './components/SpecificationPanel.vue'
+import type { GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
 
 const instance = getCurrentInstance()
+const specificationPanel = ref()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -46,19 +48,18 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
 }
 const shortcutActive = (idx: number) => {
   scrollTop.value = scrollOldTop.value
+  shortcutIdx.value = idx
   // 快捷方式自身高度
   const dH = rpxToPx(112)
   nextTick(() => {
     if (idx === 0) {
       scrollTop.value = 0
-      shortcutIdx.value = idx
     } else if (idx === 1) {
       const query = uni.createSelectorQuery().in(instance)
       query
         .select('.detail')
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
-          shortcutIdx.value = idx
           if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
           scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
@@ -69,7 +70,6 @@ const shortcutActive = (idx: number) => {
         .select('.similar')
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
-          shortcutIdx.value = idx
           if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
           scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
         })
@@ -77,6 +77,20 @@ const shortcutActive = (idx: number) => {
     }
   })
 }
+
+/**
+ * 商品属性
+ */
+const goodsProp = ref<GoodsProp[]>([
+  { id: '101', name: '品牌', value: '味值', level: 2 },
+  { id: '102', name: '商品编号', value: '1000265256', level: 2 },
+  { id: '20', name: '主体', level: 1 },
+  { id: '201', name: '保质期', value: '180天', level: 2 },
+  { id: '202', name: '净含量', value: '500g', level: 2 },
+  { id: '30', name: '参数', level: 1 },
+  { id: '301', name: '是否有机', value: '非有机', level: 2 },
+  { id: '302', name: '包装形式', value: '袋装', level: 2 },
+])
 
 /**
  * 同类推荐
@@ -130,6 +144,33 @@ const buyHandle = () => {}
 onLoad((option) => {
   getCategorySuggestData(option?.id)
 })
+
+/**
+ * 弹出层
+ */
+// uni-ui 弹出层组件 ref
+const popup = ref<{
+  open: (type?: UniHelper.UniPopupType) => void
+  close: () => void
+}>()
+const popupName = ref<'specification' | 'address'>()
+const openPopup = (name: typeof popupName.value) => {
+  popupName.value = name
+  popup.value?.open()
+}
+const closePopup = () => {
+  popup.value?.close()
+}
+// 商品规格 默认取第一个
+const currentSpec = ref<GoodsSpec>({
+  id: '001',
+  name: '经典味 500g 1袋装',
+  price: '29.90',
+  image_url: '/static/images/card/index/1.png',
+})
+const changeSpec = (data: GoodsSpec) => {
+  currentSpec.value = data
+}
 </script>
 
 <template>
@@ -186,12 +227,18 @@ onLoad((option) => {
         <!-- 操作面板 -->
         <view class="action">
           <view class="item arrow">
-            <text class="label">选择</text>
-            <text class="text ellipsis"> 请选择商品规格 <uni-icons type="right" size="14"></uni-icons></text>
+            <view class="label">已选</view>
+            <view class="text specification" @tap="openPopup('specification')">
+              <view class=""> {{ currentSpec ? currentSpec.name : '请选择商品规格' }} </view>
+              <uni-icons type="right" size="14"></uni-icons>
+            </view>
           </view>
           <view class="item arrow">
             <text class="label">配送</text>
-            <text class="text ellipsis"> 请选择收获地址 <uni-icons type="right" size="14"></uni-icons> </text>
+            <view class="text specification">
+              <view class=""> 请选择收获地址 </view>
+              <uni-icons type="right" size="14"></uni-icons>
+            </view>
           </view>
           <view class="item arrow">
             <text class="label">服务</text>
@@ -204,27 +251,20 @@ onLoad((option) => {
       <view class="detail mb20">
         <WeizTitle title="详情" />
         <view class="content">
-          <uni-section title="规格参数" type="line" color="#18c7ff"></uni-section>
+          <uni-section class="goods-section" title="规格参数" type="line" color="#18c7ff"></uni-section>
           <view class="properties">
-            <!-- 属性详情 -->
-            <view class="item">
-              <text class="label">商品编号</text>
-              <text class="value">2324928493859856</text>
-            </view>
-            <view class="item">
-              <text class="label">净含量</text>
-              <text class="value">500g</text>
-            </view>
-            <view class="item">
-              <text class="label">保质期</text>
-              <text class="value">3个月</text>
+            <view class="item" v-for="item in goodsProp" :key="item.id">
+              <text :class="{ label: true, top: item.level === 1 }">{{ item.name }}</text>
+              <text v-if="item.value" class="value">{{ item.value }}</text>
             </view>
           </view>
-          <uni-section title="商品介绍" type="line" color="#18c7ff"></uni-section>
+          <uni-section class="goods-section" title="商品介绍" type="line" color="#18c7ff"></uni-section>
           <!-- 详情 -->
-          <image mode="widthFix" src="/static/images/card/index/1.png"></image>
-          <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a8d266886d31f6eb0d7333c815769305.jpg"></image>
-          <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a9bee1cb53d72e6cdcda210071cbd46a.jpg"></image>
+          <view class="images">
+            <image mode="widthFix" src="/static/images/card/index/1.png"></image>
+            <image mode="widthFix" src="/static/images/details/1.jpg"></image>
+            <image mode="widthFix" src="/static/images/details/2.jpg"></image>
+          </view>
         </view>
       </view>
 
@@ -249,18 +289,27 @@ onLoad((option) => {
         @buttonClick="buyHandle"
       />
     </view>
+    <!-- uni-ui 弹出层 https://uniapp.dcloud.net.cn/component/uniui/uni-popup.html-->
+    <uni-popup ref="popup" type="bottom" background-color="#fff">
+      <SpecificationPanel
+        v-if="popupName === 'specification'"
+        ref="specificationPanel"
+        @close="closePopup"
+        @changeSpec="changeSpec"
+      />
+    </uni-popup>
   </view>
 </template>
 
 <style lang="scss">
 page {
   height: 100%;
+  background: $uni-bg-color-grey;
 }
 .viewport {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: $uni-bg-color-grey;
   overflow: hidden;
 }
 .scroll-view {
@@ -420,10 +469,9 @@ page {
     overflow: hidden;
     border-radius: $uni-margin-frame;
     background: #fff;
-    padding: 10rpx;
+    padding: 20rpx;
     .item {
       height: 90rpx;
-      padding-right: 60rpx;
       font-size: 26rpx;
       color: #333;
       position: relative;
@@ -432,21 +480,30 @@ page {
       &:last-child {
         border-bottom: 0 none;
       }
+      .text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 90rpx;
+        flex: 1;
+        -webkit-line-clamp: 1;
+      }
+      .specification {
+      }
     }
     .label {
       width: 60rpx;
-      color: #898b94;
-      margin: 0 16rpx 0 10rpx;
-    }
-    .text {
-      flex: 1;
-      -webkit-line-clamp: 1;
+      color: $uni-text-color-grey;
+      margin-right: 10rpx;
     }
   }
 }
 
 /* 商品详情 */
 .detail {
+  .goods-section {
+    font-weight: 600 !important;
+  }
   > .content {
     border-radius: $uni-margin-frame;
     overflow: hidden;
@@ -454,29 +511,43 @@ page {
     margin-top: 20rpx;
     display: flex;
     flex-direction: column;
-    > image {
-      width: 100%;
-      margin-bottom: 10rpx;
-      &:last-child {
-        margin-bottom: 0;
+    .images {
+      padding: 10rpx;
+      > image {
+        width: 100%;
+        margin-bottom: 10rpx;
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
   }
   .properties {
-    padding: 0 20rpx;
+    margin: 0 20rpx;
     margin-bottom: 30rpx;
+    border: 1px solid $uni-border-color;
     .item {
       display: flex;
       line-height: 2;
-      padding: 10rpx;
-      font-size: 26rpx;
-      color: #333;
-      border-bottom: 1rpx dashed #ccc;
+      font-size: 24rpx;
+      color: $uni-text-color-grey;
+      border-bottom: 1px solid $uni-border-color;
+      &:last-child {
+        border-bottom: none;
+      }
     }
     .label {
       width: 200rpx;
+      padding: 10rpx 20rpx;
+      border-right: 1px solid $uni-border-color;
+      &.top {
+        color: #333;
+        font-weight: bold;
+        border-right: none;
+      }
     }
     .value {
+      padding: 10rpx 20rpx;
       flex: 1;
     }
   }
@@ -512,5 +583,7 @@ page {
   right: var(--window-right);
   /* #endif */
   bottom: 0;
+  background: #fff;
+  box-shadow: 0 -1rpx 5rpx rgba(200, 200, 200, 0.3);
 }
 </style>

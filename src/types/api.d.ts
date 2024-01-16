@@ -125,6 +125,28 @@ export type RankItem = {
   // 排名链接
   link: string
 }
+// 商品属性
+export type GoodsProp = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // 值
+  value?: string
+  // 级别
+  level: number
+}
+// 商品规格
+export type GoodsSpec = {
+  // id
+  id: string
+  // 名称
+  name: string
+  // 价格
+  price: string
+  // 图片
+  image_url: string
+}
 
 /**
  * 热搜排行榜
