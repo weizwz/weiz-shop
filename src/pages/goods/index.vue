@@ -5,10 +5,12 @@ import { onLoad } from '@dcloudio/uni-app'
 import { rpxToPx } from '@/utils/platform'
 import { getCategorySuggestAPI } from '@/api/category'
 import SpecificationPanel from './components/SpecificationPanel.vue'
-import type { GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
+import AddressPanel from './components/AddressPanel.vue'
+import type { Address, GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
+import type { SpecificationPanelInstance } from '@/types/components'
 
 const instance = getCurrentInstance()
-const specificationPanel = ref()
+const specificationPanel = ref<SpecificationPanelInstance>()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -171,6 +173,11 @@ const currentSpec = ref<GoodsSpec>({
 const changeSpec = (data: GoodsSpec) => {
   currentSpec.value = data
 }
+// 地址 默认取第一个，无的话提示新建
+const currentAddress = ref<Address>()
+const changeAddress = (data: Address) => {
+  currentAddress.value = data
+}
 </script>
 
 <template>
@@ -235,8 +242,8 @@ const changeSpec = (data: GoodsSpec) => {
           </view>
           <view class="item arrow">
             <text class="label">配送</text>
-            <view class="text specification">
-              <view class=""> 请选择收获地址 </view>
+            <view class="text specification" @tap="openPopup('address')">
+              <view class=""> {{ currentAddress ? currentAddress.address : '请选择收货地址' }} </view>
               <uni-icons type="right" size="14"></uni-icons>
             </view>
           </view>
@@ -292,10 +299,17 @@ const changeSpec = (data: GoodsSpec) => {
     <!-- uni-ui 弹出层 https://uniapp.dcloud.net.cn/component/uniui/uni-popup.html-->
     <uni-popup ref="popup" type="bottom" background-color="#fff">
       <SpecificationPanel
-        v-if="popupName === 'specification'"
+        id="SpecificationPanel"
         ref="specificationPanel"
+        v-if="popupName === 'specification'"
         @close="closePopup"
         @changeSpec="changeSpec"
+      />
+      <AddressPanel
+        v-if="popupName === 'address'"
+        ref="addressPanel"
+        @close="closePopup"
+        @changeAddress="changeAddress"
       />
     </uni-popup>
   </view>
@@ -487,8 +501,6 @@ page {
         height: 90rpx;
         flex: 1;
         -webkit-line-clamp: 1;
-      }
-      .specification {
       }
     }
     .label {

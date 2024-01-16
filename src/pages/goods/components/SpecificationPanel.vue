@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { GoodsSpec } from '@/types/api'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -10,7 +11,7 @@ const props = defineProps<{
 const popupEmit = defineEmits(['close', 'changeSpec'])
 
 // 数量
-const currentNum = ref<number>(1)
+const currentNum = ref<UniHelper.UniNumberBoxValue>()
 // 规格
 const specification = ref<GoodsSpec[]>([
   { id: '001', name: '经典味 500g 1袋装', price: '29.90', image_url: '/static/images/card/index/1.png' },
@@ -26,7 +27,7 @@ const changeSpec = (idx: number) => {
   currentNum.value = 1
   popupEmit('changeSpec', currentSpec.value)
 }
-const changeNumber = (number) => {
+const changeNumber = (number: UniHelper.UniNumberBoxValue) => {
   currentNum.value = number
 }
 const closeWindow = () => {
@@ -34,12 +35,12 @@ const closeWindow = () => {
 }
 
 // 暴露方法给父组件
-defineExpose({
-  getCurrentSpec,
-})
 const getCurrentSpec = () => {
   return currentSpec.value
 }
+defineExpose({
+  getCurrentSpec,
+})
 </script>
 
 <template>
@@ -60,7 +61,7 @@ const getCurrentSpec = () => {
         >
       </view>
     </view>
-    <view class="pl20">规格(3)</view>
+    <view class="pl20 title">规格({{ specification.length }})</view>
     <scroll-view :scroll-y="true" class="scroll-select">
       <view class="content p20 flex-wrap">
         <view
@@ -75,8 +76,8 @@ const getCurrentSpec = () => {
       </view>
     </scroll-view>
     <view class="number flex">
-      <text class="pl20">数量</text>
-      <uni-number-box v-model="currentNum" @change="changeNumber" />
+      <text class="title">数量</text>
+      <uni-number-box v-model="currentNum" :min="1" @change="changeNumber" :max="50" />
     </view>
   </view>
 </template>
@@ -96,6 +97,9 @@ const getCurrentSpec = () => {
     position: absolute;
     top: 0;
     right: $uni-margin-frame;
+  }
+  .title {
+    font-size: 26rpx;
   }
   .current {
     height: 100%;
@@ -165,9 +169,10 @@ const getCurrentSpec = () => {
       }
     }
   }
-  .number {
+  > .number {
     justify-content: space-between;
-    padding: 0 $uni-margin-frame;
+    align-items: center;
+    padding: 0 $uni-margin-frame $uni-margin-frame;
   }
 }
 </style>

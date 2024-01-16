@@ -147,6 +147,19 @@ export type GoodsSpec = {
   // 图片
   image_url: string
 }
+// 地址
+export type Address = {
+  // id
+  id: string
+  // 姓名
+  name: string
+  // 电话
+  phone: string
+  // 地址
+  address: string
+  // 是否默认
+  checked?: boolean
+}
 
 /**
  * 热搜排行榜
