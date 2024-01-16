@@ -9,10 +9,6 @@ import { nextTick, ref, getCurrentInstance } from 'vue'
 const instance = getCurrentInstance()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-// 接收参数
-const props = defineProps<{
-  id: string
-}>()
 
 // 图集索引
 const imgIdx = ref<number>(1)
@@ -20,7 +16,9 @@ const changeImgSwiper = (ev: UniHelper.SwiperOnChangeEvent) => {
   imgIdx.value = ev.detail.current + 1
 }
 
-// 快捷滚动
+/**
+ * 快捷滚动
+ */
 const shortcutIdx = ref<number>(0)
 const scrollTop = ref<number>(0)
 const scrollOldTop = ref<number>(0)
@@ -35,7 +33,7 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
     .select('.similar')
     .boundingClientRect((data) => {
       const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
-      if (nodeInfo && nodeInfo.top && nodeInfo.top <= rpxToPx(112)) {
+      if (nodeInfo && nodeInfo.top && Math.ceil(nodeInfo.top) <= Math.ceil(rpxToPx(112))) {
         shortcutIdx.value = 2
       } else if (scrollOldTop.value >= rpxToPx(750)) {
         shortcutIdx.value = 1
@@ -84,8 +82,8 @@ const shortcutActive = (idx: number) => {
  * 同类推荐
  */
 const categoryList = ref<GoodsItem<RankItem>[]>([])
-const getCategorySuggestData = async () => {
-  const res = await getCategorySuggestAPI(props.id)
+const getCategorySuggestData = async (id: string) => {
+  const res = await getCategorySuggestAPI(id)
   categoryList.value = res.result
 }
 
@@ -127,141 +125,146 @@ const addCartHandle = () => {}
 const buyHandle = () => {}
 
 /**
- * 加载
+ * uni.navigateTo的传参在onload里接收 https://uniapp.dcloud.net.cn/api/router.html#navigateto
  */
-onLoad(() => {
-  getCategorySuggestData()
+onLoad((option) => {
+  getCategorySuggestData(option?.id)
 })
 </script>
 
 <template>
-  <scroll-view
-    :scroll-y="true"
-    :scroll-with-animation="true"
-    :scroll-top="scrollTop"
-    @scroll="scrollHandle"
-    class="viewport"
-  >
-    <!-- 基本信息 -->
-    <view class="goods">
-      <!-- 商品主图 -->
-      <view class="preview">
-        <swiper circular class="preview-swiper" @change="changeImgSwiper">
-          <swiper-item v-for="idx in 5" :key="idx">
-            <image mode="aspectFill" :src="`/static/images/card/index/${idx}.png`" />
-          </swiper-item>
-        </swiper>
-        <view class="indicator">
-          <text class="current">{{ imgIdx }}</text>
-          <text class="split">/</text>
-          <text class="total">5</text>
+  <view class="viewport">
+    <scroll-view
+      :scroll-y="true"
+      :scroll-with-animation="true"
+      :scroll-top="scrollTop"
+      @scroll="scrollHandle"
+      class="scroll-view"
+    >
+      <!-- 基本信息 -->
+      <view class="goods">
+        <!-- 商品主图 -->
+        <view class="preview">
+          <swiper circular class="preview-swiper" @change="changeImgSwiper">
+            <swiper-item v-for="idx in 5" :key="idx">
+              <image mode="aspectFill" :src="`/static/images/card/index/${idx}.png`" />
+            </swiper-item>
+          </swiper>
+          <view class="indicator">
+            <text class="current">{{ imgIdx }}</text>
+            <text class="split">/</text>
+            <text class="total">5</text>
+          </view>
+        </view>
+        <!-- 快捷跳转 -->
+        <view v-show="shortcutFixed" class="seat"> <!--占位--> </view>
+        <view :class="{ shortcut: true, fixed: shortcutFixed }">
+          <view class="content">
+            <view :class="{ active: shortcutIdx === 0, 'shortcut-item': true }" @tap="shortcutActive(0)">图集</view>
+            <view :class="{ active: shortcutIdx === 1, 'shortcut-item': true }" @tap="shortcutActive(1)">详情</view>
+            <view :class="{ active: shortcutIdx === 2, 'shortcut-item': true }" @tap="shortcutActive(2)">推荐</view>
+          </view>
+        </view>
+        <!-- 商品简介 -->
+        <view class="meta">
+          <view class="price">
+            <text class="symbol">¥</text>
+            <text class="number">29</text>
+            <text class="suffix">.00</text>
+          </view>
+          <view class="info">
+            <view class="name"> 夏威夷进口爆米花 香甜可口脆味十足 家庭影院必备 500g </view>
+            <view class="desc-content">
+              <view class="desc" v-for="(item, index) in ['原生态', '健康', '新鲜玉米']" :key="index">{{ item }}</view>
+            </view>
+            <view class="white tag-content">
+              <view class="tag" v-for="(item, index) in ['30天价保', '免费上门取退']" :key="index">{{ item }}</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 操作面板 -->
+        <view class="action">
+          <view class="item arrow">
+            <text class="label">选择</text>
+            <text class="text ellipsis"> 请选择商品规格 <uni-icons type="right" size="14"></uni-icons></text>
+          </view>
+          <view class="item arrow">
+            <text class="label">配送</text>
+            <text class="text ellipsis"> 请选择收获地址 <uni-icons type="right" size="14"></uni-icons> </text>
+          </view>
+          <view class="item arrow">
+            <text class="label">服务</text>
+            <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
+          </view>
         </view>
       </view>
-      <!-- 快捷跳转 -->
-      <view v-show="shortcutFixed" class="seat"> <!--占位--> </view>
-      <view :class="{ shortcut: true, fixed: shortcutFixed }">
+
+      <!-- 商品详情 -->
+      <view class="detail mb20">
+        <WeizTitle title="详情" />
         <view class="content">
-          <view :class="{ active: shortcutIdx === 0, 'shortcut-item': true }" @tap="shortcutActive(0)">图集</view>
-          <view :class="{ active: shortcutIdx === 1, 'shortcut-item': true }" @tap="shortcutActive(1)">详情</view>
-          <view :class="{ active: shortcutIdx === 2, 'shortcut-item': true }" @tap="shortcutActive(2)">推荐</view>
-        </view>
-      </view>
-      <!-- 商品简介 -->
-      <view class="meta">
-        <view class="price">
-          <text class="symbol">¥</text>
-          <text class="number">29</text>
-          <text class="suffix">.00</text>
-        </view>
-        <view class="info">
-          <view class="name"> 夏威夷进口爆米花 香甜可口脆味十足 家庭影院必备 500g </view>
-          <view class="desc-content">
-            <view class="desc" v-for="(item, index) in ['原生态', '健康', '新鲜玉米']" :key="index">{{ item }}</view>
+          <uni-section title="规格参数" type="line" color="#18c7ff"></uni-section>
+          <view class="properties">
+            <!-- 属性详情 -->
+            <view class="item">
+              <text class="label">商品编号</text>
+              <text class="value">2324928493859856</text>
+            </view>
+            <view class="item">
+              <text class="label">净含量</text>
+              <text class="value">500g</text>
+            </view>
+            <view class="item">
+              <text class="label">保质期</text>
+              <text class="value">3个月</text>
+            </view>
           </view>
-          <view class="white tag-content">
-            <view class="tag" v-for="(item, index) in ['30天价保', '免费上门取退']" :key="index">{{ item }}</view>
-          </view>
+          <uni-section title="商品介绍" type="line" color="#18c7ff"></uni-section>
+          <!-- 详情 -->
+          <image mode="widthFix" src="/static/images/card/index/1.png"></image>
+          <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a8d266886d31f6eb0d7333c815769305.jpg"></image>
+          <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a9bee1cb53d72e6cdcda210071cbd46a.jpg"></image>
         </view>
       </view>
 
-      <!-- 操作面板 -->
-      <view class="action">
-        <view class="item arrow">
-          <text class="label">选择</text>
-          <text class="text ellipsis"> 请选择商品规格 <uni-icons type="right" size="14"></uni-icons></text>
-        </view>
-        <view class="item arrow">
-          <text class="label">配送</text>
-          <text class="text ellipsis"> 请选择收获地址 <uni-icons type="right" size="14"></uni-icons> </text>
-        </view>
-        <view class="item arrow">
-          <text class="label">服务</text>
-          <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
+      <!-- 同类推荐 -->
+      <view class="similar">
+        <WeizTitle title="推荐" />
+        <view class="content mt20">
+          <view class="mr20 mb20 goods-item" v-for="temp in categoryList" :key="temp.id">
+            <WeizGoods :goods="temp" />
+          </view>
         </view>
       </view>
+    </scroll-view>
+
+    <!-- 用户操作 -->
+    <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
+      <uni-goods-nav
+        :options="cartOptions"
+        :fill="true"
+        :button-group="cartGroup"
+        @click="addCartHandle"
+        @buttonClick="buyHandle"
+      />
     </view>
-
-    <!-- 商品详情 -->
-    <view class="detail mb20">
-      <WeizTitle title="详情" />
-      <view class="content">
-        <uni-section title="规格参数" type="line" color="#18c7ff"></uni-section>
-        <view class="properties">
-          <!-- 属性详情 -->
-          <view class="item">
-            <text class="label">商品编号</text>
-            <text class="value">2324928493859856</text>
-          </view>
-          <view class="item">
-            <text class="label">净含量</text>
-            <text class="value">500g</text>
-          </view>
-          <view class="item">
-            <text class="label">保质期</text>
-            <text class="value">3个月</text>
-          </view>
-        </view>
-        <uni-section title="商品介绍" type="line" color="#18c7ff"></uni-section>
-        <!-- 详情 -->
-        <image mode="widthFix" src="/static/images/card/index/1.png"></image>
-        <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a8d266886d31f6eb0d7333c815769305.jpg"></image>
-        <image mode="widthFix" src="https://yanxuan-item.nosdn.127.net/a9bee1cb53d72e6cdcda210071cbd46a.jpg"></image>
-      </view>
-    </view>
-
-    <!-- 同类推荐 -->
-    <view class="similar">
-      <WeizTitle title="推荐" />
-      <view class="content mt20">
-        <view class="mr20 mb20 goods-item" v-for="temp in categoryList" :key="temp.id">
-          <WeizGoods :goods="temp" />
-        </view>
-      </view>
-    </view>
-  </scroll-view>
-
-  <!-- 用户操作 -->
-  <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
-    <uni-goods-nav
-      :options="cartOptions"
-      :fill="true"
-      :button-group="cartGroup"
-      @click="addCartHandle"
-      @buttonClick="buyHandle"
-    />
   </view>
 </template>
 
 <style lang="scss">
 page {
   height: 100%;
-  overflow: hidden;
+}
+.viewport {
+  height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.viewport {
   background: $uni-bg-color-grey;
+  overflow: hidden;
+}
+.scroll-view {
+  flex: 1;
   overflow: hidden;
 }
 .seat {
@@ -273,9 +276,11 @@ page {
   position: static;
   &.fixed {
     position: fixed;
-    top: 0;
-    //#ifdef  APP-PLUS || H5
+    //#ifdef  H5
     top: calc(44px + env(safe-area-inset-top));
+    //#endif
+    //#ifndef  H5
+    top: 0;
     //#endif
     background: rgba(255, 255, 255, 0.95);
     z-index: 1;
