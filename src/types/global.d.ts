@@ -28,16 +28,23 @@ export type CommonObj<T> = {
 
 /** 小程序登录 登录用户信息 */
 export type LoginResult = {
-  /** 用户ID */
+  // 用户ID
   id: number
-  /** 头像  */
+  // 头像
   avatar: string
-  /** 账户名  */
+  // 账户名
   account: string
-  /** 昵称 */
+  // 昵称
   nickname?: string
-  /** 手机号 */
+  // 手机号
   mobile: string
-  /** 登录凭证 */
+  // 登录凭证
   token: string
+}
+/** 普通登录 */
+export type LoginParams = {
+  // 账号
+  account: string
+  // 密码
+  password: string
 }

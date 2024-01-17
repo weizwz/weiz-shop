@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/api/login'
 import { useUserStore } from '@/stores'
-import type { LoginResult } from '@/types/global'
+import type { LoginParams, LoginResult } from '@/types/global'
 import { onLoad } from '@dcloudio/uni-app'
+import type { UniFormsInstance } from '@uni-helper/uni-ui-types'
 
 //#ifdef MP-WEIXIN
 // 获取 code 登录凭证
@@ -20,13 +22,13 @@ const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
   const res = await postLoginWxMinAPI({ code, encryptedData, iv })
   loginSuccess(res.result)
 }
-//#endif
-
 // 模拟手机号码快捷登录（开发练习）
 const onGetphonenumberSimple = async () => {
   const res = await postLoginWxMinSimpleAPI('13998672369')
   loginSuccess(res.result)
 }
+//#endif
+
 // 登录成功封装
 const loginSuccess = (profile: LoginResult) => {
   // 保存用户信息
@@ -39,6 +41,42 @@ const loginSuccess = (profile: LoginResult) => {
     uni.switchTab({ url: '/pages/my/index' })
   }, 500)
 }
+// 登录表单
+const formRole = ref<UniFormsInstance>()
+const rules = ref<UniHelper.UniFormsRules>({
+  account: {
+    rules: [
+      { required: true, errorMessage: '请输入用户名/手机号码' },
+      {
+        validateFunction: (rule, value, data, callback) => {
+          if (value.length < 5 || value.length > 11) {
+            callback('账号长度只能在5-11个字符之间')
+          }
+          return true
+        },
+      },
+    ],
+  },
+  password: {
+    rules: [
+      { required: true, errorMessage: '请输入密码' },
+      { required: true, errorMessage: '请输入密码' },
+    ],
+  },
+})
+const logoForm = ref<LoginParams>({
+  account: '',
+  password: '',
+})
+
+const submitForm = async () => {
+  try {
+    await formRole.value?.validate?.()
+    console.log('提交成功')
+  } catch (error) {
+    // uni.showToast({ icon: 'none', title: '登录失败，请重试' })
+  }
+}
 </script>
 
 <template>
@@ -48,9 +86,28 @@ const loginSuccess = (profile: LoginResult) => {
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
-      <input class="input" type="text" placeholder="请输入用户名/手机号码" />
-      <input class="input" type="text" password placeholder="请输入密码" />
-      <button class="button phone">登录</button>
+      <uni-forms ref="formRole" :modelValue="logoForm" :rules="rules">
+        <uni-forms-item label="" required name="account">
+          <uni-easyinput
+            prefixIcon="person"
+            name="account"
+            v-model="logoForm.account"
+            trim="both"
+            placeholder="请输入用户名/手机号码"
+          />
+        </uni-forms-item>
+        <uni-forms-item label="" required name="password">
+          <uni-easyinput
+            prefixIcon="locked"
+            name="password"
+            v-model="logoForm.password"
+            trim="both"
+            type="password"
+            placeholder="请输入密码"
+          />
+        </uni-forms-item>
+      </uni-forms>
+      <button class="button phone" @tap="submitForm">登录</button>
 
       <!-- 小程序端授权登录 -->
       //#ifdef MP-WEIXIN
@@ -101,15 +158,13 @@ page {
   height: 60vh;
   padding: 40rpx 20rpx 20rpx;
   width: calc(100% - 40rpx);
-
-  .input {
-    width: calc(100% - 60rpx);
+  .is-input-border {
+    border-radius: 80rpx;
+    margin-bottom: 20rpx;
+  }
+  input {
     height: 80rpx;
     font-size: 28rpx;
-    border-radius: 72rpx;
-    border: 1px solid #ddd;
-    padding: 0 30rpx;
-    margin-bottom: 20rpx;
   }
 
   .button {
