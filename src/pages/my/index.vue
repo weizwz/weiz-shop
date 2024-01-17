@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores'
+import { watch } from 'vue'
 
 const userStore = useUserStore()
-if (!userStore.userInfo) {
-  uni.redirectTo({
-    url: '/pages/login/index',
-  })
-}
+
+watch(
+  () => userStore?.userInfo?.id,
+  (val) => {
+    if (!val) {
+      uni.redirectTo({
+        url: '/pages/login/index',
+      })
+    }
+  },
+)
 </script>
 
 <template>
   <view class="">
     <view>用户信息： {{ userStore.userInfo }}</view>
-    <button size="mini" plain type="primary">保存用户信息</button>
-    <button @tap="userStore.clearUserInfo()" size="mini" plain type="primary">清理用户信息</button>
+    <button @tap="userStore.clearUserInfo()" size="mini" type="primary">清理用户信息</button>
   </view>
 </template>
 
