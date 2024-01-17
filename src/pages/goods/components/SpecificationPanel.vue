@@ -48,7 +48,7 @@ defineExpose({
     <view class="style"></view>
     <view class="close" @tap="closeWindow"><uni-icons type="closeempty" size="18" color="#999"></uni-icons></view>
     <view class="current flex">
-      <image mode="aspectFill" :src="currentSpec.image_url" />
+      <image class="current-img" mode="aspectFill" :src="currentSpec.image_url" />
       <view class="content">
         <view class="price">
           <text class="symbol">¥</text>
@@ -70,7 +70,7 @@ defineExpose({
           :key="item.id"
           @tap="changeSpec(index)"
         >
-          <image mode="aspectFill" :src="item.image_url" />
+          <image class="content-img" mode="aspectFill" :src="item.image_url" />
           <view class="item-desc">{{ item.name }}</view>
         </view>
       </view>
@@ -105,7 +105,7 @@ defineExpose({
     height: 100%;
     padding: 0 $uni-margin-frame $uni-margin-frame;
     box-sizing: border-box;
-    > image {
+    > .current-img {
       width: 180rpx;
       height: 180rpx;
       border-radius: 20rpx;
@@ -153,7 +153,7 @@ defineExpose({
             background: $uni-text-color-price-bg;
           }
         }
-        > image {
+        > .content-img {
           width: 100%;
           height: 230rpx;
         }

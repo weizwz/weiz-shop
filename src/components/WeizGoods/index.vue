@@ -30,7 +30,11 @@ defineProps<{
         <view class="goods-video-image-name">{{ goods.videoName }}</view>
       </view>
       <view class="goods-video-info">
-        <image :src="typeof goods.image_url === 'string' ? goods.image_url : ''" mode="widthFix"></image>
+        <image
+          class="goods-video-img"
+          :src="typeof goods.image_url === 'string' ? goods.image_url : ''"
+          mode="widthFix"
+        ></image>
         <view class="goods-video-name-info">
           <view class="goods-video-name">{{ goods.name }}</view>
           <view class="goods-price">
@@ -133,7 +137,7 @@ defineProps<{
       display: flex;
       align-items: center;
       overflow: hidden;
-      > image {
+      > .goods-video-img {
         width: 100rpx;
         height: 100rpx;
         border-radius: 10rpx;
