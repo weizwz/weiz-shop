@@ -1,7 +1,7 @@
-import type { LoginResult } from '@/types/global'
+import type { LoginResult, LoginParams } from '@/types/global'
 import { http } from '@/utils/http'
 
-type LoginParams = {
+type LoginWXParams = {
   code: string
   encryptedData: string
   iv: string
@@ -10,7 +10,7 @@ type LoginParams = {
  * 小程序登录
  * @param data 请求参数
  */
-export const postLoginWxMinAPI = (data: LoginParams) => {
+export const postLoginWxMinAPI = (data: LoginWXParams) => {
   return http<LoginResult>({
     method: 'POST',
     url: '/login/wxMin',
@@ -29,5 +29,16 @@ export const postLoginWxMinSimpleAPI = (phoneNumber: string) => {
     data: {
       phoneNumber,
     },
+  })
+}
+/**
+ * 网页登录
+ */
+
+export const postLoginAPI = (data: LoginParams) => {
+  return http<LoginResult>({
+    method: 'POST',
+    url: '/login/wxMin/simple',
+    data,
   })
 }

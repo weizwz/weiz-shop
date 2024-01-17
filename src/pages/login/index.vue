@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/api/login'
+import { postLoginAPI, postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/api/login'
 import { useUserStore } from '@/stores'
 import type { LoginParams, LoginResult } from '@/types/global'
 import { onLoad } from '@dcloudio/uni-app'
@@ -72,7 +72,8 @@ const logoForm = ref<LoginParams>({
 const submitForm = async () => {
   try {
     await formRole.value?.validate?.()
-    console.log('提交成功')
+    const res = await postLoginAPI(logoForm.value)
+    loginSuccess(res.result)
   } catch (error) {
     // uni.showToast({ icon: 'none', title: '登录失败，请重试' })
   }
@@ -87,19 +88,17 @@ const submitForm = async () => {
     <view class="login">
       <!-- 网页端表单登录 -->
       <uni-forms ref="formRole" :modelValue="logoForm" :rules="rules">
-        <uni-forms-item label="" required name="account">
+        <uni-forms-item label="" name="account">
           <uni-easyinput
             prefixIcon="person"
-            name="account"
             v-model="logoForm.account"
             trim="both"
             placeholder="请输入用户名/手机号码"
           />
         </uni-forms-item>
-        <uni-forms-item label="" required name="password">
+        <uni-forms-item label="" name="password">
           <uni-easyinput
             prefixIcon="locked"
-            name="password"
             v-model="logoForm.password"
             trim="both"
             type="password"
