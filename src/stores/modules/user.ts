@@ -1,3 +1,4 @@
+import type { LoginResult } from '@/types/global'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -6,10 +7,10 @@ export const useUserStore = defineStore(
   'user',
   () => {
     // 用户信息
-    const userInfo = ref<any>()
+    const userInfo = ref<LoginResult>()
 
     // 保存用户信息，登录时使用
-    const setUserInfo = (val: any) => {
+    const setUserInfo = (val: LoginResult) => {
       userInfo.value = val
     }
 
