@@ -37,7 +37,7 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
     .select('.similar')
     .boundingClientRect((data) => {
       const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
-      if (nodeInfo && nodeInfo.top && Math.ceil(nodeInfo.top) <= Math.ceil(rpxToPx(112))) {
+      if (nodeInfo && nodeInfo.top && nodeInfo.top <= Math.ceil(rpxToPx(112))) {
         shortcutIdx.value = 2
       } else if (scrollOldTop.value >= rpxToPx(750)) {
         shortcutIdx.value = 1
@@ -63,7 +63,8 @@ const shortcutActive = (idx: number) => {
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
           if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
-          scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
+          // Math.ceil(nodeInfo.top) 是为了消除误差，宁可多滚动一点，避免因为小数点导致滚动不到位
+          scrollTop.value += nodeInfo && nodeInfo.top ? Math.ceil(nodeInfo.top) - dH : 0
         })
         .exec()
     } else {
@@ -73,7 +74,7 @@ const shortcutActive = (idx: number) => {
         .boundingClientRect((data) => {
           const nodeInfo: UniApp.NodeInfo = data as UniApp.NodeInfo
           if (nodeInfo.top && Math.ceil(nodeInfo.top) === Math.ceil(dH)) return
-          scrollTop.value += nodeInfo && nodeInfo.top ? nodeInfo.top - dH : 0
+          scrollTop.value += nodeInfo && nodeInfo.top ? Math.ceil(nodeInfo.top) - dH : 0
         })
         .exec()
     }
