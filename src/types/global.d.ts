@@ -40,6 +40,12 @@ export type LoginResult = {
   mobile: string
   // 登录凭证
   token: string
+  // 性别
+  gender?: Gender
+  // 生日
+  birthday?: string
+  // 城市
+  city?: string
 }
 /** 普通登录 */
 export type LoginParams = {
@@ -47,4 +53,11 @@ export type LoginParams = {
   account: string
   // 密码
   password: string
+}
+/** 性别 */
+export type Gender = {
+  // id
+  value: string
+  // 名称
+  text: string
 }

@@ -109,5 +109,26 @@
     //   "iconPath": "static/tabs/qr_code.png",
     //   "iconWidth": "40px"
     // }
-  }
+  },
+  // 分包
+  "subPackages": [
+    {
+      "root": "pageSubs",
+      "pages": [
+        {
+          "path": "setting/index",
+          "style": {
+            "navigationBarTitleText": "设置中心"
+          }
+        },
+        {
+          "path": "profile/index",
+          "style": {
+            "navigationStyle": "custom", // 隐藏默认导航
+            "navigationBarTitleText": "个人信息"
+          }
+        }
+      ]
+    }
+  ]
 }

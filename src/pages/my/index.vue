@@ -41,12 +41,12 @@ const onScrolltolower = () => {
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 10 + 'px' }">
       <!-- 情况1：已登录 -->
       <view class="overview" v-if="userInfo">
-        <navigator url="/pages/profile/profile" hover-class="none">
+        <navigator url="/pageSubs/profile/index" hover-class="none">
           <image class="avatar" mode="aspectFill" :src="userInfo.avatar"></image>
         </navigator>
         <view class="meta">
           <view class="nickname"> {{ userInfo?.nickname }} </view>
-          <navigator class="extra" url="/pages/profile/profile" hover-class="none">
+          <navigator class="extra" url="/pageSubs/profile/index" hover-class="none">
             <text class="update">账号名：{{ userInfo.account }}</text>
           </navigator>
         </view>
@@ -54,11 +54,7 @@ const onScrolltolower = () => {
       <!-- 情况2：未登录 -->
       <view class="overview" v-else>
         <navigator url="/pages/login/login" hover-class="none">
-          <image
-            class="avatar gray"
-            mode="aspectFill"
-            src="http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-06/db628d42-88a7-46e7-abb8-659448c33081.png"
-          ></image>
+          <image class="avatar gray" mode="aspectFill" src="/static/logo1.png"></image>
         </navigator>
         <view class="meta">
           <navigator url="/pages/login/login" hover-class="none" class="nickname"> 未登录 </navigator>
@@ -67,7 +63,7 @@ const onScrolltolower = () => {
           </view>
         </view>
       </view>
-      <navigator class="settings" url="/pages/settings/settings" hover-class="none"> 设置 </navigator>
+      <navigator class="settings" url="/pageSubs/setting/index" hover-class="none"> 设置 </navigator>
     </view>
     <!-- 我的订单 -->
     <view class="orders">
@@ -135,7 +131,7 @@ page {
     align-items: flex-start;
     line-height: 30rpx;
     padding: 16rpx 0;
-    margin-left: 20rpx;
+    margin-left: $uni-margin-frame;
   }
 
   .nickname {
@@ -178,8 +174,8 @@ page {
 .orders {
   position: relative;
   z-index: 99;
-  margin: 30rpx 20rpx 0;
-  border-radius: 20rpx;
+  margin: 30rpx $uni-margin-frame 0;
+  border-radius: $uni-margin-frame;
   box-shadow: 2rpx 10rpx 10rpx rgba(240, 240, 240, 0.6);
   background-color: #fff;
   overflow: hidden;
@@ -201,7 +197,7 @@ page {
       font-size: 24rpx;
       .iconfont {
         font-size: 50rpx;
-        margin-bottom: 20rpx;
+        margin-bottom: $uni-margin-frame;
         color: $uni-color-main;
       }
     }
@@ -210,6 +206,6 @@ page {
 
 /* 推荐 */
 .similar {
-  margin-top: 20rpx;
+  margin-top: $uni-margin-frame;
 }
 </style>

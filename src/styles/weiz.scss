@@ -28,7 +28,8 @@
 .flex,
 .flex-wrap,
 .flex-column,
-.flex-align-center {
+.flex-align-center,
+.flex-between {
   display: flex;
 }
 .flex-wrap {
@@ -39,6 +40,9 @@
 }
 .flex-align-center {
   align-items: center;
+}
+.flex-between {
+  justify-content: space-between;
 }
 // 文字
 .fold {
