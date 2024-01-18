@@ -28,15 +28,24 @@ npm run dev:mp-weixin
 
 #### 项目搭建
 
-参考文档 [uni-app+vue3+ts项目搭建](https://www.cnblogs.com/weizwz/p/17952042)
+参考 [uni-app+vue3+ts项目搭建](https://weizwz.com/posts/f1579949.html)
 
-参考文档 [小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)
+参考 [小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)
 
 #### iconfont 图标使用
 
-参考文档 [uni-app 图标库整合：使用 iconfont 构建属于自己的图标库](https://juejin.cn/post/7314121672886075443)
+参考 [uni-app 图标库整合：使用 iconfont 构建属于自己的图标库](https://juejin.cn/post/7314121672886075443)
+
+#### uni-app官方文档
+
+参考 [uni-app官方文档](https://uniapp.dcloud.net.cn/)
+
+参考 [uni-ui官方文档](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
 
 #### 更新
+
+- 2024.01.17
+  uni-ui升级到1.5.0，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
 
 - 2024.01.08
   uni-app 有新版本发布，请执行 `npx @dcloudio/uvm@latest` 更新，更新日志详见：https://download1.dcloud.net.cn/hbuilderx/changelog/3.99.2023122611.html
