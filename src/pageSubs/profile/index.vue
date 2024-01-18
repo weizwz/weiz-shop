@@ -53,9 +53,8 @@ const genders = ref<Gender[]>([
 const submitForm = async () => {
   try {
     await formRole.value?.validate?.()
-    // const res = await postLoginAPI(logoForm.value)
-    // loginSuccess(res.result)
     userStore.setUserInfo(userForm.value)
+    // 调用接口保存
     // 成功提示
     uni.showToast({ icon: 'success', title: '保存成功' })
     setTimeout(() => {
@@ -65,6 +64,49 @@ const submitForm = async () => {
   } catch (error) {
     // uni.showToast({ icon: 'none', title: '保存失败，请重试' })
   }
+}
+// 头像
+const changeAvatar = () => {
+  // 调用拍照/选择图片
+  uni.chooseMedia({
+    // 文件个数
+    count: 1,
+    // 文件类型
+    mediaType: ['image'],
+    success: (res) => {
+      // 本地路径
+      const tempFile = res.tempFiles[0]
+      const { tempFilePath, size } = tempFile
+      if (size > 1024 * 1024) {
+        uni.showToast({ icon: 'none', title: '文件大小请不要大于1M' })
+        return
+      }
+
+      // 文件上传，当前无接口，在失败里读取本地文件
+      uni.uploadFile({
+        url: '/upload/avatar',
+        name: 'file', // 后端数据字段名
+        filePath: tempFilePath, // 新头像
+        success: (res) => {
+          // 判断状态码是否上传成功
+          if (res.statusCode === 200) {
+            // 提取头像
+            const { avatar } = JSON.parse(res.data).result
+            // 当前页面更新头像
+            userForm.value!.avatar = avatar
+            // 更新 Store 头像
+            userStore.userInfo!.avatar = avatar
+            uni.showToast({ icon: 'success', title: '更新成功' })
+          } else {
+            // uni.showToast({ icon: 'fail', title: '更新失败，请重试' })
+            userForm.value!.avatar = tempFilePath
+            userStore.userInfo!.avatar = tempFilePath
+            uni.showToast({ icon: 'success', title: '更新成功' })
+          }
+        },
+      })
+    },
+  })
 }
 </script>
 
@@ -77,7 +119,7 @@ const submitForm = async () => {
       <view class="title">个人信息</view>
       <!-- 头像 -->
       <view class="avatar">
-        <view class="avatar-content">
+        <view class="avatar-content" @tap="changeAvatar">
           <image class="image" :src="userForm.avatar" mode="aspectFill" />
           <text class="text">点击修改头像</text>
         </view>
