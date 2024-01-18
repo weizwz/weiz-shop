@@ -29,9 +29,8 @@ const scrollOldTop = ref<number>(0)
 const shortcutFixed = ref<boolean>(false) // 是否固定住快捷跳转
 const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
   scrollOldTop.value = e.detail.scrollTop
-  if (scrollOldTop.value >= rpxToPx(750)) {
-    shortcutFixed.value = true
-  }
+  // 优化固定定位的展示速度
+  shortcutFixed.value = scrollOldTop.value >= rpxToPx(750)
   const query = uni.createSelectorQuery().in(instance)
   query
     .select('.similar')
@@ -43,7 +42,6 @@ const scrollHandle = (e: UniHelper.ScrollViewOnScrollEvent) => {
         shortcutIdx.value = 1
       } else {
         shortcutIdx.value = 0
-        shortcutFixed.value = false
       }
     })
     .exec()
