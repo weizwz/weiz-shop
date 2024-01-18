@@ -67,6 +67,21 @@ const submitForm = async () => {
 }
 // 头像
 const changeAvatar = () => {
+  //#ifdef  APP-PLUS || H5
+  uni.chooseImage({
+    count: 1, //默认9
+    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+    sourceType: ['album'], //从相册选择
+    success: function (res) {
+      const tempFilePath = JSON.stringify(res.tempFilePaths)
+      // 调用接口后
+      userForm.value!.avatar = tempFilePath
+      userStore.userInfo!.avatar = tempFilePath
+      uni.showToast({ icon: 'success', title: '更新成功' })
+    },
+  })
+  //#endif
+  //#ifdef MP-WEIXIN
   // 调用拍照/选择图片
   uni.chooseMedia({
     // 文件个数
@@ -81,7 +96,6 @@ const changeAvatar = () => {
         uni.showToast({ icon: 'none', title: '文件大小请不要大于1M' })
         return
       }
-
       // 文件上传，当前无接口，在失败里读取本地文件
       uni.uploadFile({
         url: '/upload/avatar',
@@ -107,6 +121,7 @@ const changeAvatar = () => {
       })
     },
   })
+  //#endif
 }
 </script>
 
