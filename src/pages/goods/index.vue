@@ -6,12 +6,15 @@ import { rpxToPx } from '@/utils/platform'
 import { getCategorySuggestAPI } from '@/api/category'
 import SpecificationPanel from './components/SpecificationPanel.vue'
 import AddressPanel from './components/AddressPanel.vue'
+import { useCartsStore } from '@/stores'
 import type { Address, GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
 import type { SpecificationPanelInstance } from '@/types/components'
 import type { CartItem } from '@/types/global'
+import type { UniGoodsNav, UniGoodsNavOnButtonClick, UniGoodsNavOption } from '@uni-helper/uni-ui-types'
 
 const instance = getCurrentInstance()
 const specificationPanel = ref<SpecificationPanelInstance>()
+const useCarts = useCartsStore()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -204,18 +207,43 @@ const changeAddress = (data: Address) => {
  * 购物车
  */
 // 获取子组件数量
-const numObj = specificationPanel.value?.getCurrentNum()
-const addCartHandle = () => {
-  const cartItem: CartItem = {
-    ...currentGoods.value,
-    number: numObj?.number,
-    minNum: numObj?.minNum,
-    maxNum: numObj?.maxNum,
-    checked: true,
-    GoodsSpec: currentSpec.value,
+const clickHandle = (content: UniHelper.UniGoodsNavOnClickEvent) => {
+  // 收藏
+  if (content.index === 0) {
+    uni.showToast({ icon: 'success', title: '收藏成功' })
+  } else if (content.index === 1) {
+    uni.showToast({ icon: 'none', title: '客服真忙，请稍后再试' })
+  } else {
+    uni.switchTab({ url: '/pages/cart/index' })
   }
 }
-const buyHandle = () => {}
+const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
+  console.log(content)
+  // 加入购物车
+  if (content.index === 0) {
+    const numObj = specificationPanel.value?.getCurrentNum()
+    const specObj = specificationPanel.value?.getCurrentSpec()
+    if (!specObj?.id) {
+      // 未选规格前打开规格弹窗
+      openPopup('specification')
+      return
+    }
+    const cartItem: CartItem = {
+      ...currentGoods.value,
+      number: numObj?.number,
+      minNum: numObj?.minNum,
+      maxNum: numObj?.maxNum,
+      checked: true,
+      GoodsSpec: {
+        ...specObj,
+      },
+    }
+    useCarts.addCart(cartItem)
+    uni.showToast({ icon: 'success', title: '已加入购物车' })
+  } else {
+    //
+  }
+}
 </script>
 
 <template>
@@ -233,7 +261,7 @@ const buyHandle = () => {}
         <view class="preview">
           <swiper circular class="preview-swiper" @change="changeImgSwiper">
             <swiper-item v-for="(item, idx) in currentGoods?.image_url" :key="idx">
-              <image mode="aspectFill" :src="`/static/images/card/index/${item}.png`" />
+              <image mode="aspectFill" :src="item" />
             </swiper-item>
           </swiper>
           <view class="indicator">
@@ -334,8 +362,8 @@ const buyHandle = () => {}
         :options="cartOptions"
         :fill="true"
         :button-group="cartGroup"
-        @click="addCartHandle"
-        @buttonClick="buyHandle"
+        @click="clickHandle"
+        @buttonClick="buttonHandle"
       />
     </view>
     <!-- uni-ui 弹出层 https://uniapp.dcloud.net.cn/component/uniui/uni-popup.html-->
