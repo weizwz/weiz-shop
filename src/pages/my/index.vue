@@ -1,20 +1,14 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores'
 import type { CardListInstance } from '@/types/components'
-import { goLogin } from '@/utils/login'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
+import { watchLoginStatus } from '@/components/common/login'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const userStore = useUserStore()
 const userInfo = userStore.userInfo
-goLogin(userInfo)
-
-watch(
-  () => userStore.userInfo,
-  (val) => {
-    goLogin(val)
-  },
-)
+// 登录状态检测
+watchLoginStatus()
 
 const orderTypes = [
   { type: 1, text: '待付款', icon: 'icon-a-daifukuan_huaban1' },

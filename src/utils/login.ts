@@ -5,5 +5,7 @@ export const goLogin = (user: LoginResult | undefined) => {
     uni.redirectTo({
       url: '/pages/login/index',
     })
+    return false
   }
+  return true
 }
