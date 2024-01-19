@@ -8,6 +8,7 @@ import SpecificationPanel from './components/SpecificationPanel.vue'
 import AddressPanel from './components/AddressPanel.vue'
 import type { Address, GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
 import type { SpecificationPanelInstance } from '@/types/components'
+import type { CartItem } from '@/types/global'
 
 const instance = getCurrentInstance()
 const specificationPanel = ref<SpecificationPanelInstance>()
@@ -79,6 +80,27 @@ const shortcutActive = (idx: number) => {
   })
 }
 
+const currentGoods = ref<GoodsItem<RankItem>>()
+const getGoodsDetails = (id: string) => {
+  // 此处应调接口
+  currentGoods.value = {
+    id: id,
+    type: 'normal',
+    name: '夏威夷进口爆米花 香甜可口脆味十足 家庭影院必备 500g',
+    price: 29.9,
+    comment: '100w',
+    image_url: [
+      '/static/images/card/index/1.png',
+      '/static/images/card/index/2.png',
+      '/static/images/card/index/3.png',
+      '/static/images/card/index/4.png',
+      '/static/images/card/index/5.png',
+    ],
+    image_ratio: 1,
+    nameTag: '百亿补贴',
+  }
+}
+
 /**
  * 商品属性
  */
@@ -136,13 +158,13 @@ const cartGroup = ref([
   },
 ])
 
-const addCartHandle = () => {}
-const buyHandle = () => {}
-
 /**
  * uni.navigateTo的传参在onload里接收 https://uniapp.dcloud.net.cn/api/router.html#navigateto
  */
 onLoad((option) => {
+  // 获取商品详情
+  getGoodsDetails(option?.id)
+  // 相关推荐
   getCategorySuggestData(option?.id)
 })
 
@@ -177,6 +199,23 @@ const currentAddress = ref<Address>()
 const changeAddress = (data: Address) => {
   currentAddress.value = data
 }
+
+/**
+ * 购物车
+ */
+// 获取子组件数量
+const numObj = specificationPanel.value?.getCurrentNum()
+const addCartHandle = () => {
+  const cartItem: CartItem = {
+    ...currentGoods.value,
+    number: numObj?.number,
+    minNum: numObj?.minNum,
+    maxNum: numObj?.maxNum,
+    checked: true,
+    GoodsSpec: currentSpec.value,
+  }
+}
+const buyHandle = () => {}
 </script>
 
 <template>
@@ -193,8 +232,8 @@ const changeAddress = (data: Address) => {
         <!-- 商品主图 -->
         <view class="preview">
           <swiper circular class="preview-swiper" @change="changeImgSwiper">
-            <swiper-item v-for="idx in 5" :key="idx">
-              <image mode="aspectFill" :src="`/static/images/card/index/${idx}.png`" />
+            <swiper-item v-for="(item, idx) in currentGoods?.image_url" :key="idx">
+              <image mode="aspectFill" :src="`/static/images/card/index/${item}.png`" />
             </swiper-item>
           </swiper>
           <view class="indicator">
@@ -216,11 +255,15 @@ const changeAddress = (data: Address) => {
         <view class="meta">
           <view class="price">
             <text class="symbol">¥</text>
-            <text class="number">29</text>
-            <text class="suffix">.00</text>
+            <text class="number">
+              {{ currentGoods && currentGoods.price ? String(currentGoods.price).split('.')[0] : '' }}
+            </text>
+            <text class="suffix">
+              .{{ currentGoods && currentGoods.price ? String(currentGoods.price).split('.')[1] : '' }}
+            </text>
           </view>
           <view class="info">
-            <view class="name"> 夏威夷进口爆米花 香甜可口脆味十足 家庭影院必备 500g </view>
+            <view class="name"> {{ currentGoods?.name }} </view>
             <view class="desc-content">
               <view class="desc" v-for="(item, index) in ['原生态', '健康', '新鲜玉米']" :key="index">{{ item }}</view>
             </view>

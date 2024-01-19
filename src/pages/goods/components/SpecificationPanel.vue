@@ -12,6 +12,8 @@ const popupEmit = defineEmits(['close', 'changeSpec'])
 
 // 数量
 const currentNum = ref<UniHelper.UniNumberBoxValue>()
+const minNum = ref<UniHelper.UniNumberBoxValue>(1)
+const maxNum = ref<UniHelper.UniNumberBoxValue>(Math.ceil(Math.random() * 99) + 1)
 // 规格
 const specification = ref<GoodsSpec[]>([
   { id: '001', name: '经典味 500g 1袋装', price: '29.90', image_url: '/static/images/card/index/1.png' },
@@ -38,8 +40,16 @@ const closeWindow = () => {
 const getCurrentSpec = () => {
   return currentSpec.value
 }
+const getCurrentNum = () => {
+  return {
+    minNum: minNum.value,
+    maxNum: maxNum.value,
+    number: currentNum.value,
+  }
+}
 defineExpose({
   getCurrentSpec,
+  getCurrentNum,
 })
 </script>
 
@@ -77,7 +87,7 @@ defineExpose({
     </scroll-view>
     <view class="number flex">
       <text class="title">数量</text>
-      <uni-number-box v-model="currentNum" :min="1" @change="changeNumber" :max="50" />
+      <uni-number-box v-model="currentNum" :min="minNum" @change="changeNumber" :max="maxNum" />
     </view>
   </view>
 </template>

@@ -1,3 +1,5 @@
+import type { GoodsItem, GoodsSpec } from './api'
+
 /**
  * 处理动态变量
  * const obj: stringKey = { img_index_1, img_index_2, img_index_3 }
@@ -60,4 +62,20 @@ export type Gender = {
   value: string
   // 名称
   text: string
+}
+
+/** 购物车 */
+export type CartItem = GoodsItem & {
+  // 数量
+  number: number
+  // min
+  minMun?: number | 1
+  /// max
+  maxNum?: number | 100
+  // 选中状态
+  checked: boolean
+  // 库存
+  stock?: number
+  // 规格
+  specification: GoodsSpec
 }
