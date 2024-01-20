@@ -10,7 +10,9 @@ const delCartItem = (id: string) => {
   useCarts.delCarts(id)
   uni.showToast({ icon: 'success', title: '已删除' })
 }
-// 计算价格和数量
+/**
+ * 计算价格和数量
+ */
 let allMoney = ref<string>('')
 let allNum = ref<number>(0)
 const all = (data: CartItem[]) => {
@@ -31,14 +33,44 @@ const comAll = (data: CartItem[]) => {
   allNum.value = num
 }
 
+/**
+ * 选中/取消，全选/全取消
+ */
+const checkAllStatus = ref<boolean>(true)
+const changeChecked = (item: CartItem) => {
+  item.checked = !item.checked
+}
+const checkAll = (data: CartItem[]) => {
+  let _status = true
+  for (const item of data) {
+    if (item.checked === false) {
+      _status = false
+      break
+    }
+  }
+  checkAllStatus.value = _status
+}
+const changeCheckedAll = () => {
+  checkAllStatus.value = !checkAllStatus.value
+  for (const item of cartsList.value) {
+    item.checked = checkAllStatus.value
+  }
+}
+
+// 初始化，监听
 onMounted(() => {
   comAll(cartsList.value)
+  checkAll(cartsList.value)
 })
+
 watch(
   () => useCarts.carts,
   (val) => {
     comAll(val)
+    checkAll(val)
   },
+  //深度监听
+  { deep: true },
 )
 </script>
 
@@ -60,7 +92,7 @@ watch(
             <!-- 商品信息 -->
             <view class="goods">
               <!-- 选中状态 -->
-              <view class="checkbox" :class="{ checked: true }"></view>
+              <view class="checkbox" :class="{ checked: item.checked }" @tap="changeChecked(item)"></view>
               <navigator :url="`/pages/goods/index?id=${item.id}`" hover-class="none" class="navigator">
                 <image mode="aspectFill" class="picture" :src="item.specification.image_url"></image>
                 <view class="meta">
@@ -92,7 +124,7 @@ watch(
       </view>
       <!-- 吸底工具栏 -->
       <view class="toolbar" v-if="cartsList.length > 0">
-        <view class="checkbox all" :class="{ checked: false }"></view>
+        <view class="checkbox all" :class="{ checked: checkAllStatus }" @tap="changeCheckedAll"></view>
         <text class="text">合计:</text>
         <text class="amount">{{ allMoney }}</text>
         <view class="button-grounp">
@@ -132,9 +164,10 @@ watch(
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80rpx;
-    height: 30rpx;
+    width: 40rpx;
+    height: 40rpx;
     position: relative;
+    margin-right: 20rpx;
 
     &::before {
       position: absolute;
