@@ -10,7 +10,6 @@ import { useCartsStore } from '@/stores'
 import type { Address, GoodsItem, GoodsProp, GoodsSpec, RankItem } from '@/types/api'
 import type { SpecificationPanelInstance } from '@/types/components'
 import type { CartItem } from '@/types/global'
-import type { UniGoodsNav, UniGoodsNavOnButtonClick, UniGoodsNavOption } from '@uni-helper/uni-ui-types'
 
 const instance = getCurrentInstance()
 const specificationPanel = ref<SpecificationPanelInstance>()
@@ -218,7 +217,6 @@ const clickHandle = (content: UniHelper.UniGoodsNavOnClickEvent) => {
   }
 }
 const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
-  console.log(content)
   // 加入购物车
   if (content.index === 0) {
     const numObj = specificationPanel.value?.getCurrentNum()
@@ -234,7 +232,7 @@ const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
       minNum: numObj?.minNum,
       maxNum: numObj?.maxNum,
       checked: true,
-      GoodsSpec: {
+      specification: {
         ...specObj,
       },
     }

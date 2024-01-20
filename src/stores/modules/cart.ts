@@ -26,15 +26,10 @@ export const useCartsStore = defineStore(
 
     // 删除商品
     const delCarts = (id: string) => {
-      let idx: number = 0
-      for (let i = 0; i < carts.value.length; i++) {
-        const item = carts.value[i]
-        if (item.id === id) {
-          idx = i
-          break
-        }
-      }
-      carts.value.splice(idx, 1)
+      carts.value = carts.value.filter((item) => {
+        return id !== item.id
+      })
+      console.log(carts.value)
     }
 
     // 批量删除
