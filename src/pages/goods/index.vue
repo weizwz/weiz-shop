@@ -1,4 +1,3 @@
-// src/pages/goods/goods.vue
 <script setup lang="ts">
 import { nextTick, ref, getCurrentInstance } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
