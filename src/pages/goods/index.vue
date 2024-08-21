@@ -12,7 +12,7 @@ import type { SpecificationPanelInstance } from '@/types/components'
 import type { CartItem } from '@/types/global'
 
 const instance = getCurrentInstance()
-const specificationPanel = ref<SpecificationPanelInstance>()
+const specificationRef = ref<SpecificationPanelInstance>()
 const useCarts = useCartsStore()
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -219,8 +219,9 @@ const clickHandle = (content: UniHelper.UniGoodsNavOnClickEvent) => {
 const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
   // 加入购物车
   if (content.index === 0) {
-    const numObj = specificationPanel.value?.getCurrentNum()
-    const specObj = specificationPanel.value?.getCurrentSpec()
+    const numObj = specificationRef.value?.getCurrentNum()
+    const specObj = specificationRef.value?.getCurrentSpec()
+
     if (!specObj?.id) {
       // 未选规格前打开规格弹窗
       openPopup('specification')
@@ -367,14 +368,14 @@ const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
     <!-- uni-ui 弹出层 https://uniapp.dcloud.net.cn/component/uniui/uni-popup.html-->
     <uni-popup ref="popup" type="bottom" background-color="#fff">
       <SpecificationPanel
-        id="SpecificationPanel"
-        ref="specificationPanel"
-        v-if="popupName === 'specification'"
+        id="specificationId"
+        v-show="popupName === 'specification'"
+        ref="specificationRef"
         @close="closePopup"
         @changeSpec="changeSpec"
       />
       <AddressPanel
-        v-if="popupName === 'address'"
+        v-show="popupName === 'address'"
         ref="addressPanel"
         @close="closePopup"
         @changeAddress="changeAddress"
