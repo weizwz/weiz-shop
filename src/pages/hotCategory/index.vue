@@ -1,4 +1,3 @@
-// /src/pages/hot/hot.vue
 <script setup lang="ts">
 import { getCategoryHotAPI } from '@/api/category'
 import type { HotCategoryItem } from '@/types/api'
