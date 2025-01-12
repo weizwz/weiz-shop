@@ -48,7 +48,11 @@ const onScrolltolower = () => {
       <!-- 情况2：未登录 -->
       <view class="overview" v-else>
         <navigator url="/pages/login/login" hover-class="none">
-          <image class="avatar gray" mode="aspectFill" src="/static/logo1.png"></image>
+          <image
+            class="avatar gray"
+            mode="aspectFill"
+            src="https://www.helloimg.com/i/2025/01/12/67838ab61d067.png"
+          ></image>
         </navigator>
         <view class="meta">
           <navigator url="/pages/login/login" hover-class="none" class="nickname"> 未登录 </navigator>
