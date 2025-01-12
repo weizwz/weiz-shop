@@ -8,7 +8,12 @@ const navBarData = navData()
   <view class="navbar" :style="{ paddingTop: navBarData.top + 'px', height: navBarData.height + 'px' }">
     <!-- logo文字 -->
     <view class="logo" :style="{ height: navBarData.height + 'px' }">
-      <image mode="aspectFit" class="logo-img" src="@/static/logo.png" alt="味值商城"></image>
+      <image
+        mode="aspectFit"
+        class="logo-img"
+        src="https://www.helloimg.com/i/2025/01/12/67838a24698a2.png"
+        alt="味值商城"
+      ></image>
     </view>
     <!-- 搜索条 -->
     <view class="search-bar">

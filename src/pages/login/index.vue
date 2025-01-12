@@ -83,7 +83,12 @@ const submitForm = async () => {
 <template>
   <view class="viewport">
     <view class="logo">
-      <image mode="aspectFit" class="logo-img" src="@/static/logo1.png" alt="味值商城"></image>
+      <image
+        mode="aspectFit"
+        class="logo-img"
+        src="https://www.helloimg.com/i/2025/01/12/67838ab61d067.png"
+        alt="味值商城"
+      ></image>
     </view>
     <view class="login">
       <!-- 网页端表单登录 -->
@@ -119,7 +124,7 @@ const submitForm = async () => {
         </view>
         <view class="options">
           <!-- 通用模拟登录 -->
-          <button class="icon" type="default" @tap="onGetphonenumberSimple">模拟快捷登录</button>
+          <button class="icon" type="submit" @tap="onGetphonenumberSimple">模拟快捷登录</button>
         </view>
       </view>
       //#endif
