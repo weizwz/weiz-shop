@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, ref, getCurrentInstance } from 'vue'
+import { nextTick, ref, getCurrentInstance, watch } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { rpxToPx } from '@/utils/platform'
 import { getCategorySuggestAPI } from '@/api/category'
@@ -126,6 +126,18 @@ const getCategorySuggestData = async (id: string) => {
 }
 
 /**
+ * 计算购物车商品数量
+ */
+let allNum = ref<number>(0)
+const comAll = (data: CartItem[]) => {
+  let num = 0
+  for (const item of data) {
+    num += item.number
+  }
+  return num
+}
+
+/**
  * 购物车配置
  */
 const cartOptions = ref<UniHelper.UniGoodsNavOption[]>([
@@ -142,7 +154,7 @@ const cartOptions = ref<UniHelper.UniGoodsNavOption[]>([
   {
     icon: 'cart',
     text: '购物车',
-    info: 2,
+    info: allNum.value,
     infoBackgroundColor: '#18c7ff',
   },
 ])
@@ -159,6 +171,17 @@ const cartGroup = ref([
   },
 ])
 
+// 监听购物车数量
+watch(
+  () => useCarts.carts,
+  (val) => {
+    allNum.value = comAll(val)
+    // 同步购物车商品数量
+    cartOptions.value[2].info = allNum.value
+  },
+  //深度监听
+  { deep: true },
+)
 /**
  * uni.navigateTo的传参在onload里接收 https://uniapp.dcloud.net.cn/api/router.html#navigateto
  */
@@ -167,6 +190,9 @@ onLoad((option) => {
   getGoodsDetails(option?.id)
   // 相关推荐
   getCategorySuggestData(option?.id)
+  // 获取购物车商品数量
+  allNum.value = comAll(useCarts.carts)
+  cartOptions.value[2].info = allNum.value
 })
 
 /**
@@ -569,6 +595,7 @@ page {
         height: 90rpx;
         flex: 1;
         -webkit-line-clamp: 1;
+        line-clamp: 1;
       }
     }
     .label {

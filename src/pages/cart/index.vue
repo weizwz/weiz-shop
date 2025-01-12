@@ -22,6 +22,7 @@ const all = (data: CartItem[]) => {
     add += Number(item.specification.price) * item.number
     num += item.number
   }
+
   return {
     add: add.toFixed(2),
     num,

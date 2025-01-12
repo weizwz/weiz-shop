@@ -11,25 +11,27 @@ export const useCartsStore = defineStore(
 
     // 新增商品
     const addCart = (val: CartItem) => {
-      // 遍历去重
-      let hasVal = false
-      for (let item of carts.value) {
+      // 有就加数量，否则新增
+      for (let i = 0; i < carts.value.length; i++) {
+        let item = carts.value[i]
         if (item.id === val.id) {
           item = {
             ...val,
+            number: item.number + val.number,
           }
-          hasVal = true
+          carts.value[i] = item
+          return
         }
       }
-      if (!hasVal) carts.value.push(val)
+
+      carts.value.push(val)
     }
 
     // 删除商品
     const delCarts = (id: string) => {
-      carts.value = carts.value.filter((item) => {
+      carts.value = carts.value.filter((item: CartItem) => {
         return id !== item.id
       })
-      console.log(carts.value)
     }
 
     // 批量删除

@@ -11,7 +11,7 @@ const props = defineProps<{
 const popupEmit = defineEmits(['close', 'changeSpec'])
 
 // 数量
-const currentNum = ref<UniHelper.UniNumberBoxValue>()
+const currentNum = ref<UniHelper.UniNumberBoxValue>(1)
 const minNum = ref<UniHelper.UniNumberBoxValue>(1)
 const maxNum = ref<UniHelper.UniNumberBoxValue>(Math.ceil(Math.random() * 99) + 1)
 // 规格
