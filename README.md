@@ -46,6 +46,7 @@ pnpm run dev:mp-weixin
 
 - 2025.01.12
   uni-ui升级到1.5.7，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
+  
   @dcloudio/uni-app升级到3.0.0-4040520250104002，执行 `npx @dcloudio/uvm@latest`，https://uniapp.dcloud.net.cn/quickstart-cli.html
 
 - 2024.01.17
