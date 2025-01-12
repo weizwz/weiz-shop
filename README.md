@@ -6,7 +6,7 @@
 
 uin-app + vue3 + ts + vite 搭建的商城项目
 
-**所有商品图片来自网上，仅供参考，不可用于商用**
+**所有商品图片来自网络，仅供此项目演示使用，不可商用**
 
 ### 启动
 
@@ -43,6 +43,9 @@ npm run dev:mp-weixin
 参考 [uni-ui官方文档](https://uniapp.dcloud.net.cn/component/uniui/uni-ui.html)
 
 #### 更新
+
+- 2025.01.12
+  uni-ui升级到1.5.7，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
 
 - 2024.01.17
   uni-ui升级到1.5.0，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
