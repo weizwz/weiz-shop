@@ -119,14 +119,14 @@ export const isMpToutiaoApp = uni.getSystemInfoSync().appName == 'Toutiao'
 
 // rpx 转换为 px ，传参类型是数字（Number）
 export function rpxToPx(rpx: number) {
-  // 获取设备屏幕宽度
-  const deviceWidth = wx.getSystemInfoSync().windowWidth
+  // 获取设备屏幕宽度 https://developers.weixin.qq.com/miniprogram/dev/api/base/system/wx.getSystemInfoSync.html
+  const deviceWidth = wx.getWindowInfo().windowWidth
   const px = (deviceWidth / 750) * Number(rpx)
   return px
 }
 // px 转换为 rpx ，传参类型是数字（Number）
 export function pxToRpx(px: number) {
-  const deviceWidth = wx.getSystemInfoSync().windowWidth
+  const deviceWidth = wx.getWindowInfo().windowWidth
   const rpx = (750 / deviceWidth) * Number(px)
   return rpx
 }

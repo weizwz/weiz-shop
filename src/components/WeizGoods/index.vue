@@ -21,12 +21,12 @@ defineProps<{
       :style="{ height: `calc(${goods.image_ratio} * (50vw - 30rpx))` }"
     >
       <swiper-item class="goods-swiper-item" v-for="(img, index) in goods.image_url" :key="index">
-        <image :src="img" mode="widthFix"></image>
+        <image class="goods-img" :src="img" mode="widthFix"></image>
       </swiper-item>
     </swiper>
     <view v-else-if="goods.type === 'video'" class="goods-video">
       <view class="goods-video-image" :style="{ height: `calc(${goods.image_ratio} * (50vw - 30rpx))` }">
-        <image :src="goods?.video_url" mode="widthFix"></image>
+        <image class="goods-img" :src="goods?.video_url" mode="widthFix"></image>
         <view class="goods-video-image-name">{{ goods.videoName }}</view>
       </view>
       <view class="goods-video-info">
@@ -46,7 +46,11 @@ defineProps<{
       </view>
     </view>
     <view v-else-if="goods.type === 'normal'" class="goods-normal">
-      <image :src="typeof goods.image_url === 'string' ? goods.image_url : ''" mode="widthFix"></image>
+      <image
+        class="goods-img"
+        :src="typeof goods.image_url === 'string' ? goods.image_url : ''"
+        mode="widthFix"
+      ></image>
       <view class="goods-info">
         <view class="goods-name">
           <view v-if="goods.nameTag" class="goods-name-tag">{{ goods.nameTag }}</view>
@@ -95,7 +99,7 @@ defineProps<{
   border-radius: $uni-margin-frame;
   background: #fff;
   overflow: hidden;
-  image {
+  .goods-img {
     width: 100%;
     height: inherit;
   }
