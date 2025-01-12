@@ -13,13 +13,13 @@ uin-app + vue3 + ts + vite 搭建的商城项目
 安装
 
 ```shell
-npm i
+pnpm i
 ```
 
 运行，以微信小程序为例
 
 ```shell
-npm run dev:mp-weixin
+pnpm run dev:mp-weixin
 ```
 
 然后打开 `微信开发者工具`，导入 `dist/dev/mp-weixin` 项目，然后就可以预览了
@@ -46,6 +46,7 @@ npm run dev:mp-weixin
 
 - 2025.01.12
   uni-ui升级到1.5.7，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
+  @dcloudio/uni-app升级到3.0.0-4040520250104002，执行 `npx @dcloudio/uvm@latest`，https://uniapp.dcloud.net.cn/quickstart-cli.html
 
 - 2024.01.17
   uni-ui升级到1.5.0，执行 `npm update @dcloudio/uni-ui -S`，更新日志详见：https://ext.dcloud.net.cn/plugin?id=55&update_log
