@@ -363,8 +363,8 @@ const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
           <!-- 详情 -->
           <view class="images">
             <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/67838c514635a.png"></image>
-            <image mode="widthFix" src="/static/images/details/1.jpg"></image>
-            <image mode="widthFix" src="/static/images/details/2.jpg"></image>
+            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/6783990081fef.jpg"></image>
+            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/678398fbe3346.jpg"></image>
           </view>
         </view>
       </view>
