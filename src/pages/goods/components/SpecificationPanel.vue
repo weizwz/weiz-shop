@@ -16,11 +16,36 @@ const minNum = ref<UniHelper.UniNumberBoxValue>(1)
 const maxNum = ref<UniHelper.UniNumberBoxValue>(Math.ceil(Math.random() * 99) + 1)
 // 规格
 const specification = ref<GoodsSpec[]>([
-  { id: '001', name: '经典味 500g 1袋装', price: '29.90', image_url: '/static/images/card/index/1.png' },
-  { id: '002', name: '奶香味 500g 1袋装', price: '32.90', image_url: '/static/images/card/index/2.png' },
-  { id: '003', name: '海盐味 500g 1袋装', price: '28.90', image_url: '/static/images/card/index/3.png' },
-  { id: '004', name: '经典味 1500g 3袋装', price: '82.00', image_url: '/static/images/card/index/4.png' },
-  { id: '005', name: '奶香味 1500g 3袋装', price: '86.00', image_url: '/static/images/card/index/5.png' },
+  {
+    id: '001',
+    name: '经典味 500g 1袋装',
+    price: '29.90',
+    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
+  },
+  {
+    id: '002',
+    name: '奶香味 500g 1袋装',
+    price: '32.90',
+    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c5219bae.png',
+  },
+  {
+    id: '003',
+    name: '海盐味 500g 1袋装',
+    price: '28.90',
+    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c5151581.png',
+  },
+  {
+    id: '004',
+    name: '经典味 1500g 3袋装',
+    price: '82.00',
+    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c511948c.png',
+  },
+  {
+    id: '005',
+    name: '奶香味 1500g 3袋装',
+    price: '86.00',
+    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c511df2e.png',
+  },
 ])
 const currentSpec = ref<GoodsSpec>(specification.value[0])
 

@@ -91,11 +91,11 @@ const getGoodsDetails = (id: string) => {
     price: 29.9,
     comment: '100w',
     image_url: [
-      '/static/images/card/index/1.png',
-      '/static/images/card/index/2.png',
-      '/static/images/card/index/3.png',
-      '/static/images/card/index/4.png',
-      '/static/images/card/index/5.png',
+      'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
+      'https://www.helloimg.com/i/2025/01/12/67838c5219bae.png',
+      'https://www.helloimg.com/i/2025/01/12/67838c5151581.png',
+      'https://www.helloimg.com/i/2025/01/12/67838c511948c.png',
+      'https://www.helloimg.com/i/2025/01/12/67838c511df2e.png',
     ],
     image_ratio: 1,
     nameTag: '百亿补贴',
@@ -216,7 +216,7 @@ const currentSpec = ref<GoodsSpec>({
   id: '001',
   name: '经典味 500g 1袋装',
   price: '29.90',
-  image_url: '/static/images/card/index/1.png',
+  image_url: 'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
 })
 const changeSpec = (data: GoodsSpec) => {
   currentSpec.value = data
@@ -362,7 +362,7 @@ const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
           <uni-section class="goods-section" title="商品介绍" type="line" color="#18c7ff"></uni-section>
           <!-- 详情 -->
           <view class="images">
-            <image mode="widthFix" src="/static/images/card/index/1.png"></image>
+            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/67838c514635a.png"></image>
             <image mode="widthFix" src="/static/images/details/1.jpg"></image>
             <image mode="widthFix" src="/static/images/details/2.jpg"></image>
           </view>
