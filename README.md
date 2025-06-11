@@ -28,9 +28,9 @@ pnpm run dev:mp-weixin
 
 #### 项目搭建
 
-参考 [uni-app+vue3+ts项目搭建](https://weizwz.com/posts/f1579949.html)
+参考 [uni-app+vue3+ts项目搭建](https://note.weizwz.com/mobile/uniapp/project-building-uniapp-vue3)
 
-参考 [小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)
+参考 ~~[小兔鲜儿 - 项目起步](https://megasu.gitee.io/uni-app-shop-note/rabbit-shop/)~~
 
 #### iconfont 图标使用
 
