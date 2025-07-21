@@ -11,7 +11,7 @@ const navBarData = navData()
       <image
         mode="aspectFit"
         class="logo-img"
-        src="https://www.helloimg.com/i/2025/01/12/67838a24698a2.png"
+        src="https://p.weizwz.com/weizshop/logo_31c8fbfd33831e24.webp"
         alt="味值商城"
       ></image>
     </view>

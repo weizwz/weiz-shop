@@ -51,7 +51,7 @@ const onScrolltolower = () => {
           <image
             class="avatar gray"
             mode="aspectFill"
-            src="https://www.helloimg.com/i/2025/01/12/67838ab61d067.png"
+            src="https://p.weizwz.com/weizshop/head_7e96ed14181f6a8e.webp"
           ></image>
         </navigator>
         <view class="meta">

@@ -86,7 +86,7 @@ const submitForm = async () => {
       <image
         mode="aspectFit"
         class="logo-img"
-        src="https://www.helloimg.com/i/2025/01/12/67838ab61d067.png"
+        src="https://p.weizwz.com/weizshop/head_7e96ed14181f6a8e.webp"
         alt="味值商城"
       ></image>
     </view>
