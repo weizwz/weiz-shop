@@ -91,11 +91,11 @@ const getGoodsDetails = (id: string) => {
     price: 29.9,
     comment: '100w',
     image_url: [
-      'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
-      'https://www.helloimg.com/i/2025/01/12/67838c5219bae.png',
-      'https://www.helloimg.com/i/2025/01/12/67838c5151581.png',
-      'https://www.helloimg.com/i/2025/01/12/67838c511948c.png',
-      'https://www.helloimg.com/i/2025/01/12/67838c511df2e.png',
+      'https://p.weizwz.com/weizshop/card_index_1_261fcf492f5a72cc.webp',
+      'https://p.weizwz.com/weizshop/card_index_2_441e9f1227680fe3.webp',
+      'https://p.weizwz.com/weizshop/card_index_3_0de94b52a0aeb151.webp',
+      'https://p.weizwz.com/weizshop/card_index_4_a1e79100a65886c4.webp',
+      'https://p.weizwz.com/weizshop/card_index_5_8cdd52446feb4795.webp',
     ],
     image_ratio: 1,
     nameTag: '百亿补贴',
@@ -216,7 +216,7 @@ const currentSpec = ref<GoodsSpec>({
   id: '001',
   name: '经典味 500g 1袋装',
   price: '29.90',
-  image_url: 'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
+  image_url: 'https://p.weizwz.com/weizshop/card_index_1_261fcf492f5a72cc.webp',
 })
 const changeSpec = (data: GoodsSpec) => {
   currentSpec.value = data
@@ -362,9 +362,9 @@ const buttonHandle = (content: UniHelper.UniGoodsNavOnButtonClickEvent) => {
           <uni-section class="goods-section" title="商品介绍" type="line" color="#18c7ff"></uni-section>
           <!-- 详情 -->
           <view class="images">
-            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/67838c514635a.png"></image>
-            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/6783990081fef.jpg"></image>
-            <image mode="widthFix" src="https://www.helloimg.com/i/2025/01/12/678398fbe3346.jpg"></image>
+            <image mode="widthFix" src="https://p.weizwz.com/weizshop/card_index_1_261fcf492f5a72cc.webp"></image>
+            <image mode="widthFix" src="https://p.weizwz.com/weizshop/details_1_3066ced323aebb04.webp"></image>
+            <image mode="widthFix" src="https://p.weizwz.com/weizshop/details_2_0145b5067039a4a0.webp"></image>
           </view>
         </view>
       </view>

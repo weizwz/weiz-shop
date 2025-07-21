@@ -7,9 +7,9 @@ defineProps<{
 <template>
   <view class="weiz-title">
     <view class="content">
-      <image class="title-img" src="https://www.helloimg.com/i/2025/01/12/6783bb8bcc71b.png" mode="aspectFit" />
+      <image class="title-img" src="https://p.weizwz.com/weizshop/title_ae3b004ab912294d.webp" mode="aspectFit" />
       <view class="txt">{{ title }}</view>
-      <image class="title-img" src="https://www.helloimg.com/i/2025/01/12/6783bb8bcc71b.png" mode="aspectFit" />
+      <image class="title-img" src="https://p.weizwz.com/weizshop/title_ae3b004ab912294d.webp" mode="aspectFit" />
     </view>
   </view>
 </template>

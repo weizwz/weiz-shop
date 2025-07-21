@@ -20,31 +20,31 @@ const specification = ref<GoodsSpec[]>([
     id: '001',
     name: '经典味 500g 1袋装',
     price: '29.90',
-    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c514635a.png',
+    image_url: 'https://p.weizwz.com/weizshop/card_index_1_261fcf492f5a72cc.webp',
   },
   {
     id: '002',
     name: '奶香味 500g 1袋装',
     price: '32.90',
-    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c5219bae.png',
+    image_url: 'https://p.weizwz.com/weizshop/card_index_2_441e9f1227680fe3.webp',
   },
   {
     id: '003',
     name: '海盐味 500g 1袋装',
     price: '28.90',
-    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c5151581.png',
+    image_url: 'https://p.weizwz.com/weizshop/card_index_3_0de94b52a0aeb151.webp',
   },
   {
     id: '004',
     name: '经典味 1500g 3袋装',
     price: '82.00',
-    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c511948c.png',
+    image_url: 'https://p.weizwz.com/weizshop/card_index_4_a1e79100a65886c4.webp',
   },
   {
     id: '005',
     name: '奶香味 1500g 3袋装',
     price: '86.00',
-    image_url: 'https://www.helloimg.com/i/2025/01/12/67838c511df2e.png',
+    image_url: 'https://p.weizwz.com/weizshop/card_index_5_8cdd52446feb4795.webp',
   },
 ])
 const currentSpec = ref<GoodsSpec>(specification.value[0])
