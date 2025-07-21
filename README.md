@@ -8,7 +8,7 @@ uin-app + vue3 + ts + vite 搭建的商城项目
 
 **所有商品图片来自网络，仅供此项目演示使用，不可商用**
 
-![预览图](https://p.weizwz.com/weizshop/weizshop_design_c2d317aa67e2d7a4.webp)
+![预览图](https://p.weizwz.com/weizshop/weizshop_design_7c5778e27ee7238e.webp)
 
 ### 启动
 
